@@ -1,0 +1,83 @@
+---
+title: 使用JTK_CYCLE算法分析生物节律
+tags: []
+id: '2024'
+categories:
+  - - uncategorized
+date: 2022-09-19 15:48:00
+---
+
+JTK是一种非参数检测程序，能从芯片数据中检测循环转录本。除了计算每个转录本最佳的相位(LAG)、振幅(AMP)和周期(PER)外，JTK还计算了置换检验P值(ADJ.P)和Benjamini-Hochberg q值 (BH.Q)。与常规的周期检测算法相比，JTK具有更好的检验效能、更高的计算效率和更强的鲁棒性。R语言的**metacycle**包实现了**ARSER**、**JTK\_CYCLE**、**Lomb-Scargle**三种分析方法。
+
+## conda安装包
+
+*   conda create -n metacycle -c conda-forge r-base=4.1.3
+*   conda activate metacycle
+*   conda install -c conda-forge r-metacycle -y
+*   conda install -c conda-forge r-cosinor -y
+*   conda install -c conda-forge r-tidyverse -y
+*   conda install -c conda-forge r-irkernel -y
+*   Rscript -e "IRkernel::installspec(name='metacycle', displayname='r-metacycle')"
+*   install.packages('cosinor2')
+
+## 准备数据
+
+通过[比对](https://occdn.limour.top/1934.html)，得到的counts矩阵
+
+```R
+require(MetaCycle)
+require(tidyverse)
+tmp <- read.csv('zctcount.csv', row.names = 1)
+head(cycMouseLiverRNA[,1:5])
+tmp <- tmp[c('ID','ZT16.con.1', 'ZT16.con.2', 'ZT16.con.3', 'ZT16.con.4', 'ZT28.con.1', 'ZT28.con.2', 'ZT28.con.3', 'ZT28.con.4')]
+write.csv(tmp, file="tmp.csv", row.names=FALSE)
+```
+
+[f\_counts2TMM](https://occdn.limour.top/2159.html)
+
+```R
+tmp <- read.csv('tmp.csv', row.names = 1)
+tmp <- f_counts2TMM(tmp)
+tmp <- log2(tmp + 1)
+write.csv(tmp, file="tmp.csv")
+```
+
+## 分析周期节律
+
+```R
+meta2d(infile="tmp.csv",filestyle="csv",outdir="example", cycMethod="JTK", timepoints=c(16,16,16,16,28,28,28,28),outRawData=TRUE)
+r1 <- read.csv('example/JTKresult_tmp.csv')
+r2 <- read.csv('example/meta2d_tmp.csv')
+```
+
+## 绘制热图
+
+```R
+require(pheatmap)
+r1 <- read.csv('example/JTKresult_tmp.csv')
+r1 <- subset(r1, ADJ.P < 0.1)
+dat <- r1[-(1:6)]
+p3 <- pheatmap(dat, scale = "row", cluster_cols = F,
+  border_color = NA, show_rownames = F,treeheight_row = 0)
+```
+
+## 绘制某个基因的拟合曲线
+
+```R
+get_sin_lm <- function(PER, LAG, AMP, mean=0){
+    function(xvar){
+        -(AMP/2) * cos(2 * pi* ((xvar + LAG)/PER)) + mean
+    }
+}
+dat <- r1[-(1:6)]
+dat <- as.data.frame(t(dat))
+colnames(dat) <- r1$CycID
+index = 5
+a <- get_sin_lm(r1$PER[[index]], r1$LAG[[index]], r1$AMP[[index]], mean = mean(unlist(r1[index,-(1:6)])))
+mean(unlist(r1[index,-(1:6)]))
+dat1 <- dat[index]
+dat1$x  <- c(16,16,16,16,28,28,28,28)
+names(dat1) <- c('y', 'x')
+ggplot(dat1, aes(x=x, y = y)) +
+stat_function(fun = a) + geom_point()
+```

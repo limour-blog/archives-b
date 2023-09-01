@@ -13,7 +13,7 @@ timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://occdn.limour.top
+url: https://b.limour.top
 permalink: :id.html
 permalink_defaults:
   id: index
@@ -104,7 +104,7 @@ theme: fluid
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.moeyy.xyz/https://github.com/limour-blog/archives-occdn.git
+  repo: https://github.moeyy.xyz/https://github.com/limour-blog/archives-b.git
   branch: gh-pages
   name: us_limour@limour.top
   email: us_limour@limour.top

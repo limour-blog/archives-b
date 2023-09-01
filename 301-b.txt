@@ -1,0 +1,132 @@
+location = /1408.html {
+    return 301 https://hexo.limour.top/-qian-yi-CellTypist-zhu-shi-mian-yi-xi-bao-ya-qun;
+}
+location = /2183.html {
+    return 301 https://hexo.limour.top/-she-ding--sheng-wu-zhi-ji-qi-ren;
+}
+location = /2179.html {
+    return 301 https://hexo.limour.top/-ji-lu-Go-shi-xian-OpenAI-API-HTTP-dai-li;
+}
+location = /2157.html {
+    return 301 https://hexo.limour.top/-ji-lu-Go-shi-xian-OpenAI-API-HTTP-dai-li;
+}
+location = /2155.html {
+    return 301 https://hexo.limour.top/-ji-lu-Go-shi-xian-OpenAI-API-HTTP-dai-li;
+}
+location = /2172.html {
+    return 301 https://hexo.limour.top/-ji-lu-TTRSS-shi-yong-Supabase-zuo-shu-ju-ku;
+}
+location = /2112.html {
+    return 301 https://hexo.limour.top/-ji-lu-TTRSS-shi-yong-Supabase-zuo-shu-ju-ku;
+}
+location = /1881.html {
+    return 301 https://hexo.limour.top/-ji-lu-TTRSS-shi-yong-Supabase-zuo-shu-ju-ku;
+}
+location = /2109.html {
+    return 301 https://hexo.limour.top/-ji-lu-TTRSS-shi-yong-Supabase-zuo-shu-ju-ku;
+}
+location = /2134.html {
+    return 301 https://hexo.limour.top/-fu-ke--zai-Flyio-shang-da-jian-Alist;
+}
+location = /2114.html {
+    return 301 https://hexo.limour.top/-fu-ke--zai-Flyio-shang-da-jian-Alist;
+}
+location = /1901.html {
+    return 301 https://hexo.limour.top/-fu-ke--zai-Flyio-shang-da-jian-Alist;
+}
+location = /2105.html {
+    return 301 https://hexo.limour.top/-bai-piao--shi-yong-CloudFlare-R2-da-jian-ge-ren-tu-chuang;
+}
+location = /1912.html {
+    return 301 https://hexo.limour.top/-bai-piao--shi-yong-CloudFlare-R2-da-jian-ge-ren-tu-chuang;
+}
+location = /1911.html {
+    return 301 https://hexo.limour.top/-bai-piao--shi-yong-CloudFlare-R2-da-jian-ge-ren-tu-chuang;
+}
+location = /2002.html {
+    return 301 https://hexo.limour.top/-bai-piao--shi-yong-CloudFlare-R2-da-jian-ge-ren-tu-chuang;
+}
+location = /1658.html {
+    return 301 https://hexo.limour.top/-bai-piao--shi-yong-CloudFlare-R2-da-jian-ge-ren-tu-chuang;
+}
+location = /37.html {
+    return 301 https://hexo.limour.top/-bai-piao--shi-yong-CloudFlare-R2-da-jian-ge-ren-tu-chuang;
+}
+location = /2153.html {
+    return 301 https://hexo.limour.top/-ji-lu-GOST-jin-xing-SOCKS5-de-fu-zai-jun-heng;
+}
+location = /2121.html {
+    return 301 https://hexo.limour.top/-ji-lu-GOST-jin-xing-SOCKS5-de-fu-zai-jun-heng;
+}
+location = /2151.html {
+    return 301 https://hexo.limour.top/-ji-lu-GOST-jin-xing-SOCKS5-de-fu-zai-jun-heng;
+}
+location = /2080.html {
+    return 301 https://hexo.limour.top/-ji-lu-GOST-jin-xing-SOCKS5-de-fu-zai-jun-heng;
+}
+location = /641.html {
+    return 301 https://hexo.limour.top/-ji-lu-GOST-jin-xing-SOCKS5-de-fu-zai-jun-heng;
+}
+location = /2161.html {
+    return 301 https://hexo.limour.top/-ji-lu--shi-yong-Termux-zuo-wei-SSH-ke-hu-duan;
+}
+location = /2163.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /2047.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /2040.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /2038.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /1387.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /1098.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /738.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /652.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /580.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /548.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /460.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /1968.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /1989.html {
+    return 301 https://hexo.limour.top/-ji-lu--an-zhuang-sheng-xin-de-dai-ma-bian-xie-huan-jing;
+}
+location = /2131.html {
+    return 301 https://hexo.limour.top/Docker-bu-shu-Nginx-Proxy-Manager;
+}
+location = /2116.html {
+    return 301 https://hexo.limour.top/Docker-bu-shu-Nginx-Proxy-Manager;
+}
+location = /2097.html {
+    return 301 https://hexo.limour.top/Docker-bu-shu-Nginx-Proxy-Manager;
+}
+location = /2127.html {
+    return 301 https://hexo.limour.top/-qian-yi--shi-yong-shou-biao-zuo-zhi-nan-zhen;
+}
+location = /2129.html {
+    return 301 https://hexo.limour.top/-fu-ke-GitHub-wen-jian-jia-su;
+}
+location = /2106.html {
+    return 301 https://hexo.limour.top/-fu-ke--zai-Flyio-shang-da-jian-Alist;
+}
+location = /2189.html {
+    return 301 https://hexo.limour.top/-qian-yi--qun-xing-kong-zhi-tai-zhao-huan-hui-feng-lao-po;
+}

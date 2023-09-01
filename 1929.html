@@ -1,0 +1,715 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="官网下载zipped data sets和Male data，unzip解压，基本概念见此。 数据输入与清洗123456789library(WGCNA)  #加载WGCNA包enableWGCNAThreads()  #开启多线程femData &#x3D; read.csv(&quot;LiverFemale3600.csv&quot;) #载入基因表达量数据femData datExpr0 &#x3D; as.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WGCNA：官方教程学习之网络分析">
+<meta property="og:url" content="https://b.limour.top/1929.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="官网下载zipped data sets和Male data，unzip解压，基本概念见此。 数据输入与清洗123456789library(WGCNA)  #加载WGCNA包enableWGCNAThreads()  #开启多线程femData &#x3D; read.csv(&quot;LiverFemale3600.csv&quot;) #载入基因表达量数据femData datExpr0 &#x3D; as.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-23T21:30:51.000Z">
+<meta property="article:modified_time" content="2023-09-01T13:32:00.881Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>WGCNA：官方教程学习之网络分析 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="WGCNA：官方教程学习之网络分析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-24 05:30" pubdate>
+          July 24, 2022 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          87 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">WGCNA：官方教程学习之网络分析</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><a target="_blank" rel="noopener" href="https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/Tutorials/">官网</a>下载<a target="_blank" rel="noopener" href="https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/Tutorials/FemaleLiver-Data.zip">zipped data sets</a>和<a target="_blank" rel="noopener" href="https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/Tutorials/MaleLiver-Data.zip">Male data</a>，unzip解压，<a target="_blank" rel="noopener" href="https://occdn.limour.top/2144.html">基本概念见此</a>。</p>
+<h2 id="数据输入与清洗"><a href="#数据输入与清洗" class="headerlink" title="数据输入与清洗"></a>数据输入与清洗</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs R">library<span class="hljs-punctuation">(</span>WGCNA<span class="hljs-punctuation">)</span>  <span class="hljs-comment">#加载WGCNA包</span><br>enableWGCNAThreads<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span>  <span class="hljs-comment">#开启多线程</span><br>femData <span class="hljs-operator">=</span> read.csv<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;LiverFemale3600.csv&quot;</span><span class="hljs-punctuation">)</span> <span class="hljs-comment">#载入基因表达量数据</span><br>femData<br> <br>datExpr0 <span class="hljs-operator">=</span> as.data.frame<span class="hljs-punctuation">(</span>t<span class="hljs-punctuation">(</span>femData<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span> <span class="hljs-operator">-</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">1</span><span class="hljs-operator">:</span><span class="hljs-number">8</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>  <span class="hljs-comment">#提取加转置</span><br>colnames<span class="hljs-punctuation">(</span>datExpr0<span class="hljs-punctuation">)</span> <span class="hljs-operator">=</span> femData<span class="hljs-operator">$</span>substanceBXH <span class="hljs-comment">#基因名字</span><br>rownames<span class="hljs-punctuation">(</span>datExpr0<span class="hljs-punctuation">)</span> <span class="hljs-operator">=</span> colnames<span class="hljs-punctuation">(</span>femData<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-operator">-</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">1</span><span class="hljs-operator">:</span><span class="hljs-number">8</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span>  <span class="hljs-comment">#样品名字</span><br>datExpr0<br></code></pre></td></tr></table></figure>
+
+<p>上面的代码可以得到一个列名为基因，行名为样本的表达矩阵，表达量已经归一化。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs R">gsg <span class="hljs-operator">=</span> goodSamplesGenes<span class="hljs-punctuation">(</span>datExpr0<span class="hljs-punctuation">,</span> verbose <span class="hljs-operator">=</span> <span class="hljs-number">3</span><span class="hljs-punctuation">)</span>;<br>gsg<span class="hljs-operator">$</span>allOK<br><span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span><span class="hljs-operator">!</span>gsg<span class="hljs-operator">$</span>allOK<span class="hljs-punctuation">)</span><br><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-comment"># Optionally, print the gene and sample names that were removed:</span><br>  <span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span><span class="hljs-built_in">sum</span><span class="hljs-punctuation">(</span><span class="hljs-operator">!</span>gsg<span class="hljs-operator">$</span>goodGenes<span class="hljs-punctuation">)</span><span class="hljs-operator">&gt;</span><span class="hljs-number">0</span><span class="hljs-punctuation">)</span><br>    printFlush<span class="hljs-punctuation">(</span>paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Removing genes:&quot;</span><span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>datExpr0<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-operator">!</span>gsg<span class="hljs-operator">$</span>goodGenes<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> collapse <span class="hljs-operator">=</span> <span class="hljs-string">&quot;, &quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>;<br>  <span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span><span class="hljs-built_in">sum</span><span class="hljs-punctuation">(</span><span class="hljs-operator">!</span>gsg<span class="hljs-operator">$</span>goodSamples<span class="hljs-punctuation">)</span><span class="hljs-operator">&gt;</span><span class="hljs-number">0</span><span class="hljs-punctuation">)</span><br>    printFlush<span class="hljs-punctuation">(</span>paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Removing samples:&quot;</span><span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>rownames<span class="hljs-punctuation">(</span>datExpr0<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-operator">!</span>gsg<span class="hljs-operator">$</span>goodSamples<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> collapse <span class="hljs-operator">=</span> <span class="hljs-string">&quot;, &quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>;<br>  <span class="hljs-comment"># Remove the offending genes and samples from the data:</span><br>  datExpr0 <span class="hljs-operator">=</span> datExpr0<span class="hljs-punctuation">[</span>gsg<span class="hljs-operator">$</span>goodSamples<span class="hljs-punctuation">,</span> gsg<span class="hljs-operator">$</span>goodGenes<span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>上面的代码用于删除存在缺失值的基因和样本</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs R"><span class="hljs-comment"># 删除离群样本</span><br>sampleTree <span class="hljs-operator">=</span> hclust<span class="hljs-punctuation">(</span>dist<span class="hljs-punctuation">(</span>datExpr0<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> method <span class="hljs-operator">=</span> <span class="hljs-string">&quot;average&quot;</span><span class="hljs-punctuation">)</span><br>plot<span class="hljs-punctuation">(</span>sampleTree<span class="hljs-punctuation">,</span> main <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Sample clustering to detect outliers&quot;</span><span class="hljs-punctuation">,</span> sub<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> xlab<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> cex.lab <span class="hljs-operator">=</span> <span class="hljs-number">1.5</span><span class="hljs-punctuation">,</span><br>     cex.axis <span class="hljs-operator">=</span> <span class="hljs-number">1.5</span><span class="hljs-punctuation">,</span> cex.main <span class="hljs-operator">=</span> <span class="hljs-number">2</span><span class="hljs-punctuation">)</span><br>abline<span class="hljs-punctuation">(</span>h <span class="hljs-operator">=</span> <span class="hljs-number">15</span><span class="hljs-punctuation">,</span> col <span class="hljs-operator">=</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">)</span> <span class="hljs-comment">#划定需要剪切的枝长</span><br>clust <span class="hljs-operator">=</span> cutreeStatic<span class="hljs-punctuation">(</span>sampleTree<span class="hljs-punctuation">,</span> cutHeight <span class="hljs-operator">=</span> <span class="hljs-number">15</span><span class="hljs-punctuation">,</span> minSize <span class="hljs-operator">=</span> <span class="hljs-number">10</span><span class="hljs-punctuation">)</span><br><span class="hljs-comment"># 这时候会从高度为15这里横切，把离群样本分开</span><br>table<span class="hljs-punctuation">(</span>clust<span class="hljs-punctuation">)</span>   <br>keepSamples <span class="hljs-operator">=</span> <span class="hljs-punctuation">(</span>clust<span class="hljs-operator">==</span><span class="hljs-number">1</span><span class="hljs-punctuation">)</span>  <span class="hljs-comment">#保留非离群(clust==1)的样本</span><br>datExpr <span class="hljs-operator">=</span> datExpr0<span class="hljs-punctuation">[</span>keepSamples<span class="hljs-punctuation">,</span> <span class="hljs-punctuation">]</span>  <span class="hljs-comment">#去除离群值后的数据</span><br></code></pre></td></tr></table></figure>
+
+<p>上面的代码用于删除离群样本</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs R">sampleTree <span class="hljs-operator">=</span> hclust<span class="hljs-punctuation">(</span>dist<span class="hljs-punctuation">(</span>datExpr0<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> method <span class="hljs-operator">=</span> <span class="hljs-string">&quot;ward.D2&quot;</span><span class="hljs-punctuation">)</span><br>p <span class="hljs-operator">&lt;-</span> ggtree<span class="hljs-operator">::</span>ggtree<span class="hljs-punctuation">(</span>ape<span class="hljs-operator">::</span>as.phylo<span class="hljs-punctuation">(</span>sampleTree<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>linetype <span class="hljs-operator">=</span> <span class="hljs-string">&quot;dashed&quot;</span><span class="hljs-punctuation">,</span>layout <span class="hljs-operator">=</span> <span class="hljs-string">&quot;circular&quot;</span><span class="hljs-punctuation">)</span> <br>p <span class="hljs-operator">&lt;-</span> p <span class="hljs-operator">+</span> ggtree<span class="hljs-operator">::</span>geom_tiplab<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><br>p <br></code></pre></td></tr></table></figure>
+
+<p>画一个更好看的聚类图</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs R">traitData <span class="hljs-operator">=</span> read.csv<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;ClinicalTraits.csv&quot;</span><span class="hljs-punctuation">)</span>;<br><span class="hljs-comment"># 删除我们不需要的数据</span><br>allTraits <span class="hljs-operator">=</span> traitData<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span> <span class="hljs-operator">-</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">31</span><span class="hljs-punctuation">,</span> <span class="hljs-number">16</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span>;<br>allTraits <span class="hljs-operator">=</span> allTraits<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">2</span><span class="hljs-punctuation">,</span> <span class="hljs-number">11</span><span class="hljs-operator">:</span><span class="hljs-number">36</span><span class="hljs-punctuation">)</span> <span class="hljs-punctuation">]</span>;  <span class="hljs-comment">#只保留数值型数据</span><br>allTraits<br></code></pre></td></tr></table></figure>
+
+<p>读取性状数据</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs R"><span class="hljs-comment"># 将临床表征数据和表达数据进行匹配（用样本名字进行匹配）</span><br>f_rm_colN <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>df<span class="hljs-punctuation">,</span> regex<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    df<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-operator">!</span>grepl<span class="hljs-punctuation">(</span>regex<span class="hljs-punctuation">,</span> colnames<span class="hljs-punctuation">(</span>df<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br>traitRows <span class="hljs-operator">=</span> match<span class="hljs-punctuation">(</span>rownames<span class="hljs-punctuation">(</span>datExpr<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> allTraits<span class="hljs-operator">$</span>Mice<span class="hljs-punctuation">)</span><br>datTraits <span class="hljs-operator">=</span> allTraits<span class="hljs-punctuation">[</span>traitRows<span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span><br>rownames<span class="hljs-punctuation">(</span>datTraits<span class="hljs-punctuation">)</span> <span class="hljs-operator">=</span> datTraits<span class="hljs-operator">$</span>Mice<br>datTraits <span class="hljs-operator">&lt;-</span> f_rm_colN<span class="hljs-punctuation">(</span>datTraits<span class="hljs-punctuation">,</span> <span class="hljs-string">&#x27;Mice&#x27;</span><span class="hljs-punctuation">)</span><br>datTraits<br>collectGarbage<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span> <span class="hljs-comment"># WGCNA专用GC方法</span><br></code></pre></td></tr></table></figure>
+
+<p>清洗性状数据</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs R">sampleTree <span class="hljs-operator">=</span> hclust<span class="hljs-punctuation">(</span>dist<span class="hljs-punctuation">(</span>datExpr<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> method <span class="hljs-operator">=</span> <span class="hljs-string">&quot;average&quot;</span><span class="hljs-punctuation">)</span><br>traitColors <span class="hljs-operator">=</span> numbers2colors<span class="hljs-punctuation">(</span>datTraits<span class="hljs-punctuation">,</span> signed <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">)</span> <span class="hljs-comment">#用颜色代表关联度</span><br>plotDendroAndColors<span class="hljs-punctuation">(</span>sampleTree<span class="hljs-punctuation">,</span> traitColors<span class="hljs-punctuation">,</span><br>                    groupLabels <span class="hljs-operator">=</span> colnames<span class="hljs-punctuation">(</span>datTraits<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>                    main <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Sample dendrogram and trait heatmap&quot;</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<p>颜色越深，代表这个表型数据与这个样本的基因表达量关系越密切。</p>
+<h2 id="选择合适的β值"><a href="#选择合适的β值" class="headerlink" title="选择合适的β值"></a>选择合适的β值</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs R">powers <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">1</span><span class="hljs-operator">:</span><span class="hljs-number">10</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> seq<span class="hljs-punctuation">(</span>from <span class="hljs-operator">=</span> <span class="hljs-number">12</span><span class="hljs-punctuation">,</span> to<span class="hljs-operator">=</span><span class="hljs-number">20</span><span class="hljs-punctuation">,</span> by<span class="hljs-operator">=</span><span class="hljs-number">2</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>sft <span class="hljs-operator">=</span> pickSoftThreshold<span class="hljs-punctuation">(</span>datExpr<span class="hljs-punctuation">,</span> powerVector <span class="hljs-operator">=</span> powers<span class="hljs-punctuation">,</span> verbose <span class="hljs-operator">=</span> <span class="hljs-number">5</span><span class="hljs-punctuation">)</span><br>plot<span class="hljs-punctuation">(</span>sft<span class="hljs-operator">$</span>fitIndices<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-operator">-</span><span class="hljs-built_in">sign</span><span class="hljs-punctuation">(</span>sft<span class="hljs-operator">$</span>fitIndices<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-number">3</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-operator">*</span>sft<span class="hljs-operator">$</span>fitIndices<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     xlab<span class="hljs-operator">=</span><span class="hljs-string">&quot;Soft Threshold (power)&quot;</span><span class="hljs-punctuation">,</span>ylab<span class="hljs-operator">=</span><span class="hljs-string">&quot;Scale Free Topology Model Fit,signed R^2&quot;</span><span class="hljs-punctuation">,</span>type<span class="hljs-operator">=</span><span class="hljs-string">&quot;n&quot;</span><span class="hljs-punctuation">,</span><br>     main <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Scale independence&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>;<br>text<span class="hljs-punctuation">(</span>sft<span class="hljs-operator">$</span>fitIndices<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-operator">-</span><span class="hljs-built_in">sign</span><span class="hljs-punctuation">(</span>sft<span class="hljs-operator">$</span>fitIndices<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-number">3</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-operator">*</span>sft<span class="hljs-operator">$</span>fitIndices<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     labels<span class="hljs-operator">=</span>powers<span class="hljs-punctuation">,</span>cex<span class="hljs-operator">=</span><span class="hljs-number">0.9</span><span class="hljs-punctuation">,</span>col<span class="hljs-operator">=</span><span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">)</span>;<br>     abline<span class="hljs-punctuation">(</span>h<span class="hljs-operator">=</span><span class="hljs-number">0.90</span><span class="hljs-punctuation">,</span>col<span class="hljs-operator">=</span><span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">)</span>  <span class="hljs-comment">#查看位于0.9以上的点，可以改变高度值</span><br></code></pre></td></tr></table></figure>
+
+<p>上面的代码用于绘制无标度拓扑拟合指数图，输入的数据为清洗好的表达矩阵。一般选择在0.9以上的，第一个达到0.9以上数值，作为β值。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs R">plot<span class="hljs-punctuation">(</span>sft<span class="hljs-operator">$</span>fitIndices<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> sft<span class="hljs-operator">$</span>fitIndices<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-number">5</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     xlab<span class="hljs-operator">=</span><span class="hljs-string">&quot;Soft Threshold (power)&quot;</span><span class="hljs-punctuation">,</span>ylab<span class="hljs-operator">=</span><span class="hljs-string">&quot;Mean Connectivity&quot;</span><span class="hljs-punctuation">,</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;n&quot;</span><span class="hljs-punctuation">,</span><br>     main <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Mean connectivity&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>text<span class="hljs-punctuation">(</span>sft<span class="hljs-operator">$</span>fitIndices<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> sft<span class="hljs-operator">$</span>fitIndices<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-number">5</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> labels<span class="hljs-operator">=</span>powers<span class="hljs-punctuation">,</span> cex<span class="hljs-operator">=</span><span class="hljs-number">0.9</span><span class="hljs-punctuation">,</span>col<span class="hljs-operator">=</span><span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<p>β值选接近平缓的第一个值，网络的连通性较好。<code>sft$powerEstimate</code>可以获得推荐值</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs R"><span class="hljs-comment"># 无向网络在power小于15或有向网络power小于30内，没有一个power值可以使</span><br><span class="hljs-comment"># 无标度网络图谱结构R^2达到0.8，平均连接度较高如在100以上，可能是由于</span><br><span class="hljs-comment"># 部分样品与其他样品差别太大。这可能由批次效应、样品异质性或实验条件对</span><br><span class="hljs-comment"># 表达影响太大等造成。可以通过绘制样品聚类查看分组信息和有无异常样品。</span><br><span class="hljs-comment"># 如果这确实是由有意义的生物变化引起的，也可以使用下面的经验power值。</span><br>nSamples <span class="hljs-operator">=</span> nrow<span class="hljs-punctuation">(</span>datExpr<span class="hljs-punctuation">)</span><br>type <span class="hljs-operator">=</span> <span class="hljs-string">&quot;unsigned&quot;</span> <span class="hljs-comment"># or signed</span><br><span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span><span class="hljs-built_in">is.na</span><span class="hljs-punctuation">(</span>power<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>  power <span class="hljs-operator">=</span> ifelse<span class="hljs-punctuation">(</span>nSamples<span class="hljs-operator">&lt;</span><span class="hljs-number">20</span><span class="hljs-punctuation">,</span> ifelse<span class="hljs-punctuation">(</span>type <span class="hljs-operator">==</span> <span class="hljs-string">&quot;unsigned&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">9</span><span class="hljs-punctuation">,</span> <span class="hljs-number">18</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>          ifelse<span class="hljs-punctuation">(</span>nSamples<span class="hljs-operator">&lt;</span><span class="hljs-number">30</span><span class="hljs-punctuation">,</span> ifelse<span class="hljs-punctuation">(</span>type <span class="hljs-operator">==</span> <span class="hljs-string">&quot;unsigned&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">8</span><span class="hljs-punctuation">,</span> <span class="hljs-number">16</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>          ifelse<span class="hljs-punctuation">(</span>nSamples<span class="hljs-operator">&lt;</span><span class="hljs-number">40</span><span class="hljs-punctuation">,</span> ifelse<span class="hljs-punctuation">(</span>type <span class="hljs-operator">==</span> <span class="hljs-string">&quot;unsigned&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">,</span> <span class="hljs-number">14</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>          ifelse<span class="hljs-punctuation">(</span>type <span class="hljs-operator">==</span> <span class="hljs-string">&quot;unsigned&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">6</span><span class="hljs-punctuation">,</span> <span class="hljs-number">12</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>       <br>          <span class="hljs-punctuation">)</span><br>          <span class="hljs-punctuation">)</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="计算邻接矩阵"><a href="#计算邻接矩阵" class="headerlink" title="计算邻接矩阵"></a>计算邻接矩阵</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs R">corFnc <span class="hljs-operator">=</span> <span class="hljs-string">&quot;cor&quot;</span> <span class="hljs-comment"># Pearson correlation</span><br>corOptions <span class="hljs-operator">=</span> <span class="hljs-built_in">list</span><span class="hljs-punctuation">(</span>use <span class="hljs-operator">=</span> <span class="hljs-string">&quot;p&quot;</span><span class="hljs-punctuation">)</span> <span class="hljs-comment"># ?cor了解cor的use参数，此外method参数可以选择&quot;spearman&quot;</span><br>corFnc <span class="hljs-operator">=</span> <span class="hljs-string">&quot;bicor&quot;</span><br>corOptions <span class="hljs-operator">=</span> <span class="hljs-built_in">list</span><span class="hljs-punctuation">(</span>maxPOutliers <span class="hljs-operator">=</span> <span class="hljs-number">0.05</span><span class="hljs-punctuation">,</span> use <span class="hljs-operator">=</span> <span class="hljs-string">&quot;p&quot;</span><span class="hljs-punctuation">)</span> <span class="hljs-comment"># ?bicor了解相关参数</span><br>A <span class="hljs-operator">=</span> adjacency<span class="hljs-punctuation">(</span>datExpr<span class="hljs-punctuation">,</span> type <span class="hljs-operator">=</span> <span class="hljs-string">&quot;unsigned&quot;</span><span class="hljs-punctuation">,</span> power <span class="hljs-operator">=</span> <span class="hljs-number">6</span><span class="hljs-punctuation">,</span> corFnc <span class="hljs-operator">=</span> corFnc<span class="hljs-punctuation">,</span> corOptions <span class="hljs-operator">=</span> corOptions<span class="hljs-punctuation">)</span>; <span class="hljs-comment"># 6即为β值</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="计算拓扑重叠矩阵和节点相异度矩阵"><a href="#计算拓扑重叠矩阵和节点相异度矩阵" class="headerlink" title="计算拓扑重叠矩阵和节点相异度矩阵"></a>计算<strong>拓扑重叠矩阵</strong>和节点相异度矩阵</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs R">TOM <span class="hljs-operator">=</span> TOMsimilarity<span class="hljs-punctuation">(</span>A<span class="hljs-punctuation">)</span><br>dissTOM <span class="hljs-operator">=</span> <span class="hljs-number">1</span><span class="hljs-operator">-</span>TOM<br></code></pre></td></tr></table></figure>
+
+<h2 id="相异度矩阵聚类分析以鉴定网络模块"><a href="#相异度矩阵聚类分析以鉴定网络模块" class="headerlink" title="相异度矩阵聚类分析以鉴定网络模块"></a>相异度矩阵聚类分析以鉴定网络模块</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs R"><span class="hljs-comment"># Call the hierarchical clustering function</span><br>geneTree <span class="hljs-operator">=</span> hclust<span class="hljs-punctuation">(</span>as.dist<span class="hljs-punctuation">(</span>dissTOM<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> method <span class="hljs-operator">=</span> <span class="hljs-string">&quot;average&quot;</span><span class="hljs-punctuation">)</span>;<br><span class="hljs-comment"># Plot the resulting clustering tree (dendrogram)</span><br>plot<span class="hljs-punctuation">(</span>geneTree<span class="hljs-punctuation">,</span> xlab<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> sub<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> main <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Gene clustering on TOM-based dissimilarity&quot;</span><span class="hljs-punctuation">,</span><br>labels <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span> hang <span class="hljs-operator">=</span> <span class="hljs-number">0.04</span><span class="hljs-punctuation">)</span>;<br><span class="hljs-comment"># We like large modules, so we set the minimum module size relatively high:</span><br>minModuleSize <span class="hljs-operator">=</span> <span class="hljs-number">30</span>;<br><span class="hljs-comment"># Module identification using dynamic tree cut:</span><br>dynamicMods <span class="hljs-operator">=</span> cutreeDynamic<span class="hljs-punctuation">(</span>dendro <span class="hljs-operator">=</span> geneTree<span class="hljs-punctuation">,</span> distM <span class="hljs-operator">=</span> dissTOM<span class="hljs-punctuation">,</span><br>deepSplit <span class="hljs-operator">=</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span> pamRespectsDendro <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span><br>minClusterSize <span class="hljs-operator">=</span> minModuleSize<span class="hljs-punctuation">)</span>;<br>table<span class="hljs-punctuation">(</span>dynamicMods<span class="hljs-punctuation">)</span><br><span class="hljs-comment"># Convert numeric lables into colors</span><br>dynamicColors <span class="hljs-operator">=</span> labels2colors<span class="hljs-punctuation">(</span>dynamicMods<span class="hljs-punctuation">)</span><br>table<span class="hljs-punctuation">(</span>dynamicColors<span class="hljs-punctuation">)</span><br><span class="hljs-comment"># Plot the dendrogram and colors underneath</span><br>plotDendroAndColors<span class="hljs-punctuation">(</span>geneTree<span class="hljs-punctuation">,</span> dynamicColors<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Dynamic Tree Cut&quot;</span><span class="hljs-punctuation">,</span><br>dendroLabels <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span> hang <span class="hljs-operator">=</span> <span class="hljs-number">0.03</span><span class="hljs-punctuation">,</span><br>addGuide <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span> guideHang <span class="hljs-operator">=</span> <span class="hljs-number">0.05</span><span class="hljs-punctuation">,</span><br>main <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Gene dendrogram and module colors&quot;</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs R"><span class="hljs-comment"># Calculate eigengenes</span><br>MEList <span class="hljs-operator">=</span> moduleEigengenes<span class="hljs-punctuation">(</span>datExpr<span class="hljs-punctuation">,</span> colors <span class="hljs-operator">=</span> dynamicColors<span class="hljs-punctuation">)</span><br>MEs <span class="hljs-operator">=</span> MEList<span class="hljs-operator">$</span>eigengenes<br><span class="hljs-comment"># Calculate dissimilarity of module eigengenes</span><br>MEDiss <span class="hljs-operator">=</span> <span class="hljs-number">1</span><span class="hljs-operator">-</span>cor<span class="hljs-punctuation">(</span>MEs<span class="hljs-punctuation">)</span>;<br><span class="hljs-comment"># Cluster module eigengenes</span><br>METree <span class="hljs-operator">=</span> hclust<span class="hljs-punctuation">(</span>as.dist<span class="hljs-punctuation">(</span>MEDiss<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> method <span class="hljs-operator">=</span> <span class="hljs-string">&quot;average&quot;</span><span class="hljs-punctuation">)</span>;<br><span class="hljs-comment"># Plot the result</span><br>plot<span class="hljs-punctuation">(</span>METree<span class="hljs-punctuation">,</span> main <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Clustering of module eigengenes&quot;</span><span class="hljs-punctuation">,</span><br>xlab <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> sub <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><br>MEDissThres <span class="hljs-operator">=</span> <span class="hljs-number">0.25</span><br><span class="hljs-comment"># Plot the cut line into the dendrogram</span><br>abline<span class="hljs-punctuation">(</span>h<span class="hljs-operator">=</span>MEDissThres<span class="hljs-punctuation">,</span> col <span class="hljs-operator">=</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">)</span><br><span class="hljs-comment"># Call an automatic merging function</span><br>merge <span class="hljs-operator">=</span> mergeCloseModules<span class="hljs-punctuation">(</span>datExpr<span class="hljs-punctuation">,</span> dynamicColors<span class="hljs-punctuation">,</span> cutHeight <span class="hljs-operator">=</span> MEDissThres<span class="hljs-punctuation">,</span> verbose <span class="hljs-operator">=</span> <span class="hljs-number">3</span><span class="hljs-punctuation">)</span><br><span class="hljs-comment"># The merged module colors</span><br>mergedColors <span class="hljs-operator">=</span> merge<span class="hljs-operator">$</span>colors;<br><span class="hljs-comment"># Eigengenes of the new merged modules:</span><br>mergedMEs <span class="hljs-operator">=</span> merge<span class="hljs-operator">$</span>newMEs;<br>plotDendroAndColors<span class="hljs-punctuation">(</span>geneTree<span class="hljs-punctuation">,</span> cbind<span class="hljs-punctuation">(</span>dynamicColors<span class="hljs-punctuation">,</span> mergedColors<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Dynamic Tree Cut&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Merged dynamic&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>dendroLabels <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span> hang <span class="hljs-operator">=</span> <span class="hljs-number">0.03</span><span class="hljs-punctuation">,</span><br>addGuide <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span> guideHang <span class="hljs-operator">=</span> <span class="hljs-number">0.05</span><span class="hljs-punctuation">)</span><br><span class="hljs-comment"># Rename to moduleColors</span><br>moduleColors <span class="hljs-operator">=</span> mergedColors<br><span class="hljs-comment"># Construct numerical labels corresponding to the colors</span><br>colorOrder <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&quot;grey&quot;</span><span class="hljs-punctuation">,</span> standardColors<span class="hljs-punctuation">(</span><span class="hljs-number">50</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>;<br>moduleLabels <span class="hljs-operator">=</span> match<span class="hljs-punctuation">(</span>moduleColors<span class="hljs-punctuation">,</span> colorOrder<span class="hljs-punctuation">)</span><span class="hljs-operator">-</span><span class="hljs-number">1</span>;<br>MEs <span class="hljs-operator">=</span> mergedMEs;<br></code></pre></td></tr></table></figure>
+
+<h2 id="关联网络模块与性状"><a href="#关联网络模块与性状" class="headerlink" title="关联网络模块与性状"></a>关联网络模块与性状</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs R"><span class="hljs-comment"># 计算相关性和P值</span><br>moduleTraitCor <span class="hljs-operator">=</span> cor<span class="hljs-punctuation">(</span>MEs<span class="hljs-punctuation">,</span> datTraits<span class="hljs-punctuation">,</span> use <span class="hljs-operator">=</span> <span class="hljs-string">&quot;p&quot;</span><span class="hljs-punctuation">)</span>;<br>moduleTraitPvalue <span class="hljs-operator">=</span> corPvalueStudent<span class="hljs-punctuation">(</span>moduleTraitCor<span class="hljs-punctuation">,</span> nSamples<span class="hljs-punctuation">)</span>;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs R"><span class="hljs-comment"># 绘图可视化</span><br>textMatrix <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span><span class="hljs-built_in">signif</span><span class="hljs-punctuation">(</span>moduleTraitCor<span class="hljs-punctuation">,</span> <span class="hljs-number">2</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;\n(&quot;</span><span class="hljs-punctuation">,</span><br>                   <span class="hljs-built_in">signif</span><span class="hljs-punctuation">(</span>moduleTraitPvalue<span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;)&quot;</span><span class="hljs-punctuation">,</span> sep <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span>;<br>labeledHeatmap<span class="hljs-punctuation">(</span>Matrix <span class="hljs-operator">=</span> moduleTraitCor<span class="hljs-punctuation">,</span><br>               xLabels <span class="hljs-operator">=</span> <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>datTraits<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>               yLabels <span class="hljs-operator">=</span> <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>MEs<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>               ySymbols <span class="hljs-operator">=</span> <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>MEs<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>               colorLabels <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span><br>               colors <span class="hljs-operator">=</span> blueWhiteRed<span class="hljs-punctuation">(</span><span class="hljs-number">50</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>               textMatrix <span class="hljs-operator">=</span> textMatrix<span class="hljs-punctuation">,</span><br>               setStdMargins <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span><br>               cex.text <span class="hljs-operator">=</span> <span class="hljs-number">0.5</span><span class="hljs-punctuation">,</span><br>               zlim <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-operator">-</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>               main <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Module-trait relationships&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<p>越红的模块越正相关，越蓝的模块越负相关。</p>
+<h3 id="关联网络模块与基因"><a href="#关联网络模块与基因" class="headerlink" title="关联网络模块与基因"></a>关联网络模块与基因</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs R">geneModuleMembership <span class="hljs-operator">=</span> as.data.frame<span class="hljs-punctuation">(</span>cor<span class="hljs-punctuation">(</span>datExpr<span class="hljs-punctuation">,</span> MEs<span class="hljs-punctuation">,</span> use <span class="hljs-operator">=</span> <span class="hljs-string">&quot;p&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>;<br>MMPvalue <span class="hljs-operator">=</span> as.data.frame<span class="hljs-punctuation">(</span>corPvalueStudent<span class="hljs-punctuation">(</span>as.matrix<span class="hljs-punctuation">(</span>geneModuleMembership<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> nSamples<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>;<br><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>geneModuleMembership<span class="hljs-punctuation">)</span> <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;MM&quot;</span><span class="hljs-punctuation">,</span> substring<span class="hljs-punctuation">(</span><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>MEs<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">3</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span>;<br><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>MMPvalue<span class="hljs-punctuation">)</span> <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;p.MM&quot;</span><span class="hljs-punctuation">,</span> substring<span class="hljs-punctuation">(</span><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>MEs<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">3</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="关联基因与性状"><a href="#关联基因与性状" class="headerlink" title="关联基因与性状"></a>关联基因与性状</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs R">weight <span class="hljs-operator">=</span> as.data.frame<span class="hljs-punctuation">(</span>datTraits<span class="hljs-operator">$</span>weight_g<span class="hljs-punctuation">)</span>;<br>geneTraitSignificance <span class="hljs-operator">=</span> as.data.frame<span class="hljs-punctuation">(</span>cor<span class="hljs-punctuation">(</span>datExpr<span class="hljs-punctuation">,</span> weight<span class="hljs-punctuation">,</span> use <span class="hljs-operator">=</span> <span class="hljs-string">&quot;p&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>;<span class="hljs-comment">#和体重性状的关联</span><br>GSPvalue <span class="hljs-operator">=</span> as.data.frame<span class="hljs-punctuation">(</span>corPvalueStudent<span class="hljs-punctuation">(</span>as.matrix<span class="hljs-punctuation">(</span>geneTraitSignificance<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> nSamples<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>;<br><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>geneTraitSignificance<span class="hljs-punctuation">)</span> <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;GS.&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>weight<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span>;<br><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>GSPvalue<span class="hljs-punctuation">)</span> <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;p.GS.&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>weight<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="可视化基因与模块、性状的相关性"><a href="#可视化基因与模块、性状的相关性" class="headerlink" title="可视化基因与模块、性状的相关性"></a>可视化基因与模块、性状的相关性</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs R"><span class="hljs-comment"># 运行以下代码可视化GS和MM</span><br>module <span class="hljs-operator">=</span> <span class="hljs-string">&quot;blue&quot;</span><br>column <span class="hljs-operator">=</span> match<span class="hljs-punctuation">(</span>module<span class="hljs-punctuation">,</span> substring<span class="hljs-punctuation">(</span><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>MEs<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">3</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>;<br>moduleGenes <span class="hljs-operator">=</span> moduleColors<span class="hljs-operator">==</span>module;<br>par<span class="hljs-punctuation">(</span>mfrow <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>;<br>verboseScatterplot<span class="hljs-punctuation">(</span><span class="hljs-built_in">abs</span><span class="hljs-punctuation">(</span>geneModuleMembership<span class="hljs-punctuation">[</span>moduleGenes<span class="hljs-punctuation">,</span> column<span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>                   <span class="hljs-built_in">abs</span><span class="hljs-punctuation">(</span>geneTraitSignificance<span class="hljs-punctuation">[</span>moduleGenes<span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>                   xlab <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Module Membership in&quot;</span><span class="hljs-punctuation">,</span> module<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;module&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>                   ylab <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Gene significance for body weight&quot;</span><span class="hljs-punctuation">,</span><br>                   main <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Module membership vs. gene significance\n&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>                   cex.main <span class="hljs-operator">=</span> <span class="hljs-number">1.2</span><span class="hljs-punctuation">,</span> cex.lab <span class="hljs-operator">=</span> <span class="hljs-number">1.2</span><span class="hljs-punctuation">,</span> cex.axis <span class="hljs-operator">=</span> <span class="hljs-number">1.2</span><span class="hljs-punctuation">,</span> col <span class="hljs-operator">=</span> module<span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<p>MM-GS图中的每一个点代表一个基因，横坐标值表示基因与模块的相关性，纵坐标值表示基因与表型性状的相关性，与性状高度显著相关的基因往往是与这个性状显著相关的模块中的重要元素。</p>
+<h2 id="获得基因注释结果"><a href="#获得基因注释结果" class="headerlink" title="获得基因注释结果"></a>获得基因注释结果</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs R"><span class="hljs-comment"># 基本注释框架</span><br>annot <span class="hljs-operator">=</span> read.csv<span class="hljs-punctuation">(</span>file <span class="hljs-operator">=</span> <span class="hljs-string">&quot;GeneAnnotation.csv&quot;</span><span class="hljs-punctuation">)</span>;<br>probes2annot <span class="hljs-operator">=</span> match<span class="hljs-punctuation">(</span><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>datExpr<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> annot<span class="hljs-operator">$</span>substanceBXH<span class="hljs-punctuation">)</span>;<br><span class="hljs-built_in">sum</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">is.na</span><span class="hljs-punctuation">(</span>probes2annot<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-comment"># 为0，即全匹配上了。</span><br>geneInfo0 <span class="hljs-operator">=</span> data.frame<span class="hljs-punctuation">(</span>substanceBXH <span class="hljs-operator">=</span> <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>datExpr<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>                       geneSymbol <span class="hljs-operator">=</span> annot<span class="hljs-operator">$</span>gene_symbol<span class="hljs-punctuation">[</span>probes2annot<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>                       LocusLinkID <span class="hljs-operator">=</span> annot<span class="hljs-operator">$</span>LocusLinkID<span class="hljs-punctuation">[</span>probes2annot<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>                       moduleColor <span class="hljs-operator">=</span> moduleColors<span class="hljs-punctuation">,</span><br>                       geneTraitSignificance<span class="hljs-punctuation">,</span><br>                       GSPvalue<span class="hljs-punctuation">)</span>;<br><span class="hljs-comment"># 添加模块成员的信息</span><br>modOrder <span class="hljs-operator">=</span> order<span class="hljs-punctuation">(</span><span class="hljs-operator">-</span><span class="hljs-built_in">abs</span><span class="hljs-punctuation">(</span>cor<span class="hljs-punctuation">(</span>MEs<span class="hljs-punctuation">,</span> weight<span class="hljs-punctuation">,</span> use <span class="hljs-operator">=</span> <span class="hljs-string">&quot;p&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>; <span class="hljs-comment"># 按照与体重的显著水平将模块进行排序</span><br><span class="hljs-keyword">for</span> <span class="hljs-punctuation">(</span>mod <span class="hljs-keyword">in</span> <span class="hljs-number">1</span><span class="hljs-operator">:</span>ncol<span class="hljs-punctuation">(</span>geneModuleMembership<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>  oldNames <span class="hljs-operator">=</span> <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>geneInfo0<span class="hljs-punctuation">)</span><br>  geneInfo0 <span class="hljs-operator">=</span> data.frame<span class="hljs-punctuation">(</span>geneInfo0<span class="hljs-punctuation">,</span> geneModuleMembership<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span> modOrder<span class="hljs-punctuation">[</span>mod<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>                         MMPvalue<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span> modOrder<span class="hljs-punctuation">[</span>mod<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span>;<br>  <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>geneInfo0<span class="hljs-punctuation">)</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span>oldNames<span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;MM.&quot;</span><span class="hljs-punctuation">,</span> modNames<span class="hljs-punctuation">[</span>modOrder<span class="hljs-punctuation">[</span>mod<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>                       paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;p.MM.&quot;</span><span class="hljs-punctuation">,</span> modNames<span class="hljs-punctuation">[</span>modOrder<span class="hljs-punctuation">[</span>mod<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br><span class="hljs-punctuation">&#125;</span><br><span class="hljs-comment"># 相关性排序</span><br>geneOrder <span class="hljs-operator">=</span> order<span class="hljs-punctuation">(</span>geneInfo0<span class="hljs-operator">$</span>moduleColor<span class="hljs-punctuation">,</span> <span class="hljs-operator">-</span><span class="hljs-built_in">abs</span><span class="hljs-punctuation">(</span>geneInfo0<span class="hljs-operator">$</span>GS.datTraits.weight_g<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>;<br>geneInfo <span class="hljs-operator">=</span> geneInfo0<span class="hljs-punctuation">[</span>geneOrder<span class="hljs-punctuation">,</span> <span class="hljs-punctuation">]</span><br>geneInfo<br></code></pre></td></tr></table></figure>
+
+<p>上述基因可以按模块拆分，然后进行<a target="_blank" rel="noopener" href="https://occdn.limour.top/2128.html">富集分析</a></p>
+<h2 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h2><h3 id="基因网络"><a href="#基因网络" class="headerlink" title="基因网络"></a>基因网络</h3><ul>
+<li>TOMplot(dissTOM^7, geneTree, moduleColors, main &#x3D; “Network heatmap plot, all genes”)</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs R">select <span class="hljs-operator">=</span> moduleGenes <span class="hljs-comment"># 某个模块内的基因</span><br>selectTOM <span class="hljs-operator">=</span> dissTOM<span class="hljs-punctuation">[</span>select<span class="hljs-punctuation">,</span> select<span class="hljs-punctuation">]</span>;<br>selectTree <span class="hljs-operator">=</span> hclust<span class="hljs-punctuation">(</span>as.dist<span class="hljs-punctuation">(</span>selectTOM<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> method <span class="hljs-operator">=</span> <span class="hljs-string">&quot;average&quot;</span><span class="hljs-punctuation">)</span><br>selectColors <span class="hljs-operator">=</span> moduleColors<span class="hljs-punctuation">[</span>select<span class="hljs-punctuation">]</span>;<br>TOMplot<span class="hljs-punctuation">(</span>selectTOM<span class="hljs-operator">^</span><span class="hljs-number">7</span><span class="hljs-punctuation">,</span> selectTree<span class="hljs-punctuation">,</span> selectColors<span class="hljs-punctuation">,</span> main <span class="hljs-operator">=</span> paste0<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Network heatmap plot, &quot;</span><span class="hljs-punctuation">,</span> module<span class="hljs-punctuation">,</span> <span class="hljs-string">&#x27; module gene&#x27;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="表征基因网络"><a href="#表征基因网络" class="headerlink" title="表征基因网络"></a>表征基因网络</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs R"><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>weight<span class="hljs-punctuation">)</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;weight&quot;</span><br>MET <span class="hljs-operator">=</span> orderMEs<span class="hljs-punctuation">(</span>cbind<span class="hljs-punctuation">(</span>MEs<span class="hljs-punctuation">,</span> weight<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>plotEigengeneNetworks<span class="hljs-punctuation">(</span>MET<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> marDendro <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><span class="hljs-number">4</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> marHeatmap <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">3</span><span class="hljs-punctuation">,</span><span class="hljs-number">4</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> cex.lab <span class="hljs-operator">=</span> <span class="hljs-number">0.8</span><span class="hljs-punctuation">,</span> xLabelsAngle<br>                      <span class="hljs-operator">=</span> <span class="hljs-number">90</span><span class="hljs-punctuation">)</span><br>plotEigengeneNetworks<span class="hljs-punctuation">(</span>MET<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Eigengene dendrogram&quot;</span><span class="hljs-punctuation">,</span> marDendro <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><span class="hljs-number">4</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">,</span><span class="hljs-number">0</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>                      plotHeatmaps <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">)</span><br>plotEigengeneNetworks<span class="hljs-punctuation">(</span>MET<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Eigengene adjacency heatmap&quot;</span><span class="hljs-punctuation">,</span> marHeatmap <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">3</span><span class="hljs-punctuation">,</span><span class="hljs-number">4</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>                      plotDendrograms <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span> xLabelsAngle <span class="hljs-operator">=</span> <span class="hljs-number">90</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<p>从分层聚类图有一个叶子是weight，从中可以看出weight与哪些模块更接近</p>
+<h2 id="导出网络"><a href="#导出网络" class="headerlink" title="导出网络"></a>导出网络</h2><p><a target="_blank" rel="noopener" href="https://cytoscape.org/">Cytoscape</a>源自系统生物学，用于将生物分子交互网络与高通量基因表达数据和其他的分子状态信息整合在一起，可以用于大规模蛋白质-蛋白质相互作用、蛋白质-DNA和遗传交互作用的<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/220527695">分析</a>。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs R">modules <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&quot;blue&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;magenta&quot;</span><span class="hljs-punctuation">)</span>;<br>inModule <span class="hljs-operator">=</span> <span class="hljs-built_in">is.finite</span><span class="hljs-punctuation">(</span>match<span class="hljs-punctuation">(</span>moduleColors<span class="hljs-punctuation">,</span> modules<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>;<br>modTOM <span class="hljs-operator">=</span> TOM<span class="hljs-punctuation">[</span>inModule<span class="hljs-punctuation">,</span> inModule<span class="hljs-punctuation">]</span>;<br>modProbes <span class="hljs-operator">=</span> <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>datExpr<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span>inModule<span class="hljs-punctuation">]</span>;<br><span class="hljs-built_in">dimnames</span><span class="hljs-punctuation">(</span>modTOM<span class="hljs-punctuation">)</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">list</span><span class="hljs-punctuation">(</span>modProbes<span class="hljs-punctuation">,</span> modProbes<span class="hljs-punctuation">)</span><br>modGenes <span class="hljs-operator">=</span> annot<span class="hljs-operator">$</span>gene_symbol<span class="hljs-punctuation">[</span>match<span class="hljs-punctuation">(</span>modProbes<span class="hljs-punctuation">,</span> annot<span class="hljs-operator">$</span>substanceBXH<span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span>;<br>cyt <span class="hljs-operator">=</span> exportNetworkToCytoscape<span class="hljs-punctuation">(</span>modTOM<span class="hljs-punctuation">,</span><br>                               edgeFile <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;CytoscapeInput-edges-&quot;</span><span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>modules<span class="hljs-punctuation">,</span> collapse<span class="hljs-operator">=</span><span class="hljs-string">&quot;-&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.txt&quot;</span><span class="hljs-punctuation">,</span> sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>                               nodeFile <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;CytoscapeInput-nodes-&quot;</span><span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>modules<span class="hljs-punctuation">,</span> collapse<span class="hljs-operator">=</span><span class="hljs-string">&quot;-&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.txt&quot;</span><span class="hljs-punctuation">,</span> sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>                               weighted <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span><br>                               threshold <span class="hljs-operator">=</span> <span class="hljs-number">0.02</span><span class="hljs-punctuation">,</span><br>                               nodeNames <span class="hljs-operator">=</span> modProbes<span class="hljs-punctuation">,</span><br>                               altNodeNames <span class="hljs-operator">=</span> modGenes<span class="hljs-punctuation">,</span><br>                               nodeAttr <span class="hljs-operator">=</span> moduleColors<span class="hljs-punctuation">[</span>inModule<span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/uncategorized/" class="category-chain-item">uncategorized</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>WGCNA：官方教程学习之网络分析</div>
+      <div>https://b.limour.top/1929.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 24, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/1932.html" title="WGCNA：官方教程学习之共识分析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">WGCNA：官方教程学习之共识分析</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/1928.html" title="WGCNA：概念初探">
+                        <span class="hidden-mobile">WGCNA：概念初探</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

@@ -1,0 +1,685 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="随着单细胞数据量的增长，计算要求成指数增长，当数据量大于10万个细胞的时候，seurat包分析就显得非常有压力了，因为在实时内存中储存数据就变得非常困难，HDF5数据格式提供了高效的磁盘存储，而不是在内存中存储数据，这就将分析扩展到大规模数据集，甚至可以达到大于100万细胞的级别 ，Linnarson实验室开发了一种基于hdf5的数据结构，loom，可以方便地存储单细胞基因组数据集和元数据。他们发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="loom文件使用记录">
+<meta property="og:url" content="https://b.limour.top/2043.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="随着单细胞数据量的增长，计算要求成指数增长，当数据量大于10万个细胞的时候，seurat包分析就显得非常有压力了，因为在实时内存中储存数据就变得非常困难，HDF5数据格式提供了高效的磁盘存储，而不是在内存中存储数据，这就将分析扩展到大规模数据集，甚至可以达到大于100万细胞的级别 ，Linnarson实验室开发了一种基于hdf5的数据结构，loom，可以方便地存储单细胞基因组数据集和元数据。他们发">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-03T07:51:46.000Z">
+<meta property="article:modified_time" content="2023-09-01T13:32:01.093Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>loom文件使用记录 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="loom文件使用记录"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-03 15:51" pubdate>
+          October 3, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.6k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          39 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">loom文件使用记录</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>随着单细胞数据量的增长，计算要求成指数增长，当数据量大于10万个细胞的时候，seurat包分析就显得非常有压力了，因为在实时内存中储存数据就变得非常困难，HDF5数据格式提供了高效的磁盘存储，而不是在内存中存储数据，这就将分析扩展到大规模数据集，甚至可以达到大于100万细胞的级别 ，Linnarson实验室开发了一种基于hdf5的数据结构，loom，可以方便地存储单细胞基因组数据集和元数据。他们发布了一个名为loompy的Python API来与loom文件交互，而<a target="_blank" rel="noopener" href="https://satijalab.org/loomr/loomr_tutorial">loomR</a>能基于R的与loom交互（<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7067e0ec6ed8">Merlin_cd6c</a>）</p>
+<h2 id="安装补充包"><a href="#安装补充包" class="headerlink" title="安装补充包"></a>安装补充包</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://occdn.limour.top/2371.html">conda activate seurat</a></p>
+</li>
+<li><p>conda install -c conda-forge r-hdf5r -y</p>
+</li>
+<li><p># conda install -c bioconda r-loom&#x3D;0.2.0.2 -y</p>
+</li>
+<li><p>wget <a target="_blank" rel="noopener" href="https://github.com/mojaveazure/loomR/archive/refs/heads/develop.zip">https://github.com/mojaveazure/loomR/archive/refs/heads/develop.zip</a> -O loomR-develop.zip</p>
+</li>
+<li><p>devtools::install_local(‘loomR-develop.zip’)</p>
+</li>
+<li><p>conda install -c conda-forge binutils_impl_linux-64 -y</p>
+</li>
+<li><p>BiocManager::install(“hdf5r”)</p>
+</li>
+<li><p>conda create -n loom -c conda-forge loompy&#x3D;3.0.6 -y</p>
+</li>
+<li><p>conda activate loom</p>
+</li>
+</ul>
+<h2 id="下载数据"><a href="#下载数据" class="headerlink" title="下载数据"></a>下载数据</h2><p><a target="_blank" rel="noopener" href="https://www.humancellatlas.org/">The Human Cell Atlas</a> is an international collaborative consortium that charts the cell types in the healthy body, across time from development to adulthood, and eventually to old age. This enormous undertaking, larger even than the Human Genome Project, will transform our understanding of the 37.2 trillion cells in the human body.</p>
+<p><a target="_blank" rel="noopener" href="https://data.humancellatlas.org/">The HCA Data Portal</a> stores and provides single-cell data contributed by labs around the world. Anyone can contribute data, find data, or access community tools and applications.</p>
+<ul>
+<li><code>wget &#39;https://storage.googleapis.com/datarepo-a6e6a252-bucket/8b504553-0300-426e-876c-116772d06c6e/485f373c-f3b3-47a2-8f9b-bbe007a4a75b/ProstateCellAtlas-human-prostate-gland-10xv2.loom?X-Goog-Algorithm=GOOG4-RSA-SHA256&amp;X-Goog-Credential=datarepo-jade-api%40terra-datarepo-production.iam.gserviceaccount.com%2F20221003%2Fauto%2Fstorage%2Fgoog4_request&amp;X-Goog-Date=20221003T121317Z&amp;X-Goog-Expires=900&amp;X-Goog-SignedHeaders=host&amp;X-Goog-Signature=7eab3ff712b55cf9812cc24b379500175005b7dc5e11e11d35cb0e36522310cf6c46574fc606754eb54a57286ac0fd60d6bd7d5871a1692b80be993c0ae96d85252df7acaf3367acd1e7f2dfdc41abbcfc0abb6305fa00c9ede58e843840e93685c5e47567b8dbcf6563411d294ae1ddc244f6434a5901ee4955f75df8993a4e39417b73357ac240d5fcb2d1f4699554480d3eccc8aec594e9b8b3511f164290559f4788e7b2ea5a3b3bd6aee21ebdfbe032859d27671b496480d29d9df5bafd790bf411e10da377f112c64c49900c4f9ce9a4566e87b327ba2550530a71969fd8e0fa0d637b481d496a50c86aea8dc010348e00bb39f6a69ce38ab70b51c77e&#39; -O ProstateCellAtlas-human-prostate-gland-10xv2.loom</code></li>
+</ul>
+<p>类似的网站：<a target="_blank" rel="noopener" href="https://cellxgene.cziscience.com/">CZ CELLxGENE</a>；可以<a target="_blank" rel="noopener" href="https://cellxgene.cziscience.com/datasets">检索需要的数据集</a>，下载rds格式的文件</p>
+<ul>
+<li><code>curl -o local.rds &quot;https://corpora-data-prod.s3.amazonaws.com/5484f890-7e6f-4eb4-821f-2fc995d10c47/local.rds?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIATLYQ5N5X7IE7U3FW%2F20221003%2Fus-west-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20221003T131441Z&amp;X-Amz-Expires=604800&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOz%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIDqVa2igyV9%2BOaaQGXPAxZb%2FrSKXPH0JNBf1zPb5S33wAiEA1zFz8ZKqLcGz9Ip%2FqeJvw0JMTKkptGz%2FInBtdfurxZEq9AMIpf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgwyMzE0MjY4NDY1NzUiDOTNFg85zD2F0B0FISrIA0CT3GUFmKR4ScNFtM%2B0FU4nIVrD7lM%2FecCE9SVHJM%2F6QGWPA7E3LWr9KcWMByy3jEQ9FRAjlsr26v2d8Znt2tAkvIcF7xiQaR1qgISi0Xak0EZceNUMTknU85CCPwPC7%2FiwxckmUX%2B0o0V11yh3rQyhHvpdcgO5COGafKwMIHYtldJNuTF0B9TTf1WVJkfZv%2Bl6o7DxHahwkb9oWWBKON9cM37oXDcH7m%2BD6szQamWY6bKNN2QNcBkKFy66ndKeFpdz6annSJKR98c8MmwGdoA9DzwixxiXZhIOR7IGD9N5oIy28sd9ZyPnBwSOEmkHB%2B61TXkwV28Li7NFfe7z6a0kpG3LiRSKPmhtC8cu5LlFUnLKqHeD1tXrVkOixukdPacWLQyAQDSYaUGoZVS7ESW2Y11bSxZLCEZ97RIM5OwOQIfv%2FsQUQLic9qDmlStQCYAVBkdmApA4a3kKbMHcOVOwECwTnUDEr36oevJMqaP688egzOjpfqkshXGLRZ%2BtA9yIn1RGqrwT%2Bl%2BStPc2s2hFBue6q9sd1aVmS3VDfiRHlvMgDS3et0jnWvUVih95U8RaeMBNVYfl4P%2BMMbhgmPFEp%2B%2F03nS%2BbzD9ouuZBjqlAYt4%2FOil7fZYzwhlUd0nHWnBLsP5w0g1EBURMhQHCtKBcNf2deWPQLlnQFQSwZhCOaYtNhZ679%2FDcsiCUCgQJUj4sTm1kbxjQouHVaOnml%2FlYM6VaJo6aLjvB%2F%2Bx9u4G925PZK1CUToWyoVyWw4sPhbGuBYRTPzzNIACi5ZuCB0DZ0cjhD86pv71dJIE%2BfwzGlEzzyVEK5nkSuKbxw4aYBOA3oTaXA%3D%3D&amp;X-Amz-Signature=0e5c2ff76b231c5591672b93de4a77128e5757e50c699636a757e8eefba180aa&quot;</code></li>
+<li>mv local.rds cellxgene_Human_prostate.rds</li>
+</ul>
+<h2 id="使用记录"><a href="#使用记录" class="headerlink" title="使用记录"></a>使用记录</h2><p>公共的集群是真难用，一堆包装半天装不上，磁盘IO慢的一批。。。。。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs R">conda activate seurat<br>.libPaths<span class="hljs-punctuation">(</span><span class="hljs-string">&#x27;&#x27;</span><span class="hljs-punctuation">)</span><br>sce <span class="hljs-operator">&lt;-</span> loomR<span class="hljs-operator">::</span>connect<span class="hljs-punctuation">(</span>filename <span class="hljs-operator">=</span> <span class="hljs-string">&quot;./HumanCellAtlas/ProstateCellAtlas/ProstateCellAtlas-human-prostate-gland-10xv2.loom&quot;</span><span class="hljs-punctuation">,</span> mode <span class="hljs-operator">=</span> <span class="hljs-string">&quot;r&quot;</span><span class="hljs-punctuation">,</span> skip.validate <span class="hljs-operator">=</span> <span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span><br>mat <span class="hljs-operator">&lt;-</span> sce<span class="hljs-punctuation">[[</span><span class="hljs-string">&quot;matrix&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span><br>gene <span class="hljs-operator">&lt;-</span> sce<span class="hljs-operator">$</span>row.attrs<span class="hljs-operator">$</span>Gene<span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><br><span class="hljs-comment"># barcode &lt;- sce$col.attrs$CellID[]</span><br>barcode <span class="hljs-operator">&lt;-</span> sce<span class="hljs-operator">$</span>col.attrs<span class="hljs-operator">$</span>cell_names<span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><br>mat <span class="hljs-operator">&lt;-</span> t<span class="hljs-punctuation">(</span>mat<span class="hljs-punctuation">)</span><br>colnames<span class="hljs-punctuation">(</span>mat<span class="hljs-punctuation">)</span><span class="hljs-operator">=</span> barcode<br>rownames<span class="hljs-punctuation">(</span>mat<span class="hljs-punctuation">)</span><span class="hljs-operator">=</span> gene<br>sce<span class="hljs-operator">$</span>close_all<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><br>sce <span class="hljs-operator">&lt;-</span> Seurat<span class="hljs-operator">::</span>CreateSeuratObject<span class="hljs-punctuation">(</span>counts <span class="hljs-operator">=</span> mat<span class="hljs-punctuation">,</span> project <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;prostate&#x27;</span><span class="hljs-punctuation">,</span> min.cells <span class="hljs-operator">=</span> <span class="hljs-number">3</span><span class="hljs-punctuation">,</span> min.features <span class="hljs-operator">=</span> <span class="hljs-number">200</span><span class="hljs-punctuation">)</span><br>rm<span class="hljs-punctuation">(</span>mat<span class="hljs-punctuation">)</span><br>gc<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><br><span class="hljs-comment">#             used   (Mb)  gc trigger     (Mb)    max used     (Mb)</span><br><span class="hljs-comment"># Ncells   3611333  192.9     6136950    327.8     6136950    327.8</span><br><span class="hljs-comment"># Vcells 287451723 2193.1 45703419996 348689.5 57126196661 435838.3</span><br>sce<br><span class="hljs-comment"># An object of class Seurat </span><br><span class="hljs-comment"># 39879 features across 128673 samples within 1 assay </span><br><span class="hljs-comment"># Active assay: RNA (39879 features, 0 variable features)</span><br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/uncategorized/" class="category-chain-item">uncategorized</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>loom文件使用记录</div>
+      <div>https://b.limour.top/2043.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 3, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2044.html" title="构造Pseudo-bulk的表达量矩阵加速SingleR运行">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">构造Pseudo-bulk的表达量矩阵加速SingleR运行</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2042.html" title="通过conda安装纯净环境的SingleR">
+                        <span class="hidden-mobile">通过conda安装纯净环境的SingleR</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

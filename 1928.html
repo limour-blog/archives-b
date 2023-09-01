@@ -1,0 +1,727 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="组织&#x2F;细胞的功能执行具有模块化的特点。权重基因共表达网络分析(Weighted gene co-expression network analysis，WGCNA)使用Pearson相关系数或bicor双权重中位相关系数来衡基因之间的共表达关系，将表达模式相似的基因聚类成模块。同一模块的基因可能参与同一生物学过程或通路，被称为功能模块。WGCNA通过分析功能模块与特定性状或表型之间的关联">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WGCNA：概念初探">
+<meta property="og:url" content="https://b.limour.top/1928.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="组织&#x2F;细胞的功能执行具有模块化的特点。权重基因共表达网络分析(Weighted gene co-expression network analysis，WGCNA)使用Pearson相关系数或bicor双权重中位相关系数来衡基因之间的共表达关系，将表达模式相似的基因聚类成模块。同一模块的基因可能参与同一生物学过程或通路，被称为功能模块。WGCNA通过分析功能模块与特定性状或表型之间的关联">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-23T09:12:19.000Z">
+<meta property="article:modified_time" content="2023-09-01T13:32:00.877Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>WGCNA：概念初探 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="WGCNA：概念初探"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-23 17:12" pubdate>
+          July 23, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">WGCNA：概念初探</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><a target="_blank" rel="noopener" href="http://journals.im.ac.cn/html/cjbcn/2017/11/gc17111791.htm">组织&#x2F;细胞的功能执行具有模块化的特点</a>。权重基因共表达网络分析(Weighted gene co-expression network analysis，WGCNA)使用<a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-hans/%E5%9F%BA%E5%9B%A0%E5%85%B1%E8%A1%A8%E8%BE%BE%E7%BD%91%E7%BB%9C">Pearson相关系数</a>或<a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3586947/">bicor双权重中位相关系数</a>来衡基因之间的共表达关系，将表达模式相似的基因聚类成模块。同一模块的基因可能参与同一生物学过程或通路，被称为功能模块。WGCNA通过分析功能模块与特定性状或表型之间的关联关系，可发现有生物学意义的功能模块。WGCNA除了应用于RNA-Seq数据，也可以用于分析蛋白质组数据、miRNA表达数据，甚至是脑电图数据、大气PM2.5的分析。</p>
+<h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><ul>
+<li><p>WGCNA的基本流程</p>
+</li>
+<li><p>1、<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c515ef000946">数据归一化</a>，以及<a target="_blank" rel="noopener" href="http://www.bio-info-trainee.com/2043.html">分位数归一化</a>，保证样品间基因表达谱的可比性</p>
+</li>
+<li><p>2、计算基因表达相关矩阵、构建幂指数的邻接矩阵A（邻接矩阵只是相关矩阵逐元素求了β次幂）</p>
+</li>
+<li><p>A是分布在0到1之间的数值组成的对称矩阵，所对应的网络为<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41429668">无向赋权图</a>，是所有后续分析的基础。</p>
+</li>
+<li><p>3、将A被转换为**<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/441952423">拓扑重叠矩阵TOM</a>**，以降低噪音和假相关。</p>
+</li>
+<li><p>4、1-TOM得到节点相异度矩阵，对节点相异度矩阵进行聚类分析来鉴定网络模块</p>
+</li>
+<li><p>5、计算模块内基因的连接度，连接度高的基因可能是模块关键基因hub gene</p>
+</li>
+<li><p>6、将模块或关键基因和外部信息进行关联，如临床信息，挖掘出有生物学意义的模块或关键基因。</p>
+</li>
+<li><p>WGCNA的缺点</p>
+</li>
+<li><p><strong>最少要15个样本才适合此分析</strong>，推荐20个以上的样本。</p>
+</li>
+<li><p>整合其他数据如蛋白质-蛋白质相互作用和甲基化才能提供基因调控信息</p>
+</li>
+<li><p>如果数据来自多个组织或多种条件，组织特异性&#x2F;条件特异性模块信号可能会被稀释</p>
+</li>
+<li><p>组织中占少数比例的细胞其基因共表达信号可能受其他细胞掩盖</p>
+</li>
+<li><p>不同的数据预处理和分析参数选择也会引起不同的结果</p>
+</li>
+<li><p>样本数越多，得到的结果越好，需要的计算资源也更多</p>
+</li>
+</ul>
+<h2 id="相关术语"><a href="#相关术语" class="headerlink" title="相关术语"></a><strong>相关术语</strong></h2><ul>
+<li><strong><a target="_blank" rel="noopener" href="https://www.biowolf.cn/biodata/WGCNA01.html">Co-expression network</a>：</strong>无向加权基因网络。aij = cor(xi, xj)β表示unsigned的共表达网络， aij &#x3D; (1 + cor(xi, xj))&#x2F; 2β 表示signed的共表达网络。signed强化了强相关，弱化了弱相关或负相关，使得相关性数值更符合无标度网络特征，更具有生物意义。</li>
+<li><strong>Module：</strong>表达高度相关的基因集。在unsigned的共表达网络中，module对应具有高度绝对相关性的基因集。在signed的网络中，module对应正相关的基因基因集。</li>
+<li><strong>Module</strong> <strong>Eigengene ME：</strong>给定<strong>模块</strong>的第一主成分。它被认为可以代表给定基因module的基因表达谱。或许可以用UMAP_1来替换试试？</li>
+<li><strong>Module Membership MM：</strong>将该基因的表达量与module eigengene进行相关性分析就可以得到MM值，MM值本质上是一个相关系数，如果基因和某个module的MM值为0，说明二者根本不相关，该基因不属于这个module; 如果MM的绝对值接近1，说明基因与该module相关性很高。</li>
+<li><strong>Intramodular connectivity KIM</strong> <strong>：</strong>衡量的是给定基因相对于特定模块的基因是如何连接或共同表达的。模内连接性可以衡量module membership。</li>
+<li><strong>Gene significance GS：</strong>将指定基因的表达量与对应的表型数值进行相关性分析，最终的相关系数的值就是GS，GS反映出基因表达量与表型数据的相关性，GS越高表明指定基因与研究表型越相关。</li>
+<li><strong>Module significance：</strong>给定module中所有基因的GS平均值。反应了指定module与表型数据的相关性，Module significance越高表明指定module与研究表型越相关。</li>
+<li><strong>Eigengene significance：</strong>模块特征（ME）与样本性状的相关性。跟Module significance表明的一样，也是指定module与表型数据的相关性，值越高表明指定module与研究表型越相关。</li>
+<li><strong>Connectivity：</strong>在加权共表达网络中，由于每条边代表两个基因间的相关性的大小，对应一个数值，所以一个基因在共表达网络中的Connectivity定义为与该基因相连的所有边的数值之和。另外，根据相连的基因是否和该基因位于同一个module, 又可以将边分为两类，和该基因位于同一个module内，定义为within，位于不同的modules, 定义为out。可根据within的connectivity来确定该module的hub基因。</li>
+<li><strong>Hub gene：</strong>表示在共同表达模块内的具有高Connectivity的基因。</li>
+</ul>
+<p> </p>
+<h2 id="RNA-Seq数据中的应用"><a href="#RNA-Seq数据中的应用" class="headerlink" title="RNA-Seq数据中的应用"></a>RNA-Seq数据中的<strong>应用</strong></h2><ul>
+<li><p>鉴定高相关的基因module。往往一组表达高度相关的基因具有相似的生物学功能。可通过此方法初步探索lncRNA的功能。</p>
+</li>
+<li><p>鉴定性状高度相关的基因module。与性状高度相关的基因module可进行后续分析，探索其与性状的生物学功能。</p>
+</li>
+<li><p>寻找hub基因。该类应用在早期的lncRNA研究中很热，如果某个module中有lncRNA作为hub基因，可以继续对该lncRNA进行深度探索。 </p>
+</li>
+<li><p>如果样本性状（分组）比较多，WGCNA可以很直观的比较某一组基因在不同分组的表达情况。</p>
+</li>
+<li><p>性状矩阵：用于关联分析的性状必须是<strong>数值型</strong>特征，<a target="_blank" rel="noopener" href="https://blog.csdn.net/qazplm12_3/article/details/80001327">如果是分类变量，需要转换为<strong>0-1</strong>矩阵的形式</a>。</p>
+</li>
+<li><p>对于样本分组为连续变量，WGCNA很直观的表现特定基因module随连续变量的变化情况。</p>
+</li>
+<li><p>可以对每个模块进行三个层次的分析</p>
+</li>
+<li><p><code>1</code>. <a target="_blank" rel="noopener" href="https://occdn.limour.top/2142.html">功能富集分析</a>查看其功能特征是否与研究目的相符；</p>
+</li>
+<li><p><code>2</code>. 模块与性状进行关联分析，找出与关注性状相关度最高的模块；</p>
+</li>
+<li><p><code>3</code>. 模块与样本进行关联分析，找到样品特异高表达的模块。</p>
+</li>
+</ul>
+<h2 id="安装补充包"><a href="#安装补充包" class="headerlink" title="安装补充包"></a>安装补充包</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://occdn.limour.top/2095.html">conda activate wgcna</a></li>
+<li>conda install -c bioconda bioconductor-ggtree -y</li>
+<li>conda install -c conda-forge r-ape -y</li>
+<li># install.packages(“rphylopic”)</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/uncategorized/" class="category-chain-item">uncategorized</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>WGCNA：概念初探</div>
+      <div>https://b.limour.top/1928.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 23, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/1929.html" title="WGCNA：官方教程学习之网络分析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">WGCNA：官方教程学习之网络分析</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/1927.html" title="clusterProfiler：GSEA基本绘图演示">
+                        <span class="hidden-mobile">clusterProfiler：GSEA基本绘图演示</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

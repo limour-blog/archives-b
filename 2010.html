@@ -1,0 +1,684 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="安装补充包 conda activate tcga # conda install -c bioconda bioconductor-sesamedata -y conda install -c conda-forge r-magick -y BiocManager::install(“sesameData”) BiocManager::install(“sesame”) BiocManager:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCGAbiolinks下载甲基化数据">
+<meta property="og:url" content="https://b.limour.top/2010.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="安装补充包 conda activate tcga # conda install -c bioconda bioconductor-sesamedata -y conda install -c conda-forge r-magick -y BiocManager::install(“sesameData”) BiocManager::install(“sesame”) BiocManager:">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-09-08T08:32:59.000Z">
+<meta property="article:modified_time" content="2023-09-01T13:32:01.029Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>TCGAbiolinks下载甲基化数据 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TCGAbiolinks下载甲基化数据"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-08 16:32" pubdate>
+          September 8, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">TCGAbiolinks下载甲基化数据</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="安装补充包"><a href="#安装补充包" class="headerlink" title="安装补充包"></a>安装补充包</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://occdn.limour.top/1655.html">conda activate tcga</a></li>
+<li># conda install -c bioconda bioconductor-sesamedata -y</li>
+<li>conda install -c conda-forge r-magick -y</li>
+<li>BiocManager::install(“sesameData”)</li>
+<li>BiocManager::install(“sesame”)</li>
+<li>BiocManager::install(“doParallel”)</li>
+<li>BiocManager::install(“ComplexHeatmap”)</li>
+<li>BiocManager::install(“matlab”)</li>
+<li>conda install -c bioconda bioconductor-motifstack -y</li>
+<li># conda install -c bioconda bioconductor-bsgenome.hsapiens.ucsc.hg38 -y</li>
+<li>BiocManager::install(“BSgenome.Hsapiens.UCSC.hg38”)</li>
+<li>BiocManager::install(“BSgenome.Hsapiens.UCSC.hg19”)</li>
+<li># conda install -c bioconda bioconductor-genomicranges -y</li>
+<li>conda install -c bioconda bioconductor-rgadem -y</li>
+</ul>
+<h2 id="下载数据"><a href="#下载数据" class="headerlink" title="下载数据"></a>下载数据</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs R">library<span class="hljs-punctuation">(</span>TCGAbiolinks<span class="hljs-punctuation">)</span><br>query_met.hg38 <span class="hljs-operator">&lt;-</span> GDCquery<span class="hljs-punctuation">(</span><br>    project<span class="hljs-operator">=</span> <span class="hljs-string">&quot;TCGA-PRAD&quot;</span><span class="hljs-punctuation">,</span> <br>    data.category <span class="hljs-operator">=</span> <span class="hljs-string">&quot;DNA Methylation&quot;</span><span class="hljs-punctuation">,</span> <br>    data.type <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Methylation Beta Value&quot;</span><span class="hljs-punctuation">,</span><br>    platform <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Illumina Human Methylation 450&quot;</span><br><span class="hljs-punctuation">)</span><br>GDCdownload<span class="hljs-punctuation">(</span>query_met.hg38<span class="hljs-punctuation">)</span><br>data.hg38 <span class="hljs-operator">&lt;-</span> GDCprepare<span class="hljs-punctuation">(</span>query_met.hg38<span class="hljs-punctuation">)</span><br>saveRDS<span class="hljs-punctuation">(</span>data.hg38<span class="hljs-punctuation">,</span> <span class="hljs-string">&#x27;prad.meth.rds&#x27;</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="清洗数据"><a href="#清洗数据" class="headerlink" title="清洗数据"></a>清洗数据</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs R">library<span class="hljs-punctuation">(</span>SummarizedExperiment<span class="hljs-punctuation">)</span><br><span class="hljs-comment"># 删除包含 NA 值的探针</span><br>data.hg38 <span class="hljs-operator">&lt;-</span> subset<span class="hljs-punctuation">(</span>data.hg38<span class="hljs-punctuation">,</span>subset <span class="hljs-operator">=</span> <span class="hljs-punctuation">(</span>rowSums<span class="hljs-punctuation">(</span><span class="hljs-built_in">is.na</span><span class="hljs-punctuation">(</span>assay<span class="hljs-punctuation">(</span>data.hg38<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">==</span> <span class="hljs-number">0</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br><span class="hljs-comment"># 去除重复样本</span><br>data.hg38 <span class="hljs-operator">&lt;-</span> data.hg38<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span> substr<span class="hljs-punctuation">(</span>colnames<span class="hljs-punctuation">(</span>data.hg38<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">14</span><span class="hljs-punctuation">,</span> <span class="hljs-number">16</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">==</span> <span class="hljs-string">&quot;01A&quot;</span><span class="hljs-punctuation">]</span><br>group <span class="hljs-operator">&lt;-</span> readRDS<span class="hljs-punctuation">(</span><span class="hljs-string">&#x27;../idea_2/fig3.2/fig5/tcga.predict.rds&#x27;</span><span class="hljs-punctuation">)</span><br>gRow <span class="hljs-operator">&lt;-</span> intersect<span class="hljs-punctuation">(</span>data.hg38<span class="hljs-operator">$</span>patient<span class="hljs-punctuation">,</span> rownames<span class="hljs-punctuation">(</span>group<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>group <span class="hljs-operator">&lt;-</span> group<span class="hljs-punctuation">[</span>gRow<span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span><br>data.hg38 <span class="hljs-operator">&lt;-</span> data.hg38<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span> substr<span class="hljs-punctuation">(</span>colnames<span class="hljs-punctuation">(</span>data.hg38<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span> <span class="hljs-number">12</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">%in%</span> gRow<span class="hljs-punctuation">]</span><br>data.hg38<span class="hljs-operator">$</span>group <span class="hljs-operator">&lt;-</span> group<span class="hljs-punctuation">[</span>substr<span class="hljs-punctuation">(</span>colnames<span class="hljs-punctuation">(</span>data.hg38<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span> <span class="hljs-number">12</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&#x27;group&#x27;</span><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="计算整体差异"><a href="#计算整体差异" class="headerlink" title="计算整体差异"></a>计算整体差异</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs R">TCGAvisualize_meanMethylation<span class="hljs-punctuation">(</span><br>  data.hg38<span class="hljs-punctuation">,</span><br>  groupCol <span class="hljs-operator">=</span> <span class="hljs-string">&quot;group&quot;</span><span class="hljs-punctuation">,</span><br>  group.legend  <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Groups&quot;</span><span class="hljs-punctuation">,</span><br>  filename <span class="hljs-operator">=</span> <span class="hljs-literal">NULL</span><span class="hljs-punctuation">,</span><br>  print.pvalue <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span><br><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="识别差异甲基化-CpG-位点"><a href="#识别差异甲基化-CpG-位点" class="headerlink" title="识别差异甲基化 CpG 位点"></a><strong>识别差异甲基化</strong> CpG <strong>位点</strong></h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs R">res <span class="hljs-operator">&lt;-</span> TCGAanalyze_DMC<span class="hljs-punctuation">(</span><br>  data.hg38<span class="hljs-punctuation">,</span><br>  <span class="hljs-comment"># colData 函数获取的矩阵中分组列名</span><br>  groupCol <span class="hljs-operator">=</span> <span class="hljs-string">&quot;group&quot;</span><span class="hljs-punctuation">,</span><br>  group1 <span class="hljs-operator">=</span> <span class="hljs-string">&quot;High Risk&quot;</span><span class="hljs-punctuation">,</span><br>  group2 <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Low Risk&quot;</span><span class="hljs-punctuation">,</span><br>  p.cut <span class="hljs-operator">=</span> <span class="hljs-number">0.05</span><span class="hljs-punctuation">,</span><br>  diffmean.cut <span class="hljs-operator">=</span> <span class="hljs-number">0.15</span><span class="hljs-punctuation">,</span><br>  save <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span><br>  legend <span class="hljs-operator">=</span> <span class="hljs-string">&quot;State&quot;</span><span class="hljs-punctuation">,</span><br>  plot.filename <span class="hljs-operator">=</span> <span class="hljs-string">&quot;./PRAD_metvolcano.png&quot;</span><span class="hljs-punctuation">,</span><br>  cores <span class="hljs-operator">=</span>  <span class="hljs-number">8</span><br><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="绘制热图"><a href="#绘制热图" class="headerlink" title="绘制热图"></a>绘制热图</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs R">sig_met <span class="hljs-operator">&lt;-</span> subset<span class="hljs-punctuation">(</span>res<span class="hljs-punctuation">,</span> status <span class="hljs-operator">!=</span> <span class="hljs-string">&quot;Not Significant&quot;</span><span class="hljs-punctuation">)</span><br>res_data <span class="hljs-operator">&lt;-</span> subset<span class="hljs-punctuation">(</span>data.hg38<span class="hljs-punctuation">,</span> subset <span class="hljs-operator">=</span> <span class="hljs-punctuation">(</span>rownames<span class="hljs-punctuation">(</span>data.hg38<span class="hljs-punctuation">)</span> <span class="hljs-operator">%in%</span> rownames<span class="hljs-punctuation">(</span>sig_met<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>circlize<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>ComplexHeatmap<span class="hljs-punctuation">)</span><br>group <span class="hljs-operator">&lt;-</span> group<span class="hljs-punctuation">[</span>substr<span class="hljs-punctuation">(</span>colnames<span class="hljs-punctuation">(</span>data.hg38<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span> <span class="hljs-number">12</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">]</span><br><span class="hljs-comment">#定义注释信息</span><br>ha <span class="hljs-operator">&lt;-</span> HeatmapAnnotation<span class="hljs-punctuation">(</span>`Risk group` <span class="hljs-operator">=</span> group<span class="hljs-operator">$</span>group<span class="hljs-punctuation">,</span><br>                        `Risk Score` <span class="hljs-operator">=</span> group<span class="hljs-operator">$</span>Risk_Score<span class="hljs-punctuation">,</span><br>                        col <span class="hljs-operator">=</span> <span class="hljs-built_in">list</span><span class="hljs-punctuation">(</span><br>                            `Risk group` <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Low Risk&quot;</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;#99CCFFAA&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&#x27;High Risk&#x27;</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;#FF6666AA&#x27;</span><span class="hljs-punctuation">)</span><br>                        <span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br><span class="hljs-comment">#                         annotation_name_gp = gpar(fontsize = 14),</span><br>                        show_annotation_name <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span><br>heatmap  <span class="hljs-operator">&lt;-</span> Heatmap<span class="hljs-punctuation">(</span><br>  assay<span class="hljs-punctuation">(</span>res_data<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>  name <span class="hljs-operator">=</span> <span class="hljs-string">&quot;DNA methylation&quot;</span><span class="hljs-punctuation">,</span><br>  col <span class="hljs-operator">=</span> matlab<span class="hljs-operator">::</span>jet.colors<span class="hljs-punctuation">(</span><span class="hljs-number">200</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>  show_row_names <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span><br>  cluster_rows <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span><br>  cluster_columns <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span><br>  show_column_names <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span><br>  bottom_annotation <span class="hljs-operator">=</span> ha<span class="hljs-punctuation">,</span><br>  column_title <span class="hljs-operator">=</span> <span class="hljs-string">&quot;DNA Methylation&quot;</span><span class="hljs-punctuation">,</span><br>  column_order <span class="hljs-operator">=</span> order<span class="hljs-punctuation">(</span>group<span class="hljs-operator">$</span>Risk_Score<span class="hljs-punctuation">)</span><br><span class="hljs-punctuation">)</span><br>pdf<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;./prad_meth_heatmap.pdf&quot;</span><span class="hljs-punctuation">,</span>width <span class="hljs-operator">=</span> <span class="hljs-number">6</span><span class="hljs-punctuation">,</span> height <span class="hljs-operator">=</span> <span class="hljs-number">4</span><span class="hljs-punctuation">)</span>;<span class="hljs-punctuation">&#123;</span><br>    draw<span class="hljs-punctuation">(</span>heatmap<span class="hljs-punctuation">,</span> annotation_legend_side <span class="hljs-operator">=</span>  <span class="hljs-string">&quot;bottom&quot;</span><span class="hljs-punctuation">)</span><br><span class="hljs-punctuation">&#125;</span>;dev.off<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="模体分析（需要hg19）"><a href="#模体分析（需要hg19）" class="headerlink" title="模体分析（需要hg19）"></a><strong>模体分析</strong>（需要hg19）</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs R">query_met.hg19 <span class="hljs-operator">&lt;-</span> GDCquery<span class="hljs-punctuation">(</span><br>    project<span class="hljs-operator">=</span> <span class="hljs-string">&quot;TCGA-PRAD&quot;</span><span class="hljs-punctuation">,</span> <br>    data.category <span class="hljs-operator">=</span> <span class="hljs-string">&quot;DNA methylation&quot;</span><span class="hljs-punctuation">,</span><br>    platform <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Illumina Human Methylation 450&quot;</span><span class="hljs-punctuation">,</span><br>    legacy <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span> <span class="hljs-comment"># hg19</span><br><span class="hljs-punctuation">)</span><br>GDCdownload<span class="hljs-punctuation">(</span>query_met.hg19<span class="hljs-punctuation">)</span><br>data.hg19 <span class="hljs-operator">&lt;-</span> GDCprepare<span class="hljs-punctuation">(</span>query_met.hg19<span class="hljs-punctuation">)</span><br>saveRDS<span class="hljs-punctuation">(</span>data.hg38<span class="hljs-punctuation">,</span> <span class="hljs-string">&#x27;prad.meth.hg19.rds&#x27;</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs R">library<span class="hljs-punctuation">(</span>rGADEM<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>GenomicRanges<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>BSgenome.Hsapiens.UCSC.hg19<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>motifStack<span class="hljs-punctuation">)</span><br>probes <span class="hljs-operator">&lt;-</span> rowRanges<span class="hljs-punctuation">(</span>res_data<span class="hljs-punctuation">)</span><br><span class="hljs-comment"># 获取差异的探针并设置 200bp 大小的窗口</span><br>sequence <span class="hljs-operator">&lt;-</span> GRanges<span class="hljs-punctuation">(</span><br>  seqnames <span class="hljs-operator">=</span> <span class="hljs-built_in">as.character</span><span class="hljs-punctuation">(</span>seqnames<span class="hljs-punctuation">(</span>probes<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>  ranges <span class="hljs-operator">=</span> IRanges<span class="hljs-punctuation">(</span>start <span class="hljs-operator">=</span> start<span class="hljs-punctuation">(</span>ranges<span class="hljs-punctuation">(</span>probes<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">-</span> <span class="hljs-number">100</span><span class="hljs-punctuation">,</span><br>          end <span class="hljs-operator">=</span> start<span class="hljs-punctuation">(</span>ranges<span class="hljs-punctuation">(</span>probes<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">+</span> <span class="hljs-number">100</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>  strand <span class="hljs-operator">=</span> <span class="hljs-string">&quot;*&quot;</span><br><span class="hljs-punctuation">)</span><br><span class="hljs-comment"># 识别模体</span><br>gadem <span class="hljs-operator">&lt;-</span> GADEM<span class="hljs-punctuation">(</span>sequence<span class="hljs-punctuation">,</span> verbose <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span> genome <span class="hljs-operator">=</span> Hsapiens<span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<p>因为hg19的数据还在下载，更多内容见<a target="_blank" rel="noopener" href="https://www.bioconductor.org/packages/release/workflows/vignettes/TCGAWorkflow/inst/doc/TCGAWorkflow.html">官方教程</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/uncategorized/" class="category-chain-item">uncategorized</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TCGAbiolinks下载甲基化数据</div>
+      <div>https://b.limour.top/2010.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 8, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2011.html" title="CBNplot推断临床变量对通路的影响">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CBNplot推断临床变量对通路的影响</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2009.html" title="TCGAbiolinks下载CNV数据">
+                        <span class="hidden-mobile">TCGAbiolinks下载CNV数据</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

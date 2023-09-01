@@ -1,0 +1,949 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="conda配置环境 conda clean -y -all conda create -n geo -c conda-forge r-base&#x3D;4.1.3 conda activate geo conda install -c conda-forge r-tidyverse&#x3D;1.3.1 -y conda install -c conda-forge r-irkernel -y">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oligo：GEO&#x2F;ArrayExpress芯片数据处理">
+<meta property="og:url" content="https://b.limour.top/1939.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="conda配置环境 conda clean -y -all conda create -n geo -c conda-forge r-base&#x3D;4.1.3 conda activate geo conda install -c conda-forge r-tidyverse&#x3D;1.3.1 -y conda install -c conda-forge r-irkernel -y">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-29T02:15:10.000Z">
+<meta property="article:modified_time" content="2023-09-01T13:32:00.893Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>oligo：GEO/ArrayExpress芯片数据处理 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="oligo：GEO/ArrayExpress芯片数据处理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-29 10:15" pubdate>
+          July 29, 2022 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          77 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">oligo：GEO/ArrayExpress芯片数据处理</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="conda配置环境"><a href="#conda配置环境" class="headerlink" title="conda配置环境"></a>conda配置环境</h2><ul>
+<li>conda clean -y -all</li>
+<li>conda create -n geo -c conda-forge r-base&#x3D;4.1.3</li>
+<li>conda activate geo</li>
+<li>conda install -c conda-forge r-tidyverse&#x3D;1.3.1 -y</li>
+<li>conda install -c conda-forge r-irkernel -y</li>
+<li>conda install -c conda-forge r-r.utils -y</li>
+<li>conda install -c conda-forge r-rcolorbrewer -y</li>
+<li>Rscript -e “IRkernel::installspec(name&#x3D;’geo’, displayname&#x3D;’r-geo’)”</li>
+<li>conda install -c bioconda bioconductor-geoquery -y</li>
+<li>conda install -c bioconda bioconductor-oligo -y</li>
+<li>conda install -c bioconda bioconductor-affy -y</li>
+<li>conda install -c bioconda bioconductor-pd.hugene.1.0.st.v1 -y # read.celfiles 需要啥<a target="_blank" rel="noopener" href="https://anaconda.org/bioconda/bioconductor-pd.hg.u133a.2">安装啥</a></li>
+<li>conda install -c bioconda bioconductor-pd.hg.u133a.2 -y</li>
+<li>conda install -c bioconda bioconductor-arrayexpress -y</li>
+<li>conda install -c bioconda bioconductor-biomart -y</li>
+<li>conda install -c bioconda bioconductor-affycoretools -y</li>
+</ul>
+<h2 id="下载芯片数据"><a href="#下载芯片数据" class="headerlink" title="下载芯片数据"></a>下载芯片数据</h2><h3 id="GEO"><a href="#GEO" class="headerlink" title="GEO"></a>GEO</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs R">library<span class="hljs-punctuation">(</span>GEOquery<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>oligo<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>affy<span class="hljs-punctuation">)</span><br>gse<span class="hljs-operator">=</span><span class="hljs-string">&quot;GSE43332&quot;</span><br>rawdata <span class="hljs-operator">&lt;-</span> getGEOSuppFiles<span class="hljs-punctuation">(</span>gse<span class="hljs-punctuation">)</span> <span class="hljs-comment">#下载原始数据</span><br>rawdata<br>setwd<span class="hljs-punctuation">(</span>gse<span class="hljs-punctuation">)</span><br>untar<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;GSE43332_RAW.tar&quot;</span><span class="hljs-punctuation">,</span>exdir <span class="hljs-operator">=</span> <span class="hljs-string">&quot;.&quot;</span><span class="hljs-punctuation">)</span><br>celfiles <span class="hljs-operator">&lt;-</span> list.files<span class="hljs-punctuation">(</span>pattern <span class="hljs-operator">=</span> <span class="hljs-string">&quot;*CEL.gz$&quot;</span><span class="hljs-punctuation">)</span> <span class="hljs-comment">#批量查找并列出后缀为.gz的文件</span><br>data.raw <span class="hljs-operator">&lt;-</span> read.celfiles<span class="hljs-punctuation">(</span>celfiles<span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="ArrayExpress"><a href="#ArrayExpress" class="headerlink" title="ArrayExpress"></a>ArrayExpress</h3><ul>
+<li>~&#x2F;dev&#x2F;xray&#x2F;xray -c ~&#x2F;etc&#x2F;xui2.json &amp;</li>
+<li>wget -e “https_proxy&#x3D;<a target="_blank" rel="noopener" href="http://127.0.0.1:20809/">http://127.0.0.1:20809</a>“ <a target="_blank" rel="noopener" href="https://www.ebi.ac.uk/arrayexpress/files/E-MEXP-1422/E-MEXP-1422.raw.1.zip">https://www.ebi.ac.uk/arrayexpress/files/E-MEXP-1422/E-MEXP-1422.raw.1.zip</a> -O E-MEXP-1422.raw.1.zip</li>
+<li>unzip E-MEXP-1422.raw.1.zip</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs R">library<span class="hljs-punctuation">(</span>ArrayExpress<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>oligo<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>affy<span class="hljs-punctuation">)</span><br><span class="hljs-comment"># Sys.setenv(&quot;http_proxy&quot;=&quot;http://127.0.0.1:20809&quot;)</span><br><span class="hljs-comment"># Sys.setenv(&quot;https_proxy&quot;=&quot;http://127.0.0.1:20809&quot;)</span><br><span class="hljs-comment"># mexp1422=getAE(&quot;E-MTAB-6128&quot;, type = &#x27;raw&#x27;, extract = T)</span><br>celfiles <span class="hljs-operator">&lt;-</span> list.files<span class="hljs-punctuation">(</span>pattern <span class="hljs-operator">=</span> <span class="hljs-string">&quot;*.CEL$&quot;</span><span class="hljs-punctuation">)</span> <span class="hljs-comment">#批量查找并列出后缀为CEL的文件</span><br>data.raw <span class="hljs-operator">&lt;-</span> read.celfiles<span class="hljs-punctuation">(</span>celfiles<span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="RMA标准化数据"><a href="#RMA标准化数据" class="headerlink" title="RMA标准化数据"></a>RMA标准化数据</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs R">sampleNames<span class="hljs-punctuation">(</span>data.raw<span class="hljs-punctuation">)</span> <span class="hljs-operator">&lt;-</span> sapply<span class="hljs-punctuation">(</span>strsplit<span class="hljs-punctuation">(</span>sampleNames<span class="hljs-punctuation">(</span>data.raw<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;_&quot;</span><span class="hljs-punctuation">,</span>fixed<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;[&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">)</span><br>sampleNames<span class="hljs-punctuation">(</span>data.raw<span class="hljs-punctuation">)</span><br> <br>fit1 <span class="hljs-operator">&lt;-</span> fitProbeLevelModel<span class="hljs-punctuation">(</span>data.raw<span class="hljs-punctuation">)</span><br> <br>image<span class="hljs-punctuation">(</span>fit1<span class="hljs-punctuation">,</span>type<span class="hljs-operator">=</span><span class="hljs-string">&quot;weights&quot;</span><span class="hljs-punctuation">,</span>which<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span>main<span class="hljs-operator">=</span><span class="hljs-string">&quot;weights&quot;</span><span class="hljs-punctuation">)</span><br>image<span class="hljs-punctuation">(</span>fit1<span class="hljs-punctuation">,</span>type<span class="hljs-operator">=</span><span class="hljs-string">&quot;residuals&quot;</span><span class="hljs-punctuation">,</span>which<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span>main<span class="hljs-operator">=</span><span class="hljs-string">&quot;Residuals&quot;</span><span class="hljs-punctuation">)</span><br>image<span class="hljs-punctuation">(</span>fit1<span class="hljs-punctuation">,</span>type<span class="hljs-operator">=</span><span class="hljs-string">&quot;sign.residuals&quot;</span><span class="hljs-punctuation">,</span>which<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span>main<span class="hljs-operator">=</span><span class="hljs-string">&quot;Residuals.sign&quot;</span><span class="hljs-punctuation">)</span><br> <br>data.eset <span class="hljs-operator">&lt;-</span> oligo<span class="hljs-operator">::</span>rma<span class="hljs-punctuation">(</span>data.raw<span class="hljs-punctuation">)</span><br>data.exprs <span class="hljs-operator">&lt;-</span> exprs<span class="hljs-punctuation">(</span>data.eset<span class="hljs-punctuation">)</span><br> <br>library<span class="hljs-punctuation">(</span>RColorBrewer<span class="hljs-punctuation">)</span><br>display.brewer.all<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><br><span class="hljs-keyword">if</span><span class="hljs-punctuation">(</span>ncol<span class="hljs-punctuation">(</span>data.eset<span class="hljs-punctuation">)</span><span class="hljs-operator">&gt;</span><span class="hljs-number">8</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    colors <span class="hljs-operator">&lt;-</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span>brewer.pal<span class="hljs-punctuation">(</span><span class="hljs-number">8</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;Set2&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>brewer.pal<span class="hljs-punctuation">(</span>ncol<span class="hljs-punctuation">(</span>data.eset<span class="hljs-punctuation">)</span><span class="hljs-operator">-</span><span class="hljs-number">8</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;Set1&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br><span class="hljs-punctuation">&#125;</span><span class="hljs-keyword">else</span><span class="hljs-punctuation">&#123;</span><br>    colors <span class="hljs-operator">&lt;-</span> brewer.pal<span class="hljs-punctuation">(</span>ncol<span class="hljs-punctuation">(</span>data.eset<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;Set2&quot;</span><span class="hljs-punctuation">)</span><br><span class="hljs-punctuation">&#125;</span><br>boxplot<span class="hljs-punctuation">(</span>data.exprs<span class="hljs-punctuation">,</span>col<span class="hljs-operator">=</span>colors<span class="hljs-punctuation">,</span>main<span class="hljs-operator">=</span><span class="hljs-string">&quot;afterRMA&quot;</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="探针转Symbol"><a href="#探针转Symbol" class="headerlink" title="探针转Symbol"></a>探针转Symbol</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://occdn.limour.top/2157.html">f_dedup_IQR 函数来源</a></li>
+<li>data.raw@annotation 可以得到注释的包信息，如pd.hg.u133a.2</li>
+<li>在<a target="_blank" rel="noopener" href="https://www.bioconductor.org/">bioconductor</a>上搜索pd.hg.u133a.2，可以知道其Platform为HG-U133A_2</li>
+<li>谷歌搜索 HG-U133A_2 + affymetrix，可以找到affymetrix官网对应的页面</li>
+<li>谷歌搜索 affymetrix “HG-U133A_2” site:<a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov,随便进一个gse页面,找到对应的platforms,如/">www.ncbi.nlm.nih.gov，随便进一个GSE页面，找到对应的Platforms，如</a> GPL571 [HG-U133A_2] Affymetrix Human Genome U133A 2.0 Array，说明HG-U133A_2对应GPL571</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs R">require<span class="hljs-punctuation">(</span>GEOquery<span class="hljs-punctuation">)</span><br>f_getGPL <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>lc_GPLN<span class="hljs-punctuation">,</span> lc_local <span class="hljs-operator">=</span> <span class="hljs-built_in">F</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    options<span class="hljs-punctuation">(</span>stringsAsFactors <span class="hljs-operator">=</span> <span class="hljs-built_in">F</span><span class="hljs-punctuation">)</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span><span class="hljs-operator">!</span>file.exists<span class="hljs-punctuation">(</span>lc_GPLN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span>dir.create<span class="hljs-punctuation">(</span>lc_GPLN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-keyword">if</span><span class="hljs-punctuation">(</span>lc_local<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>        gpl<span class="hljs-operator">=</span>read.table<span class="hljs-punctuation">(</span>file.path<span class="hljs-punctuation">(</span>lc_GPLN<span class="hljs-punctuation">,</span> lc_GPLN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>               header <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span>fill <span class="hljs-operator">=</span> <span class="hljs-built_in">T</span><span class="hljs-punctuation">,</span>sep <span class="hljs-operator">=</span> <span class="hljs-string">&quot;\t&quot;</span><span class="hljs-punctuation">,</span><br>               comment.char <span class="hljs-operator">=</span> <span class="hljs-string">&quot;#&quot;</span><span class="hljs-punctuation">,</span><br>               stringsAsFactors <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span><br>               <span class="hljs-built_in">quote</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><br>        <span class="hljs-built_in">return</span><span class="hljs-punctuation">(</span>gpl<span class="hljs-punctuation">)</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-keyword">else</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-built_in">return</span><span class="hljs-punctuation">(</span>Table<span class="hljs-punctuation">(</span>getGEO<span class="hljs-punctuation">(</span>lc_GPLN<span class="hljs-punctuation">,</span>destdir <span class="hljs-operator">=</span> lc_GPLN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br>GPL <span class="hljs-operator">&lt;-</span> <span class="hljs-string">&#x27;GPL6244&#x27;</span><br>GPL <span class="hljs-operator">&lt;-</span> f_getGPL<span class="hljs-punctuation">(</span>GPL<span class="hljs-punctuation">)</span><br>GPL<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;Symbol&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> GPL<span class="hljs-operator">$</span>gene_assignment<br>GPL <span class="hljs-operator">&lt;-</span> GPL<span class="hljs-punctuation">[</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&#x27;ID&#x27;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&#x27;Symbol&#x27;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span><br>GPL<span class="hljs-punctuation">[</span>GPL<span class="hljs-operator">$</span>Symbol <span class="hljs-operator">==</span> <span class="hljs-string">&#x27;---&#x27;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&#x27;Symbol&#x27;</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;---//---&#x27;</span><br>tmp <span class="hljs-operator">&lt;-</span> strsplit<span class="hljs-punctuation">(</span>x <span class="hljs-operator">=</span> GPL<span class="hljs-operator">$</span>Symbol<span class="hljs-punctuation">,</span> split <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;//&#x27;</span><span class="hljs-punctuation">)</span><br>tmp <span class="hljs-operator">&lt;-</span> lapply<span class="hljs-punctuation">(</span>tmp<span class="hljs-punctuation">,</span> FUN <span class="hljs-operator">=</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>x<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span>x<span class="hljs-punctuation">[</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">)</span><br>GPL<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;Symbol&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> unlist<span class="hljs-punctuation">(</span>tmp<span class="hljs-punctuation">)</span><br>GPL<span class="hljs-operator">$</span>Symbol<span class="hljs-punctuation">[</span>GPL<span class="hljs-operator">$</span>Symbol <span class="hljs-operator">==</span> <span class="hljs-string">&#x27;---&#x27;</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> GPL<span class="hljs-operator">$</span>ID<span class="hljs-punctuation">[</span>GPL<span class="hljs-operator">$</span>Symbol <span class="hljs-operator">==</span> <span class="hljs-string">&#x27;---&#x27;</span><span class="hljs-punctuation">]</span><br>rownames<span class="hljs-punctuation">(</span>GPL<span class="hljs-punctuation">)</span> <span class="hljs-operator">&lt;-</span> <span class="hljs-built_in">as.character</span><span class="hljs-punctuation">(</span>GPL<span class="hljs-operator">$</span>ID<span class="hljs-punctuation">)</span><br>GPL <span class="hljs-operator">&lt;-</span> GPL<span class="hljs-punctuation">[</span><span class="hljs-built_in">as.character</span><span class="hljs-punctuation">(</span>rownames<span class="hljs-punctuation">(</span>data.exprs<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span><br>data.exprs <span class="hljs-operator">&lt;-</span> f_dedup_IQR<span class="hljs-punctuation">(</span>data.exprs<span class="hljs-punctuation">,</span> GPL<span class="hljs-operator">$</span>Symbol<span class="hljs-punctuation">)</span><br>data.exprs<br></code></pre></td></tr></table></figure>
+
+<h2 id="GPL与Platform对应表"><a href="#GPL与Platform对应表" class="headerlink" title="GPL与Platform对应表"></a>GPL与Platform对应表</h2><p>gpl</p>
+<p>bioc_package</p>
+<p>title</p>
+<p>GPL32</p>
+<p>mgu74a</p>
+<p>[MG_U74A] Affymetrix Murine Genome U74A Array</p>
+<p>GPL33</p>
+<p>mgu74b</p>
+<p>[MG_U74B] Affymetrix Murine Genome U74B Array</p>
+<p>GPL34</p>
+<p>mgu74c</p>
+<p>[MG_U74C] Affymetrix Murine Genome U74C Array</p>
+<p>GPL71</p>
+<p>ag</p>
+<p>[AG] Affymetrix Arabidopsis Genome Array</p>
+<p>GPL72</p>
+<p>drosgenome1</p>
+<p>[DrosGenome1] Affymetrix Drosophila Genome Array</p>
+<p>GPL74</p>
+<p>hcg110</p>
+<p>[HC_G110] Affymetrix Human Cancer Array</p>
+<p>GPL75</p>
+<p>mu11ksuba</p>
+<p>[Mu11KsubA] Affymetrix Murine 11K SubA Array</p>
+<p>GPL76</p>
+<p>mu11ksubb</p>
+<p>[Mu11KsubB] Affymetrix Murine 11K SubB Array</p>
+<p>GPL77</p>
+<p>mu19ksuba</p>
+<p>[Mu19KsubA] Affymetrix Murine 19K SubA Array</p>
+<p>GPL78</p>
+<p>mu19ksubb</p>
+<p>[Mu19KsubB] Affymetrix Murine 19K SubB Array</p>
+<p>GPL79</p>
+<p>mu19ksubc</p>
+<p>[Mu19KsubC] Affymetrix Murine 19K SubC Array</p>
+<p>GPL80</p>
+<p>hu6800</p>
+<p>[Hu6800] Affymetrix Human Full Length HuGeneFL Array</p>
+<p>GPL81</p>
+<p>mgu74av2</p>
+<p>[MG_U74Av2] Affymetrix Murine Genome U74A Version 2 Array</p>
+<p>GPL82</p>
+<p>mgu74bv2</p>
+<p>[MG_U74Bv2] Affymetrix Murine Genome U74B Version 2 Array</p>
+<p>GPL83</p>
+<p>mgu74cv2</p>
+<p>[MG_U74Cv2] Affymetrix Murine Genome U74 Version 2 Array</p>
+<p>GPL85</p>
+<p>rgu34a</p>
+<p>[RG_U34A] Affymetrix Rat Genome U34 Array</p>
+<p>GPL86</p>
+<p>rgu34b</p>
+<p>[RG_U34B] Affymetrix Rat Genome U34 Array</p>
+<p>GPL87</p>
+<p>rgu34c</p>
+<p>[RG_U34C] Affymetrix Rat Genome U34 Array</p>
+<p>GPL88</p>
+<p>rnu34</p>
+<p>[RN_U34] Affymetrix Rat Neurobiology U34 Array</p>
+<p>GPL89</p>
+<p>rtu34</p>
+<p>[RT_U34] Affymetrix Rat Toxicology U34 Array</p>
+<p>GPL90</p>
+<p>ygs98</p>
+<p>[YG_S98] Affymetrix Yeast Genome S98 Array</p>
+<p>GPL91</p>
+<p>hgu95av2</p>
+<p>[HG_U95A] Affymetrix Human Genome U95A Array</p>
+<p>GPL92</p>
+<p>hgu95b</p>
+<p>[HG_U95B] Affymetrix Human Genome U95B Array</p>
+<p>GPL93</p>
+<p>hgu95c</p>
+<p>[HG_U95C] Affymetrix Human Genome U95C Array</p>
+<p>GPL94</p>
+<p>hgu95d</p>
+<p>[HG_U95D] Affymetrix Human Genome U95D Array</p>
+<p>GPL95</p>
+<p>hgu95e</p>
+<p>[HG_U95E] Affymetrix Human Genome U95E Array</p>
+<p>GPL96</p>
+<p>hgu133a</p>
+<p>[HG-U133A] Affymetrix Human Genome U133A Array</p>
+<p>GPL97</p>
+<p>hgu133b</p>
+<p>[HG-U133B] Affymetrix Human Genome U133B Array</p>
+<p>GPL98</p>
+<p>hu35ksuba</p>
+<p>[Hu35KsubA] Affymetrix Human 35K SubA Array</p>
+<p>GPL99</p>
+<p>hu35ksubb</p>
+<p>[Hu35KsubB] Affymetrix Human 35K SubB Array</p>
+<p>GPL100</p>
+<p>hu35ksubc</p>
+<p>[Hu35KsubC] Affymetrix Human 35K SubC Array</p>
+<p>GPL101</p>
+<p>hu35ksubd</p>
+<p>[Hu35KsubD] Affymetrix Human 35K SubD Array</p>
+<p>GPL198</p>
+<p>ath1121501</p>
+<p>[ATH1-121501] Affymetrix Arabidopsis ATH1 Genome Array</p>
+<p>GPL199</p>
+<p>ecoli2</p>
+<p>[Ecoli_ASv2] Affymetrix E. coli Antisense Genome Array</p>
+<p>GPL200</p>
+<p>celegans</p>
+<p>[Celegans] Affymetrix C. elegans Genome Array</p>
+<p>GPL201</p>
+<p>hgfocus</p>
+<p>[HG-Focus] Affymetrix Human HG-Focus Target Array</p>
+<p>GPL339</p>
+<p>moe430a</p>
+<p>[MOE430A] Affymetrix Mouse Expression 430A Array</p>
+<p>GPL340</p>
+<p>mouse4302</p>
+<p>[MOE430B] Affymetrix Mouse Expression 430B Array</p>
+<p>GPL341</p>
+<p>rae230a</p>
+<p>[RAE230A] Affymetrix Rat Expression 230A Array</p>
+<p>GPL342</p>
+<p>rae230b</p>
+<p>[RAE230B] Affymetrix Rat Expression 230B Array</p>
+<p>GPL570</p>
+<p>hgu133plus2</p>
+<p>[HG-U133_Plus_2] Affymetrix Human Genome U133 Plus 2.0 Array</p>
+<p>GPL571</p>
+<p>hgu133a2</p>
+<p>[HG-U133A_2] Affymetrix Human Genome U133A 2.0 Array</p>
+<p>GPL886</p>
+<p>hgug4111a</p>
+<p>Agilent-011871 Human 1B Microarray G4111A (Feature Number version)</p>
+<p>GPL887</p>
+<p>hgug4110b</p>
+<p>Agilent-012097 Human 1A Microarray (V2) G4110B (Feature Number version)</p>
+<p>GPL1261</p>
+<p>mouse430a2</p>
+<p>[Mouse430_2] Affymetrix Mouse Genome 430 2.0 Array</p>
+<p>GPL1318</p>
+<p>xenopuslaevis</p>
+<p>[Xenopus_laevis] Affymetrix Xenopus laevis Genome Array</p>
+<p>GPL1319</p>
+<p>zebrafish</p>
+<p>[Zebrafish] Affymetrix Zebrafish Genome Array</p>
+<p>GPL1322</p>
+<p>drosophila2</p>
+<p>[Drosophila_2] Affymetrix Drosophila Genome 2.0 Array</p>
+<p>GPL1352</p>
+<p>u133x3p</p>
+<p>[U133_X3P] Affymetrix Human X3P Array</p>
+<p>GPL1355</p>
+<p>rat2302</p>
+<p>[Rat230_2] Affymetrix Rat Genome 230 2.0 Array</p>
+<p>GPL1708</p>
+<p>hgug4112a</p>
+<p>Agilent-012391 Whole Human Genome Oligo Microarray G4112A (Feature Number version)</p>
+<p>GPL2112</p>
+<p>bovine</p>
+<p>[Bovine] Affymetrix Bovine Genome Array</p>
+<p>GPL2529</p>
+<p>yeast2</p>
+<p>[Yeast_2] Affymetrix Yeast Genome 2.0 Array</p>
+<p>GPL2891</p>
+<p>h20kcod</p>
+<p>GE Healthcare&#x2F;Amersham Biosciences CodeLink™ UniSet Human 20K I Bioarray</p>
+<p>GPL2898</p>
+<p>adme16cod</p>
+<p>GE Healthcare&#x2F;Amersham Biosciences CodeLink™ ADME Rat 16-Assay Bioarray</p>
+<p>GPL3154</p>
+<p>ecoli2</p>
+<p>[E_coli_2] Affymetrix E. coli Genome 2.0 Array</p>
+<p>GPL3213</p>
+<p>chicken</p>
+<p>[Chicken] Affymetrix Chicken Genome Array</p>
+<p>GPL3533</p>
+<p>porcine</p>
+<p>[Porcine] Affymetrix Porcine Genome Array</p>
+<p>GPL3738</p>
+<p>canine2</p>
+<p>[Canine_2] Affymetrix Canine Genome 2.0 Array</p>
+<p>GPL3921</p>
+<p>hthgu133a</p>
+<p>[HT_HG-U133A] Affymetrix HT Human Genome U133A Array</p>
+<p>GPL3979</p>
+<p>canine</p>
+<p>[Canine] Affymetrix Canine Genome 1.0 Array</p>
+<p>GPL4032</p>
+<p>[Maize] Affymetrix Maize Genome Array</p>
+<p>GPL4191</p>
+<p>h10kcod</p>
+<p>CodeLink UniSet Human I Bioarray</p>
+<p>GPL5188</p>
+<p>huex10sttranscriptcluster</p>
+<p>[HuEx-1_0-st] Affymetrix Human Exon 1.0 ST Array [probe set (exon) version]</p>
+<p>GPL5689</p>
+<p>hgug4100a</p>
+<p>Agilent Human 1 cDNA Microarray (G4100A) [layout C]</p>
+<p>GPL6097</p>
+<p>illuminaHumanv1</p>
+<p>Illumina human-6 v1.0 expression beadchip</p>
+<p>GPL6102</p>
+<p>illuminaHumanv2</p>
+<p>Illumina human-6 v2.0 expression beadchip</p>
+<p>GPL6244</p>
+<p>hugene10sttranscriptcluster</p>
+<p>[HuGene-1_0-st] Affymetrix Human Gene 1.0 ST Array [transcript (gene) version]</p>
+<p>GPL6246</p>
+<p>mogene10sttranscriptcluster</p>
+<p>[MoGene-1_0-st] Affymetrix Mouse Gene 1.0 ST Array [transcript (gene) version]</p>
+<p>GPL6885</p>
+<p>illuminaMousev2</p>
+<p>Illumina MouseRef-8 v2.0 expression beadchip</p>
+<p>GPL6947</p>
+<p>illuminaHumanv3</p>
+<p>Illumina HumanHT-12 V3.0 expression beadchip</p>
+<p>GPL8300</p>
+<p>hgu95av2</p>
+<p>[HG_U95Av2] Affymetrix Human Genome U95 Version 2 Array</p>
+<p>GPL8321</p>
+<p>mouse430a2</p>
+<p>[Mouse430A_2] Affymetrix Mouse Genome 430A 2.0 Array</p>
+<p>GPL8490</p>
+<p>IlluminaHumanMethylation27k</p>
+<p>Illumina HumanMethylation27 BeadChip (HumanMethylation27_270596_v.1.2)</p>
+<p>GPL10558</p>
+<p>illuminaHumanv4</p>
+<p>Illumina HumanHT-12 V4.0 expression beadchip</p>
+<p>GPL11532</p>
+<p>hugene11sttranscriptcluster</p>
+<p>[HuGene-1_1-st] Affymetrix Human Gene 1.1 ST Array [transcript (gene) version]</p>
+<p>GPL13497</p>
+<p>HsAgilentDesign026652</p>
+<p>Agilent-026652 Whole Human Genome Microarray 4x44K v2 (Probe Name version)</p>
+<p>GPL13534</p>
+<p>IlluminaHumanMethylation450k</p>
+<p>Illumina HumanMethylation450 BeadChip (HumanMethylation450_15017482)</p>
+<p>GPL13667</p>
+<p>hgu219</p>
+<p>[HG-U219] Affymetrix Human Genome U219 Array</p>
+<p>GPL14877</p>
+<p>hgu133plus2</p>
+<p>Affymetrix Human Genome U133 Plus 2.0 Array [Brainarray Version 13, HGU133Plus2_Hs_ENTREZG]</p>
+<p>GPL15380</p>
+<p>GGHumanMethCancerPanelv1</p>
+<p>Illumina Sentrix Array Matrix (SAM) - GoldenGate Methylation Cancer Panel I</p>
+<p>GPL15396</p>
+<p>hthgu133b</p>
+<p>[HT_HG-U133B] Affymetrix HT Human Genome U133B Array [custom CDF: ENTREZ brainarray v. 14]</p>
+<p>GPL17556</p>
+<p>hugene10sttranscriptcluster</p>
+<p>[HuGene-1_0-st] Affymetrix Human Gene 1.0 ST Array [HuGene10stv1_Hs_ENTREZG_17.0.0]</p>
+<p>GPL17897</p>
+<p>hthgu133a</p>
+<p>[HT_HG-U133A] Affymetrix Human Genome U133A Array (custom CDF: HTHGU133A_Hs_ENTREZG.cdf version 17.0.0)</p>
+<p>GPL18190</p>
+<p>hugene11sttranscriptcluster</p>
+<p>[HuGene-1_1-st] Affymetrix Human Gene 1.1 ST Array [CDF: Brainarray HuGene11stv1_Hs_ENTREZG_15.1.0]</p>
+<p>来自：<a target="_blank" rel="noopener" href="https://icode.best/i/32522930456304">爱代码爱编程</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/uncategorized/" class="category-chain-item">uncategorized</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>oligo：GEO/ArrayExpress芯片数据处理</div>
+      <div>https://b.limour.top/1939.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 29, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/1941.html" title="使用limma包进行差异基因分析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">使用limma包进行差异基因分析</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/1938.html" title="菜鸟博主对神经网络的简单理解（一）">
+                        <span class="hidden-mobile">菜鸟博主对神经网络的简单理解（一）</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

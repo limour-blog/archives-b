@@ -40,6 +40,6 @@ df
 write.csv(df,'gene_length_human.csv')
 ```
 
-![](https://img-cdn.limour.top/2022/07/18/62d53bed5be33.png)
+![](https://img.limour.top/archives_2023/2022/07/18/62d53bed5be33.webp)
 
 和TCGA结果一致，说明结果可信，且length理论上比width更好

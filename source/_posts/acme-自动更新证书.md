@@ -141,6 +141,6 @@ acme.sh --install-cert -d *.limour.top \
 --reloadcmd     "systemctl restart httpd"
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/image-3.png)](https://img-cdn.limour.top/blog_wp/2021/10/image-3.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/image-3.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/image-3.webp)
 
 成功！

@@ -21,7 +21,7 @@ Th0细胞通过表面黏附分子（T细胞表面的LFA-1、ICAM-1、CD2分别�
 
 当Th0的TCR和pMHCII特异性结合后，CD4也随后和MHCII分子β2结构域发生结合，导致CD4在物理上靠近TCR复合物。
 
-![](https://img-cdn.limour.top/blog/20220222233140.png)
+![](https://img.limour.top/archives_2023/blog/20220222233140.webp)
 
 *   CD4：TCR的共受体，在T细胞的激活过程中起到促进的作用  
     可以结合到MHCII分子上，同时识别pMHCII复合物，增强TCR复合物和DC的结合  
@@ -61,7 +61,7 @@ Th0细胞初步活化的同时，DC也被激活，上调协同刺激分子B7，�
 *   IL-22：来自Th1、Th2、Th17、γδT、NKT、ILC3、neutro、macro，作用于非造血细胞，刺激细胞存活、增殖和抗菌剂的合成，参与伤口愈合和抗感染
 *   ILC3：来自淋巴谱系的免疫细胞，参与粘膜的先天机制，有助于组织稳态、宿主共生共生和病原体清除。
 
-![](https://img-cdn.limour.top/blog/20220223004935.png)
+![](https://img.limour.top/archives_2023/blog/20220223004935.webp)
 
 Th细胞迁移到外周组织、遇到抗原并发生二次活化（仅CD3、ξ活化信号即可），从而发挥其具体的效应。
 

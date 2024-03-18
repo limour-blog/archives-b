@@ -31,17 +31,17 @@ date: 2022-08-23 12:18:06
 *   zip -r py-requests.zip python
 *   下载 py-requests.zip
 
-![](https://img-cdn.limour.top/2022/08/23/6304b9102f98d.png)
+![](https://img.limour.top/archives_2023/2022/08/23/6304b9102f98d.webp)
 
 [创建层](https://aws.amazon.com/cn/blogs/china/use-aws-lambda-layer-function/)
 
 ## 创建函数
 
-![](https://img-cdn.limour.top/2022/08/23/6304b9edf26b2.png)
+![](https://img.limour.top/archives_2023/2022/08/23/6304b9edf26b2.webp)
 
 ## 添加依赖层
 
-![](https://img-cdn.limour.top/2022/08/23/6304bb0d72894.png)
+![](https://img.limour.top/archives_2023/2022/08/23/6304bb0d72894.webp)
 
 ## 编写函数
 

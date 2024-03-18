@@ -146,7 +146,7 @@ f_pie_metaN <- function(sObject, lc_group.by){
 
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/p.png)](https://img-cdn.limour.top/blog_wp/2021/10/p.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/p.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/p.webp)
 
 ## 第二步 画图查看相关性
 
@@ -188,7 +188,7 @@ f_corrplot <- function(lc_scdata){
 
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/cor.png)](https://img-cdn.limour.top/blog_wp/2021/10/cor.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/cor.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/cor.webp)
 
 ## 第三步 Cluster差异基因
 
@@ -277,4 +277,4 @@ f_image_output <- function(fileName, image, width=1920, height=1080){
 
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/gl_ExN_InN-1.png)](https://img-cdn.limour.top/blog_wp/2021/10/gl_ExN_InN-1.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/gl_ExN_InN-1.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/gl_ExN_InN-1.webp)

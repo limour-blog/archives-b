@@ -10,11 +10,11 @@ date: 2021-09-25 13:27:02
 
 ## 第一步 进入对应的[癌症页面](https://portal.gdc.cancer.gov/)
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-26.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-26.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-26.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-26.webp)
 
 ## 第二步 查看所需的Project
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-27.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-27.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-27.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-27.webp)
 
 ## 第三步 下载所需的分组
 

@@ -143,11 +143,11 @@ async function device_status (user_agent_info) {
 
 *   jscdn.limour.top/\*
 
-![](https://img-cdn.limour.top/i/2023/01/05/63b66e7349c6b.png)
+![](https://img.limour.top/archives_2023/2023/01/05/63b66e7349c6b.webp)
 
 ## 第三步 添加替换
 
-![](https://img-cdn.limour.top/i/2023/01/05/63b66edf10ef2.png)
+![](https://img.limour.top/archives_2023/2023/01/05/63b66edf10ef2.webp)
 
 ```nginx
 sub_filter_once off;

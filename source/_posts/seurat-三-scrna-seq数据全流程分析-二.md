@@ -135,7 +135,7 @@ tp_image <- f_get_m_p_a(scRNA, significant_markers, gl_MarkerGene)
 f_image_output('gl_MarkerGene',tp_image, width = 2160, height = 2160)
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/gl_MarkerGene.png)](https://img-cdn.limour.top/blog_wp/2021/10/gl_MarkerGene.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/gl_MarkerGene.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/gl_MarkerGene.webp)
 
 ## 第六步 手动标注 (二) 生成默认标注
 
@@ -200,7 +200,7 @@ scRNA <- f_add_annotation(scRNA, 'manual_1', "Manual_distinction_1.csv")
 DimPlot(scRNA, reduction = lc_reduction, group.by = 'manual_1',  label = T, repel = T, label.size = 6) + labs(title = "UMAP reduction of clusters")
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/UMAP_manual.png)](https://img-cdn.limour.top/blog_wp/2021/10/UMAP_manual.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/UMAP_manual.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/UMAP_manual.webp)
 
 ## 第七步 SingleR自动标注
 

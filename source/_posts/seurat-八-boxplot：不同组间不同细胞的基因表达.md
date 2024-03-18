@@ -69,4 +69,4 @@ scRNA_split <- f_metadata_removeNA(scRNA_split, 'Region')
 f_bp_gcg(scRNA_split, 'Region', 'hM1_hmca_class', 'NRXN3')
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/11/下载-2.png)](https://img-cdn.limour.top/blog_wp/2021/11/下载-2.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/11/下载-2.webp)](https://img.limour.top/archives_2023/blog_wp/2021/11/下载-2.webp)

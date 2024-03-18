@@ -74,4 +74,4 @@ services:
 
 [https://minio.j11.fun/](https://minio.j11.fun/)
 
-![](https://img-cdn.limour.top/blog/20220716124213.png)
+![](https://img.limour.top/archives_2023/blog/20220716124213.webp)

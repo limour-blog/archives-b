@@ -196,4 +196,4 @@ legend("bottomright",c(paste("AUC of 1-year =",years.auc1),
 compare(model1_years,model2years,adjusted=T)
 ```
 
-![](https://img-cdn.limour.top/2022/08/10/62f39c04f2c07.png)
+![](https://img.limour.top/archives_2023/2022/08/10/62f39c04f2c07.webp)

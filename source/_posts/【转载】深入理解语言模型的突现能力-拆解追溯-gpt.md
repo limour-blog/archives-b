@@ -22,7 +22,7 @@ date: 2023-02-16 05:31:26
 
 ### 存在于大模型而非小模型的突现能力
 
-![](https://img-cdn.limour.top/i/2023/02/16/63edb6fe00728.png)
+![](https://img.limour.top/archives_2023/2023/02/16/63edb6fe00728.webp)
 
 图片来自于 Wei. et. al. 2022. Chain-of-Thought Prompting Elicits Reasoning in Large Language Models。X 轴为模型大小。GSM8K是是一个小学水平的数学问题集。
 
@@ -87,7 +87,7 @@ GSM8K 最初由 OpenAI 于 2021 年 10 月提出。当时他们用第一版GPT3�
 *   在许多数据集中，为了获得所需的背景/常识知识，（以前很小的）模型需要一个外部语料库/知识图谱来检索，或者需要通过多任务学习在增强的数据上进行训练
 *   对于大型语言模型，可以直接去掉检索器，仅依赖模型的内部知识，且无需精调
 
-![](https://img-cdn.limour.top/i/2023/02/16/63edb8ffc6c8e.png)
+![](https://img.limour.top/archives_2023/2023/02/16/63edb8ffc6c8e.webp)
 
 图片来自于 Yu et. al. 2022. 以前的 SOTA 模型需要从外部知识源中检索。 GPT-3 的性能与以前的模型相当/优于以前的模型，且无需检索。
 
@@ -127,7 +127,7 @@ GSM8K 最初由 OpenAI 于 2021 年 10 月提出。当时他们用第一版GPT3�
 
 我们讨论的第三种能力是分布外的鲁棒性。在 2018 年至 2022 年期间，NLP、CV 和通用机器学习领域有大量关于分布偏移/对抗鲁棒性/组合生成的研究，人们发现当测试集分布与训练分布不同时，模型的行为性能可能会显著下降。然而，在大型语言模型的上下文学习中似乎并非如此。Si 等人在2022年的研究显示：
 
-![](https://img-cdn.limour.top/i/2023/02/16/63edba6ee6996.png)
+![](https://img.limour.top/archives_2023/2023/02/16/63edba6ee6996.webp)
 
 数据来自于 Si et. al. 2022. 虽然 GPT-3 在同分布设置下比 RoBERTa 要差，但在非同分布设置下优于 RoBERTa，性能下降明显更小。
 
@@ -135,7 +135,7 @@ GSM8K 最初由 OpenAI 于 2021 年 10 月提出。当时他们用第一版GPT3�
 
 此外，即使存在分布偏移，好的提示词所带来的泛化性能依旧会继续保持。比如：
 
-![](https://img-cdn.limour.top/i/2023/02/16/63edbaab0a39f.png)
+![](https://img.limour.top/archives_2023/2023/02/16/63edbaab0a39f.webp)
 
 图片来自于 Fu et. al. 2022. 即使测试分布与训练分布不同，复杂提示也始终比简单提示的表现更好。
 
@@ -155,7 +155,7 @@ Fu 等人2022年的研究显示，输入提示越复杂，模型的性能就越�
 
 这个问题的答案就藏在两种曲线中：对数线性曲线和相变曲线。如下图：
 
-![](https://img-cdn.limour.top/i/2023/02/16/63edbb2bbe373.png)
+![](https://img.limour.top/archives_2023/2023/02/16/63edbb2bbe373.webp)
 
 左图: 比例定律. 当模型大小呈指数增长时，相应的模型性能呈线性增长。右图: 当模型尺寸达到一定规模时，会出现突现能力，让性能急剧增加。
 
@@ -304,7 +304,7 @@ Fu 等人2022年的研究显示，输入提示越复杂，模型的性能就越�
 
 从最初的 GPT-3 开始，为了展示 OpenAI 是如何发展到ChatGPT的，我们看一下 GPT-3.5 的进化树：
 
-![](https://img-cdn.limour.top/i/2023/02/16/63edbd69acfc5.png)
+![](https://img.limour.top/archives_2023/2023/02/16/63edbd69acfc5.webp)
 
 在 **2020 年 7 月**，OpenAI 发布了模型索引为的 `davinci` 的初代 GPT-3 论文，从此它就开始不断进化。在 **2021 年 7 月**，Codex 的论文发布，其中初始的 Codex 是根据（可能是内部的）120 亿参数的 GPT-3 变体进行微调的。后来这个 120 亿参数的模型演变成 OpenAI API 中的`code-cushman-001`。在 **2022 年 3 月**，OpenAI 发布了指令微调 (instruction tuning) 的论文，其监督微调 (supervised instruction tuning) 的部分对应了`davinci-instruct-beta`和`text-davinci-001`。在 **2022 年 4 月至 7 月的**，OpenAI 开始对`code-davinci-002`模型进行 Beta 测试，也称其为 Codex。然后`code-davinci-002`、`text-davinci-003`和`ChatGPT` 都是从`code-davinci-002`进行指令微调得到的。详细信息请参阅 OpenAI的模型索引文档。
 

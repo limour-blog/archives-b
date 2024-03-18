@@ -34,8 +34,8 @@ jupyter38 notebook --ip='0.0.0.0' --port=18888 --no-browser --NotebookApp.token=
 
 ## 结果展示
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-21.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-21.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-21.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-21.webp)
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-22.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-22.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-22.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-22.webp)
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-19.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-19.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-19.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-19.webp)

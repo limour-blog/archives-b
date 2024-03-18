@@ -37,7 +37,7 @@ yum install tesseract-langpack-eng
 4.新建环境变量 TESSDATA_PREFIX ,值为 {解压目录}\tessdata
 ```
 
-![](https://img-cdn.limour.top/blog_wp/2020/07/微信图片_20200710090821.png)
+![](https://img.limour.top/archives_2023/blog_wp/2020/07/微信图片_20200710090821.webp)
 
 终端中运行命令 tesseract --help-extra 显示如上信息表示安装成功
 

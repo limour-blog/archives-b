@@ -7,7 +7,7 @@ categories:
 date: 2023-02-17 10:59:21
 ---
 
-![](https://img-cdn.limour.top/i/2023/02/17/63ef49707cf02.png)
+![](https://img.limour.top/archives_2023/2023/02/17/63ef49707cf02.webp)
 
 最终效果图
 
@@ -61,7 +61,7 @@ masterpiece, best quality
 
 ## 其他图
 
-![](https://img-cdn.limour.top/i/2023/02/17/63ef5dd46423d.png)
+![](https://img.limour.top/archives_2023/2023/02/17/63ef5dd46423d.webp)
 
 ```txt
 solo,illustration.media of a hanfugirl,hanfu,perfect skin,make happy expressions,gorgeous,pure,beautyfull detailed face and eyes,large breasts,beautyfull intricacy clothing decorative pattern details,arms behind back,

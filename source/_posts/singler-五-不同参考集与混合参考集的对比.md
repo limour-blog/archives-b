@@ -171,4 +171,4 @@ scRNA <- RunUMAP(scRNA, dims = 1:pca_dim)
 
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/16321701111.png)](https://img-cdn.limour.top/blog_wp/2021/09/16321701111.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/16321701111.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/16321701111.webp)

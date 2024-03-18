@@ -9,6 +9,6 @@ categories:
 date: 2020-06-02 16:37:12
 ---
 
-![](https://img-cdn.limour.top/blog_wp/2020/06/Morse.png)
+![](https://img.limour.top/archives_2023/blog_wp/2020/06/Morse.webp)
 
 `...././.-../.-../---/.--/---/.-./.-../-..`

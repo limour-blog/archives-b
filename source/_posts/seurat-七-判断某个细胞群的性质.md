@@ -124,7 +124,7 @@ f_kegg_p(kegg.u, n =15) %>% f_title("kegg.u")
 f_kegg_p(kegg.d, n =15) %>% f_title("kegg.d")
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/kegg.u.png)](https://img-cdn.limour.top/blog_wp/2021/10/kegg.u.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/kegg.u.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/kegg.u.webp)
 
 ## 第三步 GO
 
@@ -217,7 +217,7 @@ gseaplot2(GO.BP,geneSetID=head(which(GO.BP@result$enrichmentScore < -0.3),6))
 
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/kegg.gse_.png)](https://img-cdn.limour.top/blog_wp/2021/10/kegg.gse_.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/kegg.gse_.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/kegg.gse_.webp)
 
 ## 第五步 GO terms关系网络图
 
@@ -237,7 +237,7 @@ emapplot(GO.U.MF2,showCategory=15)
 
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/kegg.ema_.png)](https://img-cdn.limour.top/blog_wp/2021/10/kegg.ema_.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/kegg.ema_.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/kegg.ema_.webp)
 
 ## 第六步 共同基因绘图
 
@@ -270,4 +270,4 @@ cnetplot(GO.U.MF2, foldChange= f_gse_fuck(usignificant_markers$gene,usignificant
 cnetplot(f_kegg_readable(kegg.u2), foldChange= f_gse_fuck(usignificant_markers$gene,usignificant_markers$avg_log2FC, lc_order = F))
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/kegg.u2_c.png)](https://img-cdn.limour.top/blog_wp/2021/10/kegg.u2_c.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/kegg.u2_c.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/kegg.u2_c.webp)

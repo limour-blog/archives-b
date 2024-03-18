@@ -61,4 +61,4 @@ f_umap_density2d_  <- function(sObject){
 
 `f_umap_density2d_(pbmc)`
 
-[![](https://img-cdn.limour.top/blog_wp/2021/12/16386846371.png)](https://img-cdn.limour.top/blog_wp/2021/12/16386846371.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/12/16386846371.webp)](https://img.limour.top/archives_2023/blog_wp/2021/12/16386846371.webp)

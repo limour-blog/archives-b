@@ -9,7 +9,7 @@ date: 2022-09-02 05:52:22
 
 之前用[docker安装NPM面板](https://occdn.limour.top/1997.html)，并套上了CF的免费CDN，做好了规则防护。现在还差一个防止通过固定Hostname然后扫描全网ip来反查源站的保护。
 
-![](https://img-cdn.limour.top/2022/09/02/6311991bb6b3f.png)
+![](https://img.limour.top/archives_2023/2022/09/02/6311991bb6b3f.webp)
 
 ```bash
 #!/bin/bash

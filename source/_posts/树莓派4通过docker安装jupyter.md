@@ -87,10 +87,10 @@ RewriteRule /(.*) ws://127.0.0.1:21080/$1 [P,L]
 
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2020/12/image.png)](https://img-cdn.limour.top/blog_wp/2020/12/image.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2020/12/image.webp)](https://img.limour.top/archives_2023/blog_wp/2020/12/image.webp)
 
 最终效果
 
-[![](https://img-cdn.limour.top/blog_wp/2020/12/image-1.png)](https://img-cdn.limour.top/blog_wp/2020/12/image-1.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2020/12/image-1.webp)](https://img.limour.top/archives_2023/blog_wp/2020/12/image-1.webp)
 
 容器细节

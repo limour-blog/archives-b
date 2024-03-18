@@ -23,11 +23,11 @@ date: 2022-02-03 19:00:58
 *   导入无物理的动作
 *   打开记录物理，并开始记录物理
 
-[![](https://img-cdn.limour.top/blog_wp/2022/02/image-1.png)](https://img-cdn.limour.top/blog_wp/2022/02/image-1.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/02/image-1.webp)](https://img.limour.top/archives_2023/blog_wp/2022/02/image-1.webp)
 
 *   文件-保存动作数据（Export Motion）
 
-[![](https://img-cdn.limour.top/blog_wp/2022/02/image-2.png)](https://img-cdn.limour.top/blog_wp/2022/02/image-2.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/02/image-2.webp)](https://img.limour.top/archives_2023/blog_wp/2022/02/image-2.webp)
 
 ## 第三步 Blender载入模型并设置好渲染材质
 

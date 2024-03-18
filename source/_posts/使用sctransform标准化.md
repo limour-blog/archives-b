@@ -111,7 +111,7 @@ require(clustree)
 clustree::clustree(sce@meta.data, prefix = "SCT_snn_res.")
 ```
 
-![](https://img-cdn.limour.top/2022/09/28/63346be4bd300.png)
+![](https://img.limour.top/archives_2023/2022/09/28/63346be4bd300.webp)
 
 这图还挺好看的
 
@@ -127,7 +127,7 @@ bcmvn <- DoubletFinder::find.pK(sweep.stats)
 
 ### Run DoubletFinder
 
-![](https://img-cdn.limour.top/2022/09/29/633471b0dea83.png)
+![](https://img.limour.top/archives_2023/2022/09/29/633471b0dea83.webp)
 
 **[10X genomics单细胞平台的dulblets比率](https://cloud.tencent.com/developer/article/1825672)**
 

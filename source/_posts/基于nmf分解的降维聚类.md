@@ -64,7 +64,7 @@ DimPlot(sce, reduction = "umap", label = T, repel = T,
         group.by = c('nmf_group'))
 ```
 
-![](https://img-cdn.limour.top/2022/10/02/6339443a6fa0e.png)
+![](https://img.limour.top/archives_2023/2022/10/02/6339443a6fa0e.webp)
 
 ## **提取**signatures
 

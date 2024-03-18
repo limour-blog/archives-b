@@ -7,11 +7,11 @@ categories:
 date: 2022-09-25 07:08:51
 ---
 
-![](https://img-cdn.limour.top/2022/09/25/632fc9055a801.png)
+![](https://img.limour.top/archives_2023/2022/09/25/632fc9055a801.webp)
 
 If you have a library which was sequenced across multiple flowcells, you can pool the reads from both sequencing runs. Follow the steps in [Running Multi-Library Samples](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/2.0/advanced/multi-library-samples) to combine them in a single cellranger count run.
 
-![](https://img-cdn.limour.top/2022/09/25/632fcc42859d5.png)
+![](https://img.limour.top/archives_2023/2022/09/25/632fcc42859d5.webp)
 
 ## 重命名R1、R2
 

@@ -513,4 +513,4 @@ plotEigengeneNetworks(MET, setLabels, marDendro = c(0,2,2,1), marHeatmap = c(3,3
     zlimPreservation = c(0.5, 1), xLabelsAngle = 90)
 ```
 
-![](https://img-cdn.limour.top/2022/07/24/62dd26613e05f.png)
+![](https://img.limour.top/archives_2023/2022/07/24/62dd26613e05f.webp)

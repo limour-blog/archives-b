@@ -64,4 +64,4 @@ listen [::]:443 ssl http2;
 
 [Linux下iptables 禁止端口和开放端口](https://blog.csdn.net/zht666/article/details/17505789)
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/8ea6b47ff0fb78f9a848e9648ec364c.jpg)](https://img-cdn.limour.top/blog_wp/2021/10/8ea6b47ff0fb78f9a848e9648ec364c.jpg)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/8ea6b47ff0fb78f9a848e9648ec364c.jpg)](https://img.limour.top/archives_2023/blog_wp/2021/10/8ea6b47ff0fb78f9a848e9648ec364c.jpg)

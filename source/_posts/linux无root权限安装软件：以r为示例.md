@@ -20,7 +20,7 @@ date: 2021-09-19 19:08:22
 *   记事本打开 C:\\Users\\11248\\.ssh\\ config
 *   添加内容 `ServerAliveInterval 60` 并保存
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image.png)](https://img-cdn.limour.top/blog_wp/2021/09/image.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image.webp)
 
 *   按下 `win+R` 快捷键
 *   输入 `powershell` 确定

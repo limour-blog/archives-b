@@ -96,7 +96,7 @@ geom_point(size=3,alpha=0.8) +
 stat_smooth(method = 'lm', se = FALSE)
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/11/下载-1.png)](https://img-cdn.limour.top/blog_wp/2021/11/下载-1.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/11/下载-1.webp)](https://img.limour.top/archives_2023/blog_wp/2021/11/下载-1.webp)
 
 *   正式版
 
@@ -124,4 +124,4 @@ scale_color_discrete(name="group",
 ggsave("example2.pdf")
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/11/5.png)](https://img-cdn.limour.top/blog_wp/2021/11/5.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/11/5.webp)](https://img.limour.top/archives_2023/blog_wp/2021/11/5.webp)

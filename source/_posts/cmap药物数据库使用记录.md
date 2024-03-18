@@ -25,7 +25,7 @@ write.table(x = as.data.frame(down), file = 'cmap_input_down.txt', row.names = F
 
 ## 进行Cmap分析
 
-![](https://img-cdn.limour.top/2022/09/03/63133cc60e6e1.png)
+![](https://img.limour.top/archives_2023/2022/09/03/63133cc60e6e1.webp)
 
 [点此进入分析页面](https://clue.io/query)，完成后可下载tar.gz的结果，解压后arfs/TAG下面的gct是我们需要的
 

@@ -35,4 +35,4 @@ RewriteRule .*\.(gifjpgpngrar)$ https://i.loli.net/2020/05/15/5BnMQzU74teqm2p.pn
 
 以后用图片选择 区块-图像-媒体库 插入
 
-![](https://img-cdn.limour.top/blog_wp/2020/04/589c3057c63f8-1024x576.jpg)
+![](https://img.limour.top/archives_2023/blog_wp/2020/04/589c3057c63f8-1024x576.jpg)

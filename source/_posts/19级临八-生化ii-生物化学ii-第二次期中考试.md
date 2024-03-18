@@ -7,6 +7,6 @@ categories:
 date: 2021-11-28 21:07:34
 ---
 
-[![](https://img-cdn.limour.top/blog_wp/2021/11/2.png)](https://img-cdn.limour.top/blog_wp/2021/11/2.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/11/2.webp)](https://img.limour.top/archives_2023/blog_wp/2021/11/2.webp)
 
 第18题改A

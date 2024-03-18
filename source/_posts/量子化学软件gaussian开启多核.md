@@ -9,7 +9,7 @@ categories:
 date: 2020-04-26 18:34:14
 ---
 
-![](https://img-cdn.limour.top/blog_wp/2020/04/qrcode_for_gh_2f2011f8d30c_1280-e1587098787293.jpg)
+![](https://img.limour.top/archives_2023/blog_wp/2020/04/qrcode_for_gh_2f2011f8d30c_1280-e1587098787293.jpg)
 
 发送 Gauss软件 获得技术支持
 

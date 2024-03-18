@@ -369,4 +369,4 @@ Platelet,PPBP
 f_VlnBoxPlot(pbmc3k, markers , 'seurat_annotations')
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2022/01/VlnBox_5.png)](https://img-cdn.limour.top/blog_wp/2022/01/VlnBox_5.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/01/VlnBox_5.webp)](https://img.limour.top/archives_2023/blog_wp/2022/01/VlnBox_5.webp)

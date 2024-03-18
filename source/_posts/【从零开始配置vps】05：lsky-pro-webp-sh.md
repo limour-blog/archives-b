@@ -46,11 +46,11 @@ services:
 
 *   反向代理 7791 端口
 
-*   修改 【储存策略】【默认本地策略】【访问网址】为 `https://img-cdn.limour.top/i`
+*   修改 【储存策略】【默认本地策略】【访问网址】为 `https://img.limour.top/archives_2023/i`
 
 *   `sudo chmod 777 -R /root/app/Lsky/lsky-pro-data/storage/app/uploads`
 
-![](https://img-cdn.limour.top/i/2023/01/05/63b65a696e2af.png)
+![](https://img.limour.top/archives_2023/2023/01/05/63b65a696e2af.webp)
 
 ### 第零步 导入迁出的图片数据
 
@@ -71,7 +71,7 @@ version: '3'
 
 *   docker-compose up -d
 
-*   反向代理 3333 端口 到 `https://img-cdn.limour.top/`
+*   反向代理 3333 端口 到 `https://img.limour.top/archives_2023/`
 
 ## 第三步 搭建随机图片API
 

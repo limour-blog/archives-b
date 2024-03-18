@@ -109,3 +109,9 @@ deploy:
   name: us_limour@limour.top
   email: us_limour@limour.top
 
+links:
+  enable: true
+  field: "post"
+  exclude:
+    - "limour.top"
+    - "*.limour.top" #1.0.4及以上版本支持

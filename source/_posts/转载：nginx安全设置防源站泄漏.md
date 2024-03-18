@@ -41,11 +41,11 @@ pghp8GVQ94JcS5fmtZqX1yx0hBU4qZ0skIJr5D2M0BmhCBQ9Kulv2YDL
 
 ## 第二步 部署假页面并使用假证书
 
-[![](https://img-cdn.limour.top/blog_wp/2021/11/image.png)](https://img-cdn.limour.top/blog_wp/2021/11/image.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/11/image.webp)](https://img.limour.top/archives_2023/blog_wp/2021/11/image.webp)
 
 ## 第三步 修改默认站点
 
-[![](https://img-cdn.limour.top/blog_wp/2021/11/image-1.png)](https://img-cdn.limour.top/blog_wp/2021/11/image-1.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/11/image-1.webp)](https://img.limour.top/archives_2023/blog_wp/2021/11/image-1.webp)
 
 ## 第四步 修改返回代码
 
@@ -53,7 +53,7 @@ pghp8GVQ94JcS5fmtZqX1yx0hBU4qZ0skIJr5D2M0BmhCBQ9Kulv2YDL
 return 444;
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/11/image-2.png)](https://img-cdn.limour.top/blog_wp/2021/11/image-2.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/11/image-2.webp)](https://img.limour.top/archives_2023/blog_wp/2021/11/image-2.webp)
 
 ## 第五步 安全检测
 

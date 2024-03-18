@@ -17,23 +17,23 @@ date: 2022-07-31 17:30:20
 
 从[Ubuntu官网](https://cn.ubuntu.com/download/server/thank-you?version=22.04&architecture=amd64)下载ISO镜像，创建虚拟机
 
-![](https://img-cdn.limour.top/2022/08/01/62e6aa4038aa6.png)
+![](https://img.limour.top/archives_2023/2022/08/01/62e6aa4038aa6.webp)
 
 选择典型
 
-![](https://img-cdn.limour.top/2022/08/01/62e6aa768774c.png)
+![](https://img.limour.top/archives_2023/2022/08/01/62e6aa768774c.webp)
 
 选择ISO镜像路径
 
-![](https://img-cdn.limour.top/2022/08/01/62e6aaea6e083.png)
+![](https://img.limour.top/archives_2023/2022/08/01/62e6aaea6e083.webp)
 
 选择虚拟磁盘保存路径，建议新建空文件夹
 
-![](https://img-cdn.limour.top/2022/08/01/62e6abbfa6a51.png)
+![](https://img.limour.top/archives_2023/2022/08/01/62e6abbfa6a51.webp)
 
 磁盘大小设置大一点
 
-![](https://img-cdn.limour.top/2022/08/01/62e6add58a37b.png)
+![](https://img.limour.top/archives_2023/2022/08/01/62e6add58a37b.webp)
 
 一路默认，到这里选择开启SSH，安装完成后会提示reboot，之后会提示移除CD安装镜像
 

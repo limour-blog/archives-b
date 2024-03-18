@@ -232,7 +232,7 @@ f_tcga_getSampleID <- function(lc_pre1){
 # https://api.gdc.cancer.gov/data/25aa497c-e615-4cb7-8751-71f744f9691f
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/image-1.png)](https://img-cdn.limour.top/blog_wp/2021/10/image-1.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/image-1.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/image-1.webp)
 
 下载解压
 

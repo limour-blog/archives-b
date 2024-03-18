@@ -19,6 +19,6 @@ jupyter nbextensions_configurator enable --user
 kill 1
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/03/image.png)](https://img-cdn.limour.top/blog_wp/2021/03/image.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/03/image.webp)](https://img.limour.top/archives_2023/blog_wp/2021/03/image.webp)
 
 取消disable，勾选Hinterland

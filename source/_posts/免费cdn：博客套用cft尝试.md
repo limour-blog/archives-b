@@ -21,7 +21,7 @@ AWS注册比甲骨文云轻松，但是需要VISA信用卡，邮箱和手机号
 *   [grpc看这里，但是CFT似乎还不支持](https://occdn.limour.top/2075.html)
 *   查看日志 tail /home/ubuntu/ngpm/data/logs/proxy-host-9\_access.log
 
-![](https://img-cdn.limour.top/2022/08/05/62eceadc5bfb4.png)
+![](https://img.limour.top/archives_2023/2022/08/05/62eceadc5bfb4.webp)
 
 sudo ip addr show docker0
 

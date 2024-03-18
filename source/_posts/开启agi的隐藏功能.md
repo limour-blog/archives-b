@@ -9,7 +9,7 @@ date: 2023-03-04 05:31:47
 
 之前利用[chatgpt-demo](https://github.com/ddiu8081/chatgpt-demo)部署了[自己的AGI](https://occdn.limour.top/2610.html)，现在通过修改前端代码，来开启一些额外的功能。(修改方法由chatGPT辅助)
 
-![](https://img-cdn.limour.top/i/2023/03/04/6402d633864ab.png)
+![](https://img.limour.top/archives_2023/2023/03/04/6402d633864ab.webp)
 
 效果类似这样
 

@@ -7,7 +7,7 @@ categories:
 date: 2023-02-17 16:36:01
 ---
 
-![](https://img-cdn.limour.top/i/2023/02/18/63efaab8c5d13.jpg)
+![](https://img.limour.top/archives_2023/2023/02/18/63efaab8c5d13.jpg)
 
 Arona+naifu+hanfu
 
@@ -23,7 +23,7 @@ Time taken: 1m 20.61sTorch active/reserved: 4898/5302 MiB, Sys VRAM: 6144/6144 M
 
 这张图以NovelAI的模型为底，加上Arona的LoRA和hanfu的LoRA混合而成。
 
-![](https://img-cdn.limour.top/i/2023/02/18/63efaba9118b2.png)
+![](https://img.limour.top/archives_2023/2023/02/18/63efaba9118b2.webp)
 
 我将这些拆成了四个Styles：（以下为styles.csv中对应的内容）
 

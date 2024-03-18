@@ -59,6 +59,6 @@ options(repr.plot.width=7, repr.plot.height=6)
 plotTSNE(sce, colour_by="Batch")
 ```
 
-![](https://img-cdn.limour.top/2022/08/13/62f75f0279859.png)
+![](https://img.limour.top/archives_2023/2022/08/13/62f75f0279859.webp)
 
 emm，效果差强人意

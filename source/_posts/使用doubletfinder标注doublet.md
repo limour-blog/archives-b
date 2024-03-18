@@ -49,7 +49,7 @@ f_plotBestClusters(sce)
 
 ## 进行分群
 
-![](https://img-cdn.limour.top/2022/10/01/6337c9ef721ee.png)
+![](https://img.limour.top/archives_2023/2022/10/01/6337c9ef721ee.webp)
 
 f\_plotBestClusters
 
@@ -75,7 +75,7 @@ table(Seurat::Idents(sce))
 
 ## 标注Doublet
 
-![](https://img-cdn.limour.top/2022/09/29/633471b0dea83.png)
+![](https://img.limour.top/archives_2023/2022/09/29/633471b0dea83.webp)
 
 读表获取先验的Doublet占比
 
@@ -117,4 +117,4 @@ DimPlot(sce, reduction = "umap", label = T, repel = T,
         group.by = c("DF.classifications_0.25_0.04_416", 'seurat_clusters'))
 ```
 
-![](https://img-cdn.limour.top/2022/10/01/6337d3a982439.png)
+![](https://img.limour.top/archives_2023/2022/10/01/6337d3a982439.webp)

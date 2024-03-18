@@ -54,7 +54,7 @@ sample = Fileset('Captcha', '.jpg', Image.open)
 
 测试用验证码文件
 
-![](https://img-cdn.limour.top/blog_wp/2020/07/微信图片_20200702203134.png)
+![](https://img.limour.top/archives_2023/blog_wp/2020/07/微信图片_20200702203134.webp)
 
 与百度OCR的对比,第一个是tesseractOCR
 

@@ -7,4 +7,4 @@ categories:
 date: 2021-10-24 21:56:45
 ---
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/1.png)](https://img-cdn.limour.top/blog_wp/2021/10/1.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/1.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/1.webp)

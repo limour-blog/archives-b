@@ -11,10 +11,10 @@ date: 2022-10-19 11:05:03
 
 先在[AWS Certificate Manager](https://us-east-1.console.aws.amazon.com/acm/home?region=us-east-1#/welcome)中申请别名的证书。
 
-![](https://img-cdn.limour.top/2022/10/19/634fd70bbc65d.png)
+![](https://img.limour.top/archives_2023/2022/10/19/634fd70bbc65d.webp)
 
 [CloudFront](https://us-east-1.console.aws.amazon.com/cloudfront/v3/home?region=us-west-1#/)中添加别名和证书
 
-![](https://img-cdn.limour.top/2022/10/19/634fd7c13e005.png)
+![](https://img.limour.top/archives_2023/2022/10/19/634fd7c13e005.webp)
 
 DNS解析中，将别名用CNAME指向xxx.cloudfront.net，并在NPManger中添加别名反代。使用https访问别名，查看博客证书是否正确。

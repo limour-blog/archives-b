@@ -9,7 +9,7 @@ date: 2023-01-29 17:25:55
 
 创建新的免费实例，选择Ubuntu镜像，SSH密钥对在登录时一直不正确，删除重建了N次，干脆绕开这个奇怪的设计。按下图在最后的高级选项里添加如下的初始化脚本，然后用密码登录即可。
 
-![](https://img-cdn.limour.top/i/2023/01/30/63d6ab6e72577.png)
+![](https://img.limour.top/archives_2023/2023/01/30/63d6ab6e72577.webp)
 
 ```bash
 #!/bin/bash

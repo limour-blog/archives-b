@@ -77,7 +77,7 @@ a$c <- f_removeBE(a$c,a$b,a$g,use_ComBat = 2)
 
 ## 第三步 使用SigEMD
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/image-2.png)](https://img-cdn.limour.top/blog_wp/2021/10/image-2.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/image-2.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/image-2.webp)
 
 emm，前面都不用做了
 

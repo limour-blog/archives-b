@@ -28,7 +28,7 @@ date: 2022-07-11 04:33:27
 *   添加知乎每日精选进行测试 https://www.zhihu.com/rss
 *   同时可以在RSShub找到订阅源 https://docs.rsshub.app/usage.html#sheng-cheng-ding-yue-yuan
 
-![](https://img-cdn.limour.top/blog/20220711110841.png)
+![](https://img.limour.top/archives_2023/blog/20220711110841.webp)
 
 效果很棒！
 
@@ -64,7 +64,7 @@ services:
 *   在TTRSS中添加 这个的订阅源
 *   使用教程：https://blog.laoda.de/archives/docker-compose-install-wallabag
 
-![](https://img-cdn.limour.top/blog/20220711121934.png)
+![](https://img.limour.top/archives_2023/blog/20220711121934.webp)
 
 效果很棒！
 
@@ -75,6 +75,6 @@ services:
 *   谷歌市场安装FeedMe，TTRSS登录，域名需要带https://前缀
 *   登录后点击同步
 
-![](https://img-cdn.limour.top/blog/f8968e59b82a59b69db5bc99a31f345.jpg)
+![](https://img.limour.top/archives_2023/blog/f8968e59b82a59b69db5bc99a31f345.jpg)
 
 效果很棒！

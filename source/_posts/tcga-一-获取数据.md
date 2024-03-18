@@ -28,7 +28,7 @@ library(SummarizedExperiment)
 TCGAbiolinks:::getGDCprojects()$project_id
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-23.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-23.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-23.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-23.webp)
 
 癌症类型说明：[癌症类型和样本代号详解TCGA](https://www.biowolf.cn/TCGA/tcga_sample.html)
 
@@ -38,7 +38,7 @@ TCGAbiolinks:::getGDCprojects()$project_id
 TCGAbiolinks:::getProjectSummary('TCGA-PRAD') # 以前列腺癌为例
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-24.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-24.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-24.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-24.webp)
 
 case\_count为病人数，file\_count为对应的文件数，"Transcriptome Profiling"表示表达谱
 
@@ -75,7 +75,7 @@ query <- GDCquery(project = 'TCGA-PRAD',
                   workflow.type = "HTSeq - Counts")
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-25.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-25.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-25.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-25.webp)
 
 ## 第五步 保存对应数据
 

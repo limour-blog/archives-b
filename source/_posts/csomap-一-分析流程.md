@@ -12,19 +12,19 @@ date: 2021-09-21 14:43:08
 
 *   先读readme，里面描述了输入数据的格式
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-17.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-17.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-17.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-17.webp)
 
 *   label.txt：细胞标注表，格式如图
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-13.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-13.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-13.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-13.webp)
 
 *   LR\_pairs.txt：受体配体表，格式如图，用CSOmap自带的也行
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-11.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-11.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-11.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-11.webp)
 
 *   TPM.txt：TPM标注化的表达矩阵，格式如图，第一行得用`\t`开头
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-18.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-18.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-18.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-18.webp)
 
 ## 第二步 导出CSOmap所需的数据
 
@@ -88,17 +88,17 @@ f[0:1] = b"\t"
 *   [What is a Host ID? How do I find my Host ID in order to activate my license?](https://ww2.mathworks.cn/matlabcentral/answers/101892-what-is-a-host-id-how-do-i-find-my-host-id-in-order-to-activate-my-license)
 *   运行 `matlab -nojvm`
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-14.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-14.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-14.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-14.webp)
 
 *   hostid中选一个， 比如 `6c:92:bf:ee:06:d6`
 *   [获得离线许可证](https://ww2.mathworks.cn/licensecenter)
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-15.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-15.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-15.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-15.webp)
 
 *   将许可证放入用户目录的License path，并修改后缀为 `.lic`
 *   测试：`matlab **-nodisplay**`
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-16.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-16.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-16.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-16.webp)
 
 ## 第四步 测试CSOmap分析
 

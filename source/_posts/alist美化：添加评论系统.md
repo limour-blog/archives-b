@@ -13,7 +13,7 @@ date: 2023-02-08 05:08:41
 
 Demo：[https://od.limour.top/](https://od.limour.top/)
 
-![](https://img-cdn.limour.top/i/2023/02/08/63e32caf028fb.jpg)
+![](https://img.limour.top/archives_2023/2023/02/08/63e32caf028fb.jpg)
 
 ## 添加评论系统
 
@@ -73,7 +73,7 @@ function getOnlineUser() {
 <style type="text/css">
 * {font-family: LXGW WenKai;font-weight: bold;}
 .notify-render .hope-close-button{display: none;}
-.hope-ui-light {background-image: url(https://img-cdn.limour.top/i/2023/02/05/63dece3c51856.png) !important; background-repeat: no-repeat; background-size: cover; background-attachment: fixed; background-position-x: center;}
+.hope-ui-light {background-image: url(https://img.limour.top/archives_2023/2023/02/05/63dece3c51856.webp) !important; background-repeat: no-repeat; background-size: cover; background-attachment: fixed; background-position-x: center;}
 .obj-box.hope-stack.hope-c-dhzjXW.hope-c-PJLV.hope-c-PJLV-igScBhH-css {background-color: rgba(255, 255, 255, 0.5) !important;}
 .hope-c-PJLV.hope-c-PJLV-ikSuVsl-css {background-color: rgba(255, 255, 255, 0.5) !important;}
 .hope-ui-light pre {background-color: rgba(255, 255, 255, 0.1) !important;}

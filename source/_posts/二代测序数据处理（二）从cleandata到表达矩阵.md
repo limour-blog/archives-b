@@ -12,19 +12,19 @@ date: 2022-01-25 00:52:05
 
 *   CleanData：由测序公司提供
 
-[![](https://img-cdn.limour.top/blog_wp/2022/01/image-17.png)](https://img-cdn.limour.top/blog_wp/2022/01/image-17.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/01/image-17.webp)](https://img.limour.top/archives_2023/blog_wp/2022/01/image-17.webp)
 
 内有 name\_R1.fq.gz 和 name\_R2.fq.gz
 
 *   对应物种的索引文件：[二代测序数据处理（一）数据格式说明](https://limour.top/1391.html)
 
-[![](https://img-cdn.limour.top/blog_wp/2022/01/image-15.png)](https://img-cdn.limour.top/blog_wp/2022/01/image-15.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/01/image-15.webp)](https://img.limour.top/archives_2023/blog_wp/2022/01/image-15.webp)
 
 大鼠的索引文件
 
 *   对应物种的染色体模板
 
-[![](https://img-cdn.limour.top/blog_wp/2022/01/image-20.png)](https://img-cdn.limour.top/blog_wp/2022/01/image-20.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/01/image-20.webp)](https://img.limour.top/archives_2023/blog_wp/2022/01/image-20.webp)
 
 上面的染色体模板命名不规范，使用下面脚本修改
 
@@ -38,13 +38,13 @@ do
 done
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2022/01/image-22.png)](https://img-cdn.limour.top/blog_wp/2022/01/image-22.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/01/image-22.webp)](https://img.limour.top/archives_2023/blog_wp/2022/01/image-22.webp)
 
 规范后的染色体命名
 
 *   对应物种的GFT注释文件
 
-[![](https://img-cdn.limour.top/blog_wp/2022/01/image-21.png)](https://img-cdn.limour.top/blog_wp/2022/01/image-21.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/01/image-21.webp)](https://img.limour.top/archives_2023/blog_wp/2022/01/image-21.webp)
 
 [两份注释文件的差别](https://www.biostars.org/p/217700/)，一般使用不带chr的文件
 
@@ -85,11 +85,11 @@ done
 
 *   查看 1.log 确保匹配率高于80%，下图为 95.01%
 
-[![](https://img-cdn.limour.top/blog_wp/2022/01/image-18.png)](https://img-cdn.limour.top/blog_wp/2022/01/image-18.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/01/image-18.webp)](https://img.limour.top/archives_2023/blog_wp/2022/01/image-18.webp)
 
 *   最终结果
 
-[![](https://img-cdn.limour.top/blog_wp/2022/01/image-19.png)](https://img-cdn.limour.top/blog_wp/2022/01/image-19.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/01/image-19.webp)](https://img.limour.top/archives_2023/blog_wp/2022/01/image-19.webp)
 
 ## 第三步 生成基因矩阵
 
@@ -153,7 +153,7 @@ cuffdiff -L $LABLES -o $WORK -b $GRCh38 -p 12 -u $GTF $LIST
 
 *   最终结果
 
-[![](https://img-cdn.limour.top/blog_wp/2022/01/image-23.png)](https://img-cdn.limour.top/blog_wp/2022/01/image-23.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/01/image-23.webp)](https://img.limour.top/archives_2023/blog_wp/2022/01/image-23.webp)
 
 ## 第四步 转换成symbol的csv
 
@@ -165,10 +165,10 @@ gp_filter <- gp[,c('gene_id', 'gene_short_name', sampleN)]
 write.csv(gp_filter, file='gp.csv')
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2022/01/image-24.png)](https://img-cdn.limour.top/blog_wp/2022/01/image-24.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/01/image-24.webp)](https://img.limour.top/archives_2023/blog_wp/2022/01/image-24.webp)
 
 gp的内容
 
-[![](https://img-cdn.limour.top/blog_wp/2022/01/image-25.png)](https://img-cdn.limour.top/blog_wp/2022/01/image-25.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/01/image-25.webp)](https://img.limour.top/archives_2023/blog_wp/2022/01/image-25.webp)
 
 gp.csv的内容

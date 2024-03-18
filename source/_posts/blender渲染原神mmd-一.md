@@ -11,7 +11,7 @@ date: 2022-02-01 08:21:07
 
 *   在Steam安装Blender
 
-[![](https://img-cdn.limour.top/blog_wp/2022/02/image.png)](https://img-cdn.limour.top/blog_wp/2022/02/image.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2022/02/image.webp)](https://img.limour.top/archives_2023/blog_wp/2022/02/image.webp)
 
 *   安装PR或其他视频剪辑软件
 *   下载[c753214896](https://space.bilibili.com/152332728)大佬的blender场景  

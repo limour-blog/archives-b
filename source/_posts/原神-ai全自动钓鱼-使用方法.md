@@ -17,7 +17,7 @@ date: 2021-12-15 21:03:45
 *   [Getting started with Anaconda](https://www.anaconda.com/products/individual#Downloads)
 *   下载安装包，安装到独立的磁盘，取消掉两个Advanced Options
 
-[![](https://img-cdn.limour.top/blog_wp/2021/12/image.png)](https://img-cdn.limour.top/blog_wp/2021/12/image.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/12/image.webp)](https://img.limour.top/archives_2023/blog_wp/2021/12/image.webp)
 
 ## 第二步 安装cuda和cuDNN
 
@@ -30,7 +30,7 @@ date: 2021-12-15 21:03:45
 *   按教程安装，覆盖，设置好环境变量
 *   cuda安装时取消除cuda外的其他选项
 
-[![](https://img-cdn.limour.top/blog_wp/2021/12/image-1.png)](https://img-cdn.limour.top/blog_wp/2021/12/image-1.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/12/image-1.webp)](https://img.limour.top/archives_2023/blog_wp/2021/12/image-1.webp)
 
 ## 第三步 修改 conda 镜像
 

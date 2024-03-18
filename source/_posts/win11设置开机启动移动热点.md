@@ -57,4 +57,4 @@ powershell.exe -command ^ "& {set-executionpolicy Remotesigned -Scope Process; .
 *   设置里设置 按下图进行设置
 *   重启测试，确认运行正常
 
-![](https://img-cdn.limour.top/2022/12/31/63aff8b266572.png)
+![](https://img.limour.top/archives_2023/2022/12/31/63aff8b266572.webp)

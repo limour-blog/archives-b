@@ -42,7 +42,7 @@ PP-Structurev2的主要特性如下：
 *   [NVIDIA Developer Program](https://developer.nvidia.com/rdp/cudnn-download)，下载cuDNN，解压cuDNN压缩包，可以看到bin、include、lib目录，将其拖拽到cuda目录下的相应版本的根目录，覆盖相应的bin、include、lib目录
 *   cd $env:CUDA\_PATH\\extras\\demo\_suite 执行 .\\bandwidthTest.exe
 
-![](https://img-cdn.limour.top/blog_wp/2021/12/image-1.png)
+![](https://img.limour.top/archives_2023/blog_wp/2021/12/image-1.webp)
 
 ## 安装**[PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)**
 

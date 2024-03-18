@@ -11,9 +11,9 @@ date: 2022-09-03 14:42:00
 
 ## 选择数据集
 
-![](https://img-cdn.limour.top/2022/09/03/631366d26c67b.png)
+![](https://img.limour.top/archives_2023/2022/09/03/631366d26c67b.webp)
 
-![](https://img-cdn.limour.top/2022/09/03/63136707221ea.png)
+![](https://img.limour.top/archives_2023/2022/09/03/63136707221ea.webp)
 
 ## 下载数据
 

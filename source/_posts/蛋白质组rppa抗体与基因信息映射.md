@@ -13,7 +13,7 @@ date: 2022-09-11 09:13:59
 
 从[官网](https://www.mdanderson.org/research/research-resources/core-facilities/functional-proteomics-rppa-core/antibody-information-and-protocols.html)下载手工版的映射表，整理成下面的格式，RPPA\_Expanded\_Ab\_List\_Updated、RPPA\_Standard\_Ab\_List\_Updated和the list of [Updated Gene Names](https://www.mdanderson.org/content/dam/mdanderson/documents/core-facilities/Functional%20Proteomics%20RPPA%20Core%20Facility/Corrected_Gene_Names.pdf)都需要。
 
-![](https://img-cdn.limour.top/2022/09/11/631d8cff8b914.png)
+![](https://img.limour.top/archives_2023/2022/09/11/631d8cff8b914.webp)
 
 ## 清洗合并映射表
 

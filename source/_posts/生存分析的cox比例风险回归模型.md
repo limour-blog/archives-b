@@ -13,7 +13,7 @@ date: 2022-07-17 00:27:45
 
 [Logisitic回归](https://occdn.limour.top/2099.html)和Cox回归均基于大样本的假定，因此所需要的样本含量多于多重线性回归，需要达到**模型自变量个数的15~20倍**。如果样本含量较小，则难以得到稳定可靠的结论。
 
-![](https://img-cdn.limour.top/2022/07/17/62d3463eb5034.png)
+![](https://img.limour.top/archives_2023/2022/07/17/62d3463eb5034.webp)
 
 ## Cox回归的假设
 

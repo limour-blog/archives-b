@@ -67,7 +67,7 @@ options(repr.plot.width=8, repr.plot.height=8)
 cnetplot(kegg.d2, foldChange=lgene)
 ```
 
-![](https://img-cdn.limour.top/2022/07/21/62d88e9365f97.png)
+![](https://img.limour.top/archives_2023/2022/07/21/62d88e9365f97.webp)
 
 显然，结果是成功的！
 
@@ -108,4 +108,4 @@ gse.H <- GSEA(gene = lgene,
 gseaplot2(gse.H,geneSetID=head(which(gse.H@result$enrichmentScore < -0.3),6))
 ```
 
-![](https://img-cdn.limour.top/2022/07/21/62d8989995e3f.png)
+![](https://img.limour.top/archives_2023/2022/07/21/62d8989995e3f.webp)

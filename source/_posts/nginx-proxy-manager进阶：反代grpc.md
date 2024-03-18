@@ -21,4 +21,4 @@ location /path {
 }
 ```
 
-![](https://img-cdn.limour.top/i/2023/01/31/63d8ebf212d75.png)
+![](https://img.limour.top/archives_2023/2023/01/31/63d8ebf212d75.webp)

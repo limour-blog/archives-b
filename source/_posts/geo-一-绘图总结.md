@@ -34,7 +34,7 @@ f_DEG_Volcano <- function(lc_logFC, lc_p, lc_gene, Threshold_logFC = 1, Threshol
 
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/v-1.png)](https://img-cdn.limour.top/blog_wp/2021/10/v-1.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/v-1.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/v-1.webp)
 
 ## 第二步 箱型图
 
@@ -93,7 +93,7 @@ tp_counts <- f_id2name(gl_counts, illuminaMousev2SYMBOL)
 
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/10/box-2.png)](https://img-cdn.limour.top/blog_wp/2021/10/box-2.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/10/box-2.webp)](https://img.limour.top/archives_2023/blog_wp/2021/10/box-2.webp)
 
 ## 第三步 热图
 

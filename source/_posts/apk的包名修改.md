@@ -30,7 +30,7 @@ pip3 install python-magic-bin
 .\apktool.bat d .\xpushdemo.apk
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/11/0f25ad37e69eea0f05ffdd4ba6cbbab.png)](https://img-cdn.limour.top/blog_wp/2021/11/0f25ad37e69eea0f05ffdd4ba6cbbab.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/11/0f25ad37e69eea0f05ffdd4ba6cbbab.webp)](https://img.limour.top/archives_2023/blog_wp/2021/11/0f25ad37e69eea0f05ffdd4ba6cbbab.webp)
 
 ## 第三步 使用python批量替换
 
@@ -180,7 +180,7 @@ if __name__=='__main__':
 .\apktool.bat b .\xpushdemo
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/11/image-3.png)](https://img-cdn.limour.top/blog_wp/2021/11/image-3.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/11/image-3.webp)](https://img.limour.top/archives_2023/blog_wp/2021/11/image-3.webp)
 
 新打包的apk在解包文件夹的 `dist` 目录下
 
@@ -192,9 +192,9 @@ if __name__=='__main__':
 keytool -genkey -alias abc.keystore -keyalg RSA -validity 20000 -keystore abc.keystore
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/11/9abeda08b2b408d196779f058d37a9b.png)](https://img-cdn.limour.top/blog_wp/2021/11/9abeda08b2b408d196779f058d37a9b.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/11/9abeda08b2b408d196779f058d37a9b.webp)](https://img.limour.top/archives_2023/blog_wp/2021/11/9abeda08b2b408d196779f058d37a9b.webp)
 
-[![](https://img-cdn.limour.top/blog_wp/2021/11/5e2d83c8f998a1e3b69761778c0e5cc.png)](https://img-cdn.limour.top/blog_wp/2021/11/5e2d83c8f998a1e3b69761778c0e5cc.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/11/5e2d83c8f998a1e3b69761778c0e5cc.webp)](https://img.limour.top/archives_2023/blog_wp/2021/11/5e2d83c8f998a1e3b69761778c0e5cc.webp)
 
 ## 第六步 给apk签名
 
@@ -204,7 +204,7 @@ keytool -genkey -alias abc.keystore -keyalg RSA -validity 20000 -keystore abc.ke
 jarsigner -verbose -keystore abc.keystore -signedjar xpushdemo_signed.apk xpushdemo.apk abc.keystore
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/11/53bbb0390bb68b8704845cabf3edf0f.png)](https://img-cdn.limour.top/blog_wp/2021/11/53bbb0390bb68b8704845cabf3edf0f.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/11/53bbb0390bb68b8704845cabf3edf0f.webp)](https://img.limour.top/archives_2023/blog_wp/2021/11/53bbb0390bb68b8704845cabf3edf0f.webp)
 
 *   验证签名有效
 

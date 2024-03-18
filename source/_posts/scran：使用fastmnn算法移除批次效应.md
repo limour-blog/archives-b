@@ -132,6 +132,6 @@ sce <- runTSNE(sce, use_dimred="MNN");
 plotTSNE(sce, colour_by="Batch")
 ```
 
-![](https://img-cdn.limour.top/2022/08/13/62f7500076865.png)
+![](https://img.limour.top/archives_2023/2022/08/13/62f7500076865.webp)
 
 效果稀碎。。。

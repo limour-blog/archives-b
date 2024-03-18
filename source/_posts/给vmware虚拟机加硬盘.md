@@ -9,15 +9,15 @@ date: 2022-10-02 06:27:33
 
 买了一台[零刻 SER5 Pro 32G](https://zhongce.sina.com.cn/article/view/146429/)作为虚拟机的宿主机，用了一个月[感觉还行](https://tz.limour.eu.org/)，准备加装一个[铠侠TC10 1T SATA3固态](https://item.jd.com/100007080971.html)。小心排线接口上有个黑色的东东，先用镊子挑起来再拔。然后虚拟机设置里添加磁盘。
 
-![](https://img-cdn.limour.top/2022/10/02/633912609a4e0.png)
+![](https://img.limour.top/archives_2023/2022/10/02/633912609a4e0.webp)
 
 核心参数
 
-![](https://img-cdn.limour.top/2022/10/02/633912aeb6600.jpg)
+![](https://img.limour.top/archives_2023/2022/10/02/633912aeb6600.jpg)
 
 机器外观
 
-![](https://img-cdn.limour.top/2022/10/02/63391364f3844.jpg)
+![](https://img.limour.top/archives_2023/2022/10/02/63391364f3844.jpg)
 
 固态外观
 

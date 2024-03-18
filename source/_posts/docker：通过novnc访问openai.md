@@ -35,4 +35,4 @@ services:
 
 *   访问 https://yourdomain/vnc.html?resize=downscale&autoconnect=1&password=password
 
-![](https://img-cdn.limour.top/i/2023/02/13/63e91bbccaf5f.png)
+![](https://img.limour.top/archives_2023/2023/02/13/63e91bbccaf5f.webp)

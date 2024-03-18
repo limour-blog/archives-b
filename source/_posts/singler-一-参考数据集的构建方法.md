@@ -30,9 +30,9 @@ ref_meta <- read.csv("/home/rqzhang/zlliu/R_data/human_M1_10x/metadata.csv")
 ref_counts <- read.csv("/home/rqzhang/zlliu/R_data/human_M1_10x/matrix.csv")
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-1.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-1.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-1.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-1.webp)
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-3.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-3.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-3.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-3.webp)
 
 *   读入 [`Human Multiple Cortical Areas SMART-seq`](https://portal.brain-map.org/atlases-and-data/rnaseq/human-multiple-cortical-areas-smart-seq)
 
@@ -41,9 +41,9 @@ ref2_meta <- read.csv("/home/rqzhang/zlliu/R_data/Human_Multiple_Cortical_Areas_
 ref2_counts <- read.csv("/home/rqzhang/zlliu/R_data/Human_Multiple_Cortical_Areas_SMART-seq/matrix.csv")
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-4.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-4.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-4.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-4.webp)
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-5.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-5.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-5.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-5.webp)
 
 ## 第三步 转置矩阵
 
@@ -67,7 +67,7 @@ ref2_d_counts <- as.data.frame(lapply(ref2_d_counts, as.integer))
 
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-7.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-7.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-7.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-7.webp)
 
 ## 第四步 加载程辑包并计算SummarizedExperiment
 
@@ -83,7 +83,7 @@ ref2_d_counts <- logNormCounts(ref2_d_counts)
 
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-8.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-8.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-8.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-8.webp)
 
 ## 第五步 与metadata一起保存
 
@@ -93,4 +93,4 @@ ref2_d_counts$meta <- ref2_meta
 
 ```
 
-[![](https://img-cdn.limour.top/blog_wp/2021/09/image-9.png)](https://img-cdn.limour.top/blog_wp/2021/09/image-9.png)
+[![](https://img.limour.top/archives_2023/blog_wp/2021/09/image-9.webp)](https://img.limour.top/archives_2023/blog_wp/2021/09/image-9.webp)

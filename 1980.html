@@ -1,0 +1,705 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="需求 每天早上核酸检测即将开始，定时发送在线表格二维码到班级微信群 每天下午核酸检测即将结束，定时检测未完成填写的同学名单，发送提醒信息到班级微信群 在线表格设计如下   用了保护所选范围+冻结+条件格式+数据验证构建的简易核酸记录表，要求在校同学每日填报 功能拆分 低功耗小主机，如树莓派，运行微信，开放发信API到公网，demo点此 爬虫采集腾讯文档在线表格内容，demo点此 通过爬虫采集的内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="核酸检测完成情况提醒bot开发记录">
+<meta property="og:url" content="https://b.limour.top/1980.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="需求 每天早上核酸检测即将开始，定时发送在线表格二维码到班级微信群 每天下午核酸检测即将结束，定时检测未完成填写的同学名单，发送提醒信息到班级微信群 在线表格设计如下   用了保护所选范围+冻结+条件格式+数据验证构建的简易核酸记录表，要求在校同学每日填报 功能拆分 低功耗小主机，如树莓派，运行微信，开放发信API到公网，demo点此 爬虫采集腾讯文档在线表格内容，demo点此 通过爬虫采集的内容">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img.limour.top/archives_2023/2022/08/14/62f8ed229013a.webp">
+<meta property="og:image" content="https://img.limour.top/archives_2023/2022/08/15/62fa52398a154.webp">
+<meta property="article:published_time" content="2022-08-15T07:40:01.000Z">
+<meta property="article:modified_time" content="2024-03-18T09:34:16.828Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.limour.top/archives_2023/2022/08/14/62f8ed229013a.webp">
+  
+  
+  
+  <title>核酸检测完成情况提醒bot开发记录 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="核酸检测完成情况提醒bot开发记录"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-15 15:40" pubdate>
+          August 15, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.7k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          73 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">核酸检测完成情况提醒bot开发记录</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><ul>
+<li>每天早上核酸检测即将开始，定时发送在线表格二维码到班级微信群</li>
+<li>每天下午核酸检测即将结束，定时检测未完成填写的同学名单，发送提醒信息到班级微信群</li>
+<li>在线表格设计如下</li>
+</ul>
+<p><img src="https://img.limour.top/archives_2023/2022/08/14/62f8ed229013a.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></p>
+<p>用了保护所选范围+冻结+条件格式+数据验证构建的简易核酸记录表，要求在校同学每日填报</p>
+<h2 id="功能拆分"><a href="#功能拆分" class="headerlink" title="功能拆分"></a>功能拆分</h2><ul>
+<li>低功耗小主机，如树莓派，运行微信，开放发信API到公网，<a target="_blank" rel="noopener" href="https://occdn.limour.top/2242.html">demo点此</a></li>
+<li>爬虫采集腾讯文档在线表格内容，<a target="_blank" rel="noopener" href="https://occdn.limour.top/2249.html">demo点此</a></li>
+<li>通过爬虫采集的内容，分析未完成填写的同学名单，通过发信API发送提醒信息到班级微信群</li>
+<li>最终效果见下图</li>
+</ul>
+<p><img src="https://img.limour.top/archives_2023/2022/08/15/62fa52398a154.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></p>
+<p>左图是早上定时提醒的效果，右图分别是有同学未记录和全部已记录的效果</p>
+<h2 id="发信API"><a href="#发信API" class="headerlink" title="发信API"></a>发信API</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python3</span><br><span class="hljs-keyword">import</span> itchat<br>itchat.auto_login(<span class="hljs-literal">True</span>, enableCmdQR=<span class="hljs-number">2</span>)<br> <br><span class="hljs-keyword">import</span> bottle<br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">verifyToken</span>(<span class="hljs-params">func</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">wrapper</span>(<span class="hljs-params">*args, **kwargs</span>):<br>        token = bottle.request.json.get(<span class="hljs-string">&#x27;token&#x27;</span>)<br>        <span class="hljs-keyword">if</span> token != <span class="hljs-string">&#x27;a123456&#x27;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">dict</span>(BaseResponse=<span class="hljs-string">&#x27;invalid token!&#x27;</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> func(*args, **kwargs)<br>    <span class="hljs-keyword">return</span> wrapper<br>    <br><span class="hljs-meta">@bottle.route(<span class="hljs-params"><span class="hljs-string">&#x27;/api/send_image&#x27;</span>, method=<span class="hljs-string">&#x27;POST&#x27;</span></span>)</span><br><span class="hljs-meta">@verifyToken</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">api_send_image</span>():<br>    fileDir = bottle.request.json.get(<span class="hljs-string">&#x27;fileDir&#x27;</span>)<br>    toUserName = bottle.request.json.get(<span class="hljs-string">&#x27;toUserName&#x27;</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">dict</span>(itchat.send_image(fileDir, toUserName))<br>    <br><span class="hljs-meta">@bottle.route(<span class="hljs-params"><span class="hljs-string">&#x27;/api/send&#x27;</span>, method=<span class="hljs-string">&#x27;POST&#x27;</span></span>)</span><br><span class="hljs-meta">@verifyToken</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">api_send</span>():<br>    msg = bottle.request.json.get(<span class="hljs-string">&#x27;msg&#x27;</span>)<br>    toUserName = bottle.request.json.get(<span class="hljs-string">&#x27;toUserName&#x27;</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">dict</span>(itchat.send(msg, toUserName))<br>    <br><span class="hljs-meta">@bottle.route(<span class="hljs-params"><span class="hljs-string">&#x27;/api/search_friends&#x27;</span>, method=<span class="hljs-string">&#x27;POST&#x27;</span></span>)</span><br><span class="hljs-meta">@verifyToken</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">api_search_friends</span>():<br>    remarkName = bottle.request.json.get(<span class="hljs-string">&#x27;remarkName&#x27;</span>)<br>    usr = itchat.search_friends(remarkName=remarkName)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> usr:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">dict</span>(BaseResponse=<span class="hljs-string">&#x27;failed&#x27;</span>)<br>    usr = usr[<span class="hljs-number">0</span>]<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">dict</span>(BaseResponse=<span class="hljs-string">&#x27;succeed&#x27;</span>, UserName=usr.userName)<br>    <br><span class="hljs-meta">@bottle.route(<span class="hljs-params"><span class="hljs-string">&#x27;/api/search_chatrooms&#x27;</span>, method=<span class="hljs-string">&#x27;POST&#x27;</span></span>)</span><br><span class="hljs-meta">@verifyToken</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">api_search_chatrooms</span>():<br>    name = bottle.request.json.get(<span class="hljs-string">&#x27;name&#x27;</span>)<br>    group =  itchat.search_chatrooms(name=name)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> group:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">dict</span>(BaseResponse=<span class="hljs-string">&#x27;failed&#x27;</span>)<br>    group = group[<span class="hljs-number">0</span>]<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">dict</span>(BaseResponse=<span class="hljs-string">&#x27;succeed&#x27;</span>, UserName=group.userName)<br> <br>bottle.run(host=<span class="hljs-string">&#x27;localhost&#x27;</span>, port=<span class="hljs-number">2001</span>, debug=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>依赖见<a target="_blank" rel="noopener" href="https://occdn.limour.top/2242.html">demo点此</a></li>
+<li>screen &#x2F;home&#x2F;pi&#x2F;itchat_api.py</li>
+<li>下面是测试，通过后修改token，通过反代将服务暴露到公网，并加上https</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>/usr/bin/curl -X POST \<br>-H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> \<br>-d <span class="hljs-string">&#x27;&#123;&quot;fileDir&quot;: &quot;./itchat/COVID.19.testing.png&quot;, &quot;toUserName&quot;:&quot;filehelper&quot;, &quot;token&quot;:&quot;a123456&quot;&#125;&#x27;</span> \<br>http://localhost:2001/api/send_image<br> <br>/usr/bin/curl -X POST \<br>-H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> \<br>-d <span class="hljs-string">&#x27;&#123;&quot;msg&quot;: &quot;./itchat/COVID.19.testing.png&quot;, &quot;toUserName&quot;:&quot;filehelper&quot;, &quot;token&quot;:&quot;a123456&quot;&#125;&#x27;</span> \<br>http://localhost:2001/api/send<br> <br>/usr/bin/curl -X POST \<br>-H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> \<br>-d <span class="hljs-string">&#x27;&#123;&quot;remarkName&quot;: &quot;没有这个备注&quot;, &quot;token&quot;:&quot;a123456&quot;&#125;&#x27;</span> \<br>http://localhost:2001/api/search_friends<br> <br>/usr/bin/curl -X POST \<br>-H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> \<br>-d <span class="hljs-string">&#x27;&#123;&quot;remarkName&quot;: &quot;Limour&quot;, &quot;token&quot;:&quot;a123456&quot;&#125;&#x27;</span> \<br>http://localhost:2001/api/search_friends<br> <br>/usr/bin/curl -X POST \<br>-H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> \<br>-d <span class="hljs-string">&#x27;&#123;&quot;name&quot;: &quot;没有这个群&quot;, &quot;token&quot;:&quot;a123456&quot;&#125;&#x27;</span> \<br>http://localhost:2001/api/search_chatrooms<br> <br>/usr/bin/curl -X POST \<br>-H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> \<br>-d <span class="hljs-string">&#x27;&#123;&quot;name&quot;: &quot;相亲相爱一家人&quot;, &quot;token&quot;:&quot;a123456&quot;&#125;&#x27;</span> \<br>http://localhost:2001/api/search_chatrooms<br></code></pre></td></tr></table></figure>
+
+<h2 id="早上提醒"><a href="#早上提醒" class="headerlink" title="早上提醒"></a>早上提醒</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/bin/bash</span><br>/usr/<span class="hljs-built_in">bin</span>/curl -X POST \<br>-H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> \<br>-d <span class="hljs-string">&#x27;&#123;&quot;fileDir&quot;: &quot;./itchat/COVID.19.testing.png&quot;, &quot;toUserName&quot;:&quot;filehelper&quot;, &quot;token&quot;:&quot;a123456&quot;&#125;&#x27;</span> \<br>http://localhost:<span class="hljs-number">2001</span>/api/send_image<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>toUserName从filehelper改为班级群的group.userName</li>
+<li>crontab -e</li>
+<li>10 7 * * * &#x2F;home&#x2F;pi&#x2F;task&#x2F;01.sh</li>
+<li>获取班级群的group.userName的方法如下</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">/usr/bin/curl -X POST \<br>-H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> \<br>-d <span class="hljs-string">&#x27;&#123;&quot;name&quot;: &quot;临八一班男生群&quot;, &quot;token&quot;:&quot;a123456&quot;&#125;&#x27;</span> \<br>http://localhost:2001/api/search_chatrooms<br></code></pre></td></tr></table></figure>
+
+<h2 id="下午提醒"><a href="#下午提醒" class="headerlink" title="下午提醒"></a>下午提醒</h2><h3 id="通过puppeteer获取腾讯文档在线表格内容"><a href="#通过puppeteer获取腾讯文档在线表格内容" class="headerlink" title="通过puppeteer获取腾讯文档在线表格内容"></a>通过puppeteer获取腾讯文档在线表格内容</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-meta">#!/usr/bin/env node</span><br><span class="hljs-keyword">const</span> puppeteer = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;puppeteer-extra&#x27;</span>)<br><span class="hljs-comment">// add stealth plugin and use defaults (all evasion techniques)</span><br><span class="hljs-keyword">const</span> <span class="hljs-title class_">StealthPlugin</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;puppeteer-extra-plugin-stealth&#x27;</span>)<br>puppeteer.<span class="hljs-title function_">use</span>(<span class="hljs-title class_">StealthPlugin</span>())<br><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>)<br> <br>puppeteer.<span class="hljs-title function_">launch</span>(&#123; <span class="hljs-attr">headless</span>: <span class="hljs-literal">true</span> &#125;).<span class="hljs-title function_">then</span>(<span class="hljs-keyword">async</span> browser =&gt; &#123;<br>    <span class="hljs-keyword">const</span> context = browser.<span class="hljs-title function_">defaultBrowserContext</span>();<br>    context.<span class="hljs-title function_">overridePermissions</span>(<span class="hljs-string">&#x27;https://docs.qq.com&#x27;</span>, [<span class="hljs-string">&#x27;clipboard-read&#x27;</span>])<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Running tests..&#x27;</span>)<br>    <span class="hljs-keyword">const</span> page = <span class="hljs-keyword">await</span> browser.<span class="hljs-title function_">newPage</span>()<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">goto</span>(<span class="hljs-string">&#x27;https://docs.qq.com/sheet/id&#x27;</span>)<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Open sheet.html&#x27;</span>)<br>    <br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">waitForSelector</span>(<span class="hljs-string">&#x27;#canvasContainer &gt; div.excel-container &gt; canvas&#x27;</span>)<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">waitForTimeout</span>(<span class="hljs-number">500</span>)<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">click</span>(<span class="hljs-string">&#x27;#canvasContainer &gt; div.excel-container &gt; canvas&#x27;</span>);<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">waitForTimeout</span>(<span class="hljs-number">100</span>)<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">focus</span>(<span class="hljs-string">&#x27;#canvasContainer &gt; div.excel-container &gt; canvas&#x27;</span>)<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;focus sheet1&#x27;</span>)<br>    <br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">waitForTimeout</span>(<span class="hljs-number">100</span>)<br>    <br>    <span class="hljs-keyword">await</span> page.<span class="hljs-property">keyboard</span>.<span class="hljs-title function_">down</span>(<span class="hljs-string">&#x27;Control&#x27;</span>);<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">waitForTimeout</span>(<span class="hljs-number">30</span>)<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-property">keyboard</span>.<span class="hljs-title function_">press</span>(<span class="hljs-string">&#x27;KeyA&#x27;</span>);<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">waitForTimeout</span>(<span class="hljs-number">10</span>)<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-property">keyboard</span>.<span class="hljs-title function_">up</span>(<span class="hljs-string">&#x27;Control&#x27;</span>);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;send Ctrl A&#x27;</span>)<br>    <br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">waitForTimeout</span>(<span class="hljs-number">1000</span>)<br>    <br>    <span class="hljs-keyword">await</span> page.<span class="hljs-property">keyboard</span>.<span class="hljs-title function_">down</span>(<span class="hljs-string">&#x27;Control&#x27;</span>);<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">waitForTimeout</span>(<span class="hljs-number">21</span>)<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-property">keyboard</span>.<span class="hljs-title function_">press</span>(<span class="hljs-string">&#x27;KeyC&#x27;</span>);<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">waitForTimeout</span>(<span class="hljs-number">12</span>)<br>    <span class="hljs-keyword">await</span> page.<span class="hljs-property">keyboard</span>.<span class="hljs-title function_">up</span>(<span class="hljs-string">&#x27;Control&#x27;</span>);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;send Ctrl C&#x27;</span>)<br>    <br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">waitForTimeout</span>(<span class="hljs-number">2000</span>)<br>    <br>    <span class="hljs-keyword">const</span> table = <span class="hljs-keyword">await</span> page.evaluate(<span class="hljs-function">() =&gt;</span> navigator.<span class="hljs-property">clipboard</span>.<span class="hljs-title function_">readText</span>())<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(table)<br>    fs.<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">&#x27;test.txt&#x27;</span>, table, <span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> &#123;<br>      <span class="hljs-keyword">if</span> (err) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(err)<br>        <span class="hljs-keyword">return</span><br>      &#125;<br>      <span class="hljs-comment">//文件写入成功。</span><br>    &#125;)<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;get clipboard&#x27;</span>)<br>    <br>    <span class="hljs-keyword">await</span> page.<span class="hljs-title function_">screenshot</span>(&#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;testresult.png&#x27;</span>, <span class="hljs-attr">fullPage</span>: <span class="hljs-literal">true</span> &#125;)<br>    <span class="hljs-keyword">await</span> browser.<span class="hljs-title function_">close</span>()<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`All done, check the screenshot. ✨`</span>)<br>    process.<span class="hljs-title function_">exit</span>()<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="使用Python解析上一步获取的内容"><a href="#使用Python解析上一步获取的内容" class="headerlink" title="使用Python解析上一步获取的内容"></a>使用Python解析上一步获取的内容</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3</span><br><span class="hljs-keyword">from</span> os <span class="hljs-keyword">import</span> system, access, R_OK<br><span class="hljs-keyword">import</span> sys<br>system(<span class="hljs-string">f&quot;rm split_table.pkl&quot;</span>)<br>system(<span class="hljs-string">f&quot;./wecomchan.py &#x27;exec txtable.js&#x27;&quot;</span>)<br>system(<span class="hljs-string">f&quot;rm test.txt&quot;</span>)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>): <span class="hljs-comment"># 尝试三次</span><br>    system(<span class="hljs-string">f&quot;./txtable.js&quot;</span>)<br>    <span class="hljs-keyword">if</span> access(<span class="hljs-string">&#x27;test.txt&#x27;</span>, R_OK):<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;test.txt&#x27;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>            table = f.read().strip()<br>            <span class="hljs-built_in">print</span>(table)<br>            <span class="hljs-keyword">if</span> table:<br>                system(<span class="hljs-string">f&quot;./wecomchan.py &#x27;exec txtable.js succeed&#x27;&quot;</span>)<br>                <span class="hljs-keyword">break</span><br>    system(<span class="hljs-string">f&quot;./wecomchan.py &#x27;exec txtable.js failed once&#x27;&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    system(<span class="hljs-string">f&quot;./wecomchan.py &#x27;exec txtable.js failed&#x27;&quot;</span>)<br>    sys.exit(<span class="hljs-number">1</span>)<br>system(<span class="hljs-string">f&quot;rm test.txt&quot;</span>)<br>table = table.splitlines()<br><span class="hljs-keyword">import</span> datetime<br>today=datetime.date.today()<br>formatted_today=today.strftime(<span class="hljs-string">&#x27;%-m月%-d日&#x27;</span>)<br><span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> table:<br>    <span class="hljs-keyword">if</span> line.startswith(formatted_today):<br>        <span class="hljs-built_in">print</span>(line)<br>        today_data = line<br>        <span class="hljs-keyword">break</span><br><span class="hljs-keyword">else</span>:<br>    system(<span class="hljs-string">f&quot;./wecomchan.py &#x27;txtable.py failed: line.startswith(formatted_today) is False&#x27;&quot;</span>)<br>    sys.exit(<span class="hljs-number">1</span>)<br>table = table[<span class="hljs-number">0</span>:<span class="hljs-number">3</span>]<br>table.append(today_data)<br>split_table = <span class="hljs-built_in">list</span>()<br><span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> table:<br>    line = line.split(<span class="hljs-string">&#x27;\t&#x27;</span>)<br>    split_table.append(line)<br><span class="hljs-comment">#     print(line)</span><br>split_table[<span class="hljs-number">0</span>] = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">filter</span>(<span class="hljs-literal">None</span>, split_table[<span class="hljs-number">0</span>]))<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,<span class="hljs-built_in">len</span>(split_table)):<br>    split_table[i] = split_table[i][<span class="hljs-number">0</span>:<span class="hljs-built_in">len</span>(split_table[<span class="hljs-number">0</span>])]<br><span class="hljs-keyword">import</span> pickle<br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;split_table.pkl&quot;</span>, <span class="hljs-string">&quot;wb&quot;</span>) <span class="hljs-keyword">as</span> tf:<br>    pickle.dump(split_table,tf)<br></code></pre></td></tr></table></figure>
+
+<h3 id="进行下午提醒"><a href="#进行下午提醒" class="headerlink" title="进行下午提醒"></a>进行下午提醒</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3</span><br><span class="hljs-keyword">from</span> os <span class="hljs-keyword">import</span> system, access, R_OK, chdir<br>chdir(<span class="hljs-string">&#x27;/home/limour/02&#x27;</span>)<br><span class="hljs-keyword">import</span> sys<br>system(<span class="hljs-string">f&quot;./txtable.py&quot;</span>)<br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> access(<span class="hljs-string">&#x27;split_table.pkl&#x27;</span>, R_OK):<br>    sys.exit(<span class="hljs-number">1</span>)<br><span class="hljs-keyword">import</span> pickle<br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;split_table.pkl&quot;</span>, <span class="hljs-string">&quot;rb&quot;</span>) <span class="hljs-keyword">as</span> tf:<br>    table = pickle.load(tf)<br>r1 = table[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>:] <span class="hljs-comment">#需要填写的人</span><br>r4 = table[<span class="hljs-number">3</span>][<span class="hljs-number">2</span>:] <span class="hljs-comment">#已经填写的人</span><br>r5 = <span class="hljs-built_in">list</span>(r1[x] <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(r4)) <span class="hljs-keyword">if</span> r4[x] == <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-comment">#未填写的人</span><br><span class="hljs-keyword">if</span> r5:<br>    info = <span class="hljs-string">&#x27;@&#x27;</span>+ <span class="hljs-string">&#x27; @&#x27;</span>.join(r5)<br>    info = <span class="hljs-string">f&quot;核酸检测即将结束，请以下同学及时记录自己的检测情况(n=<span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(r5)&#125;</span>)：\n<span class="hljs-subst">&#123;info&#125;</span>&quot;</span><br><span class="hljs-keyword">else</span>:<br>    info = <span class="hljs-string">f&quot;今日核酸/抗原已全部完成！&quot;</span><br>system(<span class="hljs-string">f&quot;./wecomchan.py &#x27;<span class="hljs-subst">&#123;info&#125;</span>&#x27;&quot;</span>)<br>info = info.replace(<span class="hljs-string">&#x27;\n&#x27;</span>, <span class="hljs-string">&#x27;\\n&#x27;</span>)<br>system(<span class="hljs-string">f&#x27;&#x27;&#x27;/usr/bin/curl -X POST \\</span><br><span class="hljs-string">-H &quot;Content-Type: application/json&quot; \\</span><br><span class="hljs-string">-d &#x27;&#123;&#123;&quot;msg&quot;: &quot;<span class="hljs-subst">&#123;info&#125;</span>&quot;, &quot;toUserName&quot;:&quot;filehelper&quot;, &quot;token&quot;:&quot;a123456&quot;&#125;&#125;&#x27; \\</span><br><span class="hljs-string">https://limour.top/api/send&#x27;&#x27;&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>toUserName从filehelper改为班级群的group.userName</li>
+<li>tzselect #修改时区</li>
+<li>sudo cp &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime</li>
+<li>date +”%m-%d-%H-%M-%S”#查询系统当前时间</li>
+<li>crontab -e</li>
+<li>0 16 * * * &#x2F;home&#x2F;limour&#x2F;02&#x2F;reminder.py</li>
+<li># <a href="https://b.limour.top/go/#aHR0cHM6Ly90b29sLmx1L2Nyb250YWIv" rel="noopener external nofollow noreferrer">crontab 执行时间计算器</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/uncategorized/" class="category-chain-item">uncategorized</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>核酸检测完成情况提醒bot开发记录</div>
+      <div>https://b.limour.top/1980.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 15, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/1988.html" title="timeROC绘图记录">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">timeROC绘图记录</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/1978.html" title="puppeteer获取腾讯文档在线表格内容">
+                        <span class="hidden-mobile">puppeteer获取腾讯文档在线表格内容</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

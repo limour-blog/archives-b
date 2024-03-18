@@ -1,0 +1,670 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="包安装https:&#x2F;&#x2F;github.com&#x2F;wu-yc&#x2F;scMetabolism 第一步 分离对比对象1234HSPC &lt;- subset(immune, group &#x3D;&#x3D; &amp;#x27;HSPC&amp;#x27;)CPRC &lt;- subset(immune, group &#x3D;&#x3D; &amp;#x27;CRPC&amp;#x27;)countexp_HSPC &lt;-sc.metabolism.Seurat(o">
+<meta property="og:type" content="article">
+<meta property="og:title" content="scMetabolism分析细胞代谢">
+<meta property="og:url" content="https://b.limour.top/1539.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="包安装https:&#x2F;&#x2F;github.com&#x2F;wu-yc&#x2F;scMetabolism 第一步 分离对比对象1234HSPC &lt;- subset(immune, group &#x3D;&#x3D; &amp;#x27;HSPC&amp;#x27;)CPRC &lt;- subset(immune, group &#x3D;&#x3D; &amp;#x27;CRPC&amp;#x27;)countexp_HSPC &lt;-sc.metabolism.Seurat(o">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-02-08T19:53:56.000Z">
+<meta property="article:modified_time" content="2023-09-01T13:32:00.717Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>scMetabolism分析细胞代谢 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="scMetabolism分析细胞代谢"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-02-09 03:53" pubdate>
+          February 9, 2022 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.4k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          71 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">scMetabolism分析细胞代谢</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="包安装"><a href="#包安装" class="headerlink" title="包安装"></a>包安装</h2><p><a target="_blank" rel="noopener" href="https://github.com/wu-yc/scMetabolism">https://github.com/wu-yc/scMetabolism</a></p>
+<h2 id="第一步-分离对比对象"><a href="#第一步-分离对比对象" class="headerlink" title="第一步 分离对比对象"></a>第一步 分离对比对象</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs r">HSPC <span class="hljs-operator">&lt;-</span> subset<span class="hljs-punctuation">(</span>immune<span class="hljs-punctuation">,</span> group <span class="hljs-operator">==</span> <span class="hljs-string">&#x27;HSPC&#x27;</span><span class="hljs-punctuation">)</span><br>CPRC <span class="hljs-operator">&lt;-</span> subset<span class="hljs-punctuation">(</span>immune<span class="hljs-punctuation">,</span> group <span class="hljs-operator">==</span> <span class="hljs-string">&#x27;CRPC&#x27;</span><span class="hljs-punctuation">)</span><br>countexp_HSPC <span class="hljs-operator">&lt;-</span>sc.metabolism.Seurat<span class="hljs-punctuation">(</span>obj <span class="hljs-operator">=</span> HSPC<span class="hljs-punctuation">,</span> method <span class="hljs-operator">=</span> <span class="hljs-string">&quot;VISION&quot;</span><span class="hljs-punctuation">,</span> imputation <span class="hljs-operator">=</span> <span class="hljs-built_in">F</span><span class="hljs-punctuation">,</span> ncores <span class="hljs-operator">=</span> <span class="hljs-number">12</span><span class="hljs-punctuation">,</span> metabolism.type <span class="hljs-operator">=</span> <span class="hljs-string">&quot;KEGG&quot;</span><span class="hljs-punctuation">)</span><br>countexp_CPRC <span class="hljs-operator">&lt;-</span>sc.metabolism.Seurat<span class="hljs-punctuation">(</span>obj <span class="hljs-operator">=</span> CPRC<span class="hljs-punctuation">,</span> method <span class="hljs-operator">=</span> <span class="hljs-string">&quot;VISION&quot;</span><span class="hljs-punctuation">,</span> imputation <span class="hljs-operator">=</span> <span class="hljs-built_in">F</span><span class="hljs-punctuation">,</span> ncores <span class="hljs-operator">=</span> <span class="hljs-number">12</span><span class="hljs-punctuation">,</span> metabolism.type <span class="hljs-operator">=</span> <span class="hljs-string">&quot;KEGG&quot;</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="第二步-获得代谢矩阵"><a href="#第二步-获得代谢矩阵" class="headerlink" title="第二步 获得代谢矩阵"></a>第二步 获得代谢矩阵</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs r">etabolism.matrix_HSPC <span class="hljs-operator">&lt;-</span> countexp_HSPC<span class="hljs-operator">@</span>assays<span class="hljs-operator">$</span>METABOLISM<span class="hljs-operator">$</span>score<br>etabolism.matrix_CPRC <span class="hljs-operator">&lt;-</span> countexp_CPRC<span class="hljs-operator">@</span>assays<span class="hljs-operator">$</span>METABOLISM<span class="hljs-operator">$</span>score<br></code></pre></td></tr></table></figure>
+
+<h2 id="第三步-代谢差异分析"><a href="#第三步-代谢差异分析" class="headerlink" title="第三步 代谢差异分析"></a>第三步 代谢差异分析</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs r">f_DEmetabolism_01 <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>matrixN<span class="hljs-punctuation">,</span> matrixE<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    res <span class="hljs-operator">&lt;-</span> data.frame<span class="hljs-punctuation">(</span>row.names <span class="hljs-operator">=</span> rownames<span class="hljs-punctuation">(</span>matrixN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    res<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;meanN&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span><br>    res<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;meanE&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span><br>    res<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;p-value&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">for</span><span class="hljs-punctuation">(</span>i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span><span class="hljs-operator">:</span>nrow<span class="hljs-punctuation">(</span>matrixN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>        test <span class="hljs-operator">&lt;-</span> t.test<span class="hljs-punctuation">(</span>unlist<span class="hljs-punctuation">(</span>matrixN<span class="hljs-punctuation">[</span>i<span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>unlist<span class="hljs-punctuation">(</span>matrixE<span class="hljs-punctuation">[</span>i<span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>        res<span class="hljs-punctuation">[</span>i<span class="hljs-punctuation">,</span> <span class="hljs-string">&#x27;p-value&#x27;</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> test<span class="hljs-operator">$</span>p.value<br>        res<span class="hljs-punctuation">[</span>i<span class="hljs-punctuation">,</span> <span class="hljs-string">&#x27;meanN&#x27;</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> test<span class="hljs-operator">$</span>estimate<span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><br>        res<span class="hljs-punctuation">[</span>i<span class="hljs-punctuation">,</span> <span class="hljs-string">&#x27;meanE&#x27;</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> test<span class="hljs-operator">$</span>estimate<span class="hljs-punctuation">[</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><br>    res<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;def&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> with<span class="hljs-punctuation">(</span>res<span class="hljs-punctuation">,</span> meanE <span class="hljs-operator">-</span> meanN<span class="hljs-punctuation">)</span><br>    res<br><span class="hljs-punctuation">&#125;</span><br>f_metaN2cellN <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>scRNA<span class="hljs-punctuation">,</span> metaN<span class="hljs-punctuation">,</span> typeN<span class="hljs-punctuation">,</span> matrixN<span class="hljs-operator">=</span><span class="hljs-built_in">F</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    res <span class="hljs-operator">&lt;-</span> scRNA<span class="hljs-punctuation">[[</span>metaN<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>    idx <span class="hljs-operator">&lt;-</span> which<span class="hljs-punctuation">(</span>res<span class="hljs-punctuation">[[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">==</span> typeN<span class="hljs-punctuation">)</span><br>    <span class="hljs-keyword">if</span><span class="hljs-punctuation">(</span>matrixN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-built_in">return</span><span class="hljs-punctuation">(</span>gsub<span class="hljs-punctuation">(</span><span class="hljs-string">&#x27;-&#x27;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&#x27;.&#x27;</span><span class="hljs-punctuation">,</span>rownames<span class="hljs-punctuation">(</span>res<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span>idx<span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-keyword">else</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-built_in">return</span><span class="hljs-punctuation">(</span>rownames<span class="hljs-punctuation">(</span>res<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span>idx<span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br>f_DEmetabolism <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>countexpN<span class="hljs-punctuation">,</span> countexpE<span class="hljs-punctuation">,</span> metaN<span class="hljs-punctuation">,</span> typeN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    matrixN <span class="hljs-operator">&lt;-</span> countexpN<span class="hljs-operator">@</span>assays<span class="hljs-operator">$</span>METABOLISM<span class="hljs-operator">$</span>score<br>    matrixE <span class="hljs-operator">&lt;-</span> countexpE<span class="hljs-operator">@</span>assays<span class="hljs-operator">$</span>METABOLISM<span class="hljs-operator">$</span>score<br>    matrixN <span class="hljs-operator">&lt;-</span> matrixN<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span>f_metaN2cellN<span class="hljs-punctuation">(</span>countexpN<span class="hljs-punctuation">,</span> metaN<span class="hljs-punctuation">,</span> typeN<span class="hljs-punctuation">,</span> matrixN <span class="hljs-operator">=</span> <span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span><br>    matrixE <span class="hljs-operator">&lt;-</span> matrixE<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span>f_metaN2cellN<span class="hljs-punctuation">(</span>countexpE<span class="hljs-punctuation">,</span> metaN<span class="hljs-punctuation">,</span> typeN<span class="hljs-punctuation">,</span> matrixN <span class="hljs-operator">=</span> <span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span><br>    f_DEmetabolism_01<span class="hljs-punctuation">(</span>matrixN<span class="hljs-punctuation">,</span> matrixE<span class="hljs-punctuation">)</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="第四步-代谢差异展示"><a href="#第四步-代谢差异展示" class="headerlink" title="第四步 代谢差异展示"></a>第四步 代谢差异展示</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs r">require<span class="hljs-punctuation">(</span>ggrepel<span class="hljs-punctuation">)</span><br>f_ggplot2_ti <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>p<span class="hljs-punctuation">,</span> title<span class="hljs-punctuation">,</span> subtitle<span class="hljs-operator">=</span><span class="hljs-string">&#x27;&#x27;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span>subtitle <span class="hljs-operator">==</span> <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-punctuation">(</span>p <span class="hljs-operator">+</span> ggtitle<span class="hljs-punctuation">(</span>title<span class="hljs-punctuation">)</span> <span class="hljs-operator">+</span> theme<span class="hljs-punctuation">(</span>plot.title <span class="hljs-operator">=</span> element_text<span class="hljs-punctuation">(</span>hjust <span class="hljs-operator">=</span> <span class="hljs-number">0.5</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-keyword">else</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-punctuation">(</span>p <span class="hljs-operator">+</span> ggtitle<span class="hljs-punctuation">(</span>title<span class="hljs-punctuation">,</span> subtitle<span class="hljs-operator">=</span>subtitle<span class="hljs-punctuation">)</span> <span class="hljs-operator">+</span> <br>         theme<span class="hljs-punctuation">(</span>plot.title <span class="hljs-operator">=</span> element_text<span class="hljs-punctuation">(</span>hjust <span class="hljs-operator">=</span> <span class="hljs-number">0.5</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> plot.subtitle <span class="hljs-operator">=</span> element_text<span class="hljs-punctuation">(</span>hjust <span class="hljs-operator">=</span> <span class="hljs-number">0.5</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br>f_DEmetabolism_Volcano <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>countexpN<span class="hljs-punctuation">,</span> countexpE<span class="hljs-punctuation">,</span> metaN<span class="hljs-punctuation">,</span> typeN<span class="hljs-punctuation">,</span> delta <span class="hljs-operator">=</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span> Threshold_p <span class="hljs-operator">=</span> <span class="hljs-number">0.05</span><span class="hljs-punctuation">,</span> lc_rep<span class="hljs-operator">=</span><span class="hljs-number">5</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    DEmm <span class="hljs-operator">&lt;-</span> f_DEmetabolism<span class="hljs-punctuation">(</span>countexpN<span class="hljs-punctuation">,</span> countexpE<span class="hljs-punctuation">,</span> metaN<span class="hljs-punctuation">,</span> typeN<span class="hljs-punctuation">)</span><br>    col_vector <span class="hljs-operator">=</span> <span class="hljs-built_in">rep</span><span class="hljs-punctuation">(</span>rgb<span class="hljs-punctuation">(</span><span class="hljs-number">108</span><span class="hljs-punctuation">,</span> <span class="hljs-number">200</span><span class="hljs-punctuation">,</span> <span class="hljs-number">228</span><span class="hljs-punctuation">,</span> maxColorValue <span class="hljs-operator">=</span> <span class="hljs-number">255</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> nrow<span class="hljs-punctuation">(</span>DEmm<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    Threshold <span class="hljs-operator">=</span> with<span class="hljs-punctuation">(</span>DEmm<span class="hljs-punctuation">,</span> delta<span class="hljs-operator">*</span>sd<span class="hljs-punctuation">(</span><span class="hljs-built_in">abs</span><span class="hljs-punctuation">(</span>def<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    <br>    col_vector<span class="hljs-punctuation">[</span>with<span class="hljs-punctuation">(</span>DEmm<span class="hljs-punctuation">,</span> `p-value` <span class="hljs-operator">&lt;</span> Threshold_p <span class="hljs-operator">&amp;</span> def <span class="hljs-operator">&gt;</span> Threshold<span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> rgb<span class="hljs-punctuation">(</span><span class="hljs-number">226</span><span class="hljs-punctuation">,</span> <span class="hljs-number">61</span><span class="hljs-punctuation">,</span> <span class="hljs-number">75</span><span class="hljs-punctuation">,</span> maxColorValue <span class="hljs-operator">=</span> <span class="hljs-number">255</span><span class="hljs-punctuation">)</span><br>    col_vector<span class="hljs-punctuation">[</span>with<span class="hljs-punctuation">(</span>DEmm<span class="hljs-punctuation">,</span> `p-value` <span class="hljs-operator">&lt;</span> Threshold_p <span class="hljs-operator">&amp;</span> def <span class="hljs-operator">&lt;</span> <span class="hljs-operator">-</span>Threshold<span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> rgb<span class="hljs-punctuation">(</span><span class="hljs-number">232</span><span class="hljs-punctuation">,</span> <span class="hljs-number">168</span><span class="hljs-punctuation">,</span> <span class="hljs-number">71</span><span class="hljs-punctuation">,</span> maxColorValue <span class="hljs-operator">=</span> <span class="hljs-number">255</span><span class="hljs-punctuation">)</span><br>    <br>    DEmm<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;Name&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> rownames<span class="hljs-punctuation">(</span>DEmm<span class="hljs-punctuation">)</span><br>    DEmm<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;col&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> col_vector<br>    DEmm<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;-log10(P)&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> with<span class="hljs-punctuation">(</span>DEmm<span class="hljs-punctuation">,</span> <span class="hljs-operator">-</span>log10<span class="hljs-punctuation">(</span>`p-value`<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    <br>    lc_tp_logFC <span class="hljs-operator">&lt;-</span> DEmm<span class="hljs-operator">$</span>def<br>    lc_tp_logFC<span class="hljs-punctuation">[</span>with<span class="hljs-punctuation">(</span>DEmm<span class="hljs-punctuation">,</span> `p-value` <span class="hljs-operator">&gt;=</span> Threshold_p<span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span><br>    lc_idx <span class="hljs-operator">&lt;-</span> order<span class="hljs-punctuation">(</span>lc_tp_logFC<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">1</span><span class="hljs-operator">:</span>lc_rep<span class="hljs-punctuation">,</span> <span class="hljs-punctuation">(</span>nrow<span class="hljs-punctuation">(</span>DEmm<span class="hljs-punctuation">)</span><span class="hljs-operator">+</span><span class="hljs-number">1</span><span class="hljs-operator">-</span>lc_rep<span class="hljs-punctuation">)</span><span class="hljs-operator">:</span>nrow<span class="hljs-punctuation">(</span>DEmm<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span><br>    <br>    res <span class="hljs-operator">&lt;-</span> ggplot<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">+</span> geom_point<span class="hljs-punctuation">(</span>aes<span class="hljs-punctuation">(</span>def<span class="hljs-punctuation">,</span> `-log10(P)`<span class="hljs-punctuation">,</span> col<span class="hljs-operator">=</span>I<span class="hljs-punctuation">(</span>col<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> data <span class="hljs-operator">=</span> DEmm<span class="hljs-punctuation">)</span> <br>    res <span class="hljs-operator">&lt;-</span> res <span class="hljs-operator">+</span> theme_bw<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">+</span> theme<span class="hljs-punctuation">(</span>panel.grid<span class="hljs-operator">=</span>element_line<span class="hljs-punctuation">(</span>colour<span class="hljs-operator">=</span><span class="hljs-literal">NA</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    res <span class="hljs-operator">&lt;-</span> res <span class="hljs-operator">+</span> geom_hline<span class="hljs-punctuation">(</span>yintercept<span class="hljs-operator">=</span><span class="hljs-operator">-</span>log10<span class="hljs-punctuation">(</span>Threshold_p<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> linetype<span class="hljs-operator">=</span><span class="hljs-string">&quot;longdash&quot;</span><span class="hljs-punctuation">)</span><br>    res <span class="hljs-operator">&lt;-</span> res <span class="hljs-operator">+</span> geom_vline<span class="hljs-punctuation">(</span>xintercept<span class="hljs-operator">=</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span>Threshold<span class="hljs-punctuation">,</span> <span class="hljs-operator">-</span>Threshold<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> linetype<span class="hljs-operator">=</span><span class="hljs-string">&quot;longdash&quot;</span><span class="hljs-punctuation">)</span><br>    res <span class="hljs-operator">&lt;-</span> res <span class="hljs-operator">+</span> geom_text_repel<span class="hljs-punctuation">(</span>data<span class="hljs-operator">=</span>DEmm<span class="hljs-punctuation">[</span>lc_idx<span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>aes<span class="hljs-punctuation">(</span>def<span class="hljs-punctuation">,</span>`-log10(P)`<span class="hljs-punctuation">,</span>label<span class="hljs-operator">=</span>Name<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> force<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">,</span> max.overlaps<span class="hljs-operator">=</span><span class="hljs-literal">Inf</span><span class="hljs-punctuation">)</span><br>    f_ggplot2_ti<span class="hljs-punctuation">(</span>res<span class="hljs-punctuation">,</span> typeN<span class="hljs-punctuation">)</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="第五步-全部展示"><a href="#第五步-全部展示" class="headerlink" title="第五步 全部展示"></a>第五步 全部展示</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs r">require<span class="hljs-punctuation">(</span>export<span class="hljs-punctuation">)</span><br>f_ppt_output <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>fileName<span class="hljs-punctuation">,</span> image<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-keyword">for</span> <span class="hljs-punctuation">(</span>p <span class="hljs-keyword">in</span> image<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>        graph2ppt<span class="hljs-punctuation">(</span>x<span class="hljs-operator">=</span>p<span class="hljs-punctuation">,</span> file<span class="hljs-operator">=</span>fileName<span class="hljs-punctuation">,</span> width<span class="hljs-operator">=</span><span class="hljs-number">9</span><span class="hljs-punctuation">,</span> aspectr<span class="hljs-operator">=</span><span class="hljs-number">1.5</span><span class="hljs-punctuation">,</span> append <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br>pl <span class="hljs-operator">&lt;-</span> <span class="hljs-built_in">list</span><span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><br><span class="hljs-keyword">for</span> <span class="hljs-punctuation">(</span>tN <span class="hljs-keyword">in</span> unique<span class="hljs-punctuation">(</span>unlist<span class="hljs-punctuation">(</span>countexp_HSPC<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;immune_type_2&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    pl<span class="hljs-punctuation">[[</span>tN<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> f_DEmetabolism_Volcano<span class="hljs-punctuation">(</span>countexp_HSPC<span class="hljs-punctuation">,</span> countexp_CPRC<span class="hljs-punctuation">,</span> <span class="hljs-string">&#x27;immune_type_2&#x27;</span><span class="hljs-punctuation">,</span> tN<span class="hljs-punctuation">)</span><br><span class="hljs-punctuation">&#125;</span><br>f_ppt_output<span class="hljs-punctuation">(</span><span class="hljs-string">&#x27;HSPC vs CRPC.pptx&#x27;</span><span class="hljs-punctuation">,</span> pl<span class="hljs-punctuation">)</span><br><br>input.pathway<span class="hljs-operator">&lt;-</span> rownames<span class="hljs-punctuation">(</span>countexp_HSPC<span class="hljs-operator">@</span>assays<span class="hljs-operator">$</span>METABOLISM<span class="hljs-operator">$</span>score<span class="hljs-punctuation">)</span><br>p1 <span class="hljs-operator">&lt;-</span> DotPlot.metabolism<span class="hljs-punctuation">(</span>obj <span class="hljs-operator">=</span> countexp_HSPC<span class="hljs-punctuation">,</span> pathway <span class="hljs-operator">=</span> input.pathway<span class="hljs-punctuation">,</span> phenotype <span class="hljs-operator">=</span> <span class="hljs-string">&quot;immune_type_2&quot;</span><span class="hljs-punctuation">,</span> norm <span class="hljs-operator">=</span> <span class="hljs-string">&quot;y&quot;</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">+</span> DotPlot.metabolism<span class="hljs-punctuation">(</span>obj <span class="hljs-operator">=</span> countexp_CPRC<span class="hljs-punctuation">,</span> pathway <span class="hljs-operator">=</span> input.pathway<span class="hljs-punctuation">,</span> phenotype <span class="hljs-operator">=</span> <span class="hljs-string">&quot;immune_type_2&quot;</span><span class="hljs-punctuation">,</span> norm <span class="hljs-operator">=</span> <span class="hljs-string">&quot;y&quot;</span><span class="hljs-punctuation">)</span><br>ggsave<span class="hljs-punctuation">(</span>p1<span class="hljs-punctuation">,</span> filename <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;HSPC vs CRPC.pdf&#x27;</span><span class="hljs-punctuation">,</span> dpi <span class="hljs-operator">=</span> <span class="hljs-number">1200</span><span class="hljs-punctuation">,</span> width <span class="hljs-operator">=</span> <span class="hljs-number">24</span><span class="hljs-punctuation">,</span> height <span class="hljs-operator">=</span> <span class="hljs-number">36</span><span class="hljs-punctuation">,</span> device <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;pdf&#x27;</span><span class="hljs-punctuation">,</span> limitsize <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="第六步-基因热图-获取代谢相关基因"><a href="#第六步-基因热图-获取代谢相关基因" class="headerlink" title="第六步 基因热图-获取代谢相关基因"></a>第六步 基因热图-获取代谢相关基因</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs r">require<span class="hljs-punctuation">(</span>KEGGREST<span class="hljs-punctuation">)</span><br>require<span class="hljs-punctuation">(</span>stringr<span class="hljs-punctuation">)</span><br>f_KEGG_name2id <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>keggL<span class="hljs-punctuation">,</span> nameL<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    res <span class="hljs-operator">&lt;-</span> <span class="hljs-literal">NULL</span><br>    <span class="hljs-keyword">for</span> <span class="hljs-punctuation">(</span>i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span><span class="hljs-operator">:</span><span class="hljs-built_in">length</span><span class="hljs-punctuation">(</span>nameL<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>        fuck <span class="hljs-operator">&lt;-</span> gsub<span class="hljs-punctuation">(</span>pattern <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\\(&#x27;</span><span class="hljs-punctuation">,</span> replacement <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\\\\(&#x27;</span><span class="hljs-punctuation">,</span> x <span class="hljs-operator">=</span> nameL<span class="hljs-punctuation">[[</span>i<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><br>        fuck <span class="hljs-operator">&lt;-</span> gsub<span class="hljs-punctuation">(</span>pattern <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\\)&#x27;</span><span class="hljs-punctuation">,</span> replacement <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\\\\)&#x27;</span><span class="hljs-punctuation">,</span> x <span class="hljs-operator">=</span> fuck<span class="hljs-punctuation">)</span><br>        idx <span class="hljs-operator">&lt;-</span> str_detect<span class="hljs-punctuation">(</span>keggL<span class="hljs-punctuation">,</span> fuck<span class="hljs-punctuation">)</span><br>        tmp <span class="hljs-operator">&lt;-</span> keggL<span class="hljs-punctuation">[</span>idx<span class="hljs-punctuation">]</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span><span class="hljs-built_in">length</span><span class="hljs-punctuation">(</span>tmp<span class="hljs-punctuation">)</span> <span class="hljs-operator">==</span> <span class="hljs-number">1</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>            tmp <span class="hljs-operator">&lt;-</span> <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>tmp<span class="hljs-punctuation">)</span><br>            tmp <span class="hljs-operator">&lt;-</span> substr<span class="hljs-punctuation">(</span>x <span class="hljs-operator">=</span>tmp<span class="hljs-punctuation">,</span> start <span class="hljs-operator">=</span> <span class="hljs-number">6</span><span class="hljs-punctuation">,</span> stop<span class="hljs-operator">=</span><span class="hljs-number">15</span><span class="hljs-punctuation">)</span><br>            res <span class="hljs-operator">&lt;-</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span>res<span class="hljs-punctuation">,</span> tmp<span class="hljs-punctuation">)</span><br>        <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span><span class="hljs-built_in">length</span><span class="hljs-punctuation">(</span>tmp<span class="hljs-punctuation">)</span> <span class="hljs-operator">&gt;</span> <span class="hljs-number">1</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>            print<span class="hljs-punctuation">(</span>tmp<span class="hljs-punctuation">)</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br>    res<br><span class="hljs-punctuation">&#125;</span><br>f_KEGG_id2symbol <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>KEGGid<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    res <span class="hljs-operator">&lt;-</span> <span class="hljs-literal">NULL</span><br>    <span class="hljs-keyword">for</span> <span class="hljs-punctuation">(</span>hsa_id <span class="hljs-keyword">in</span> KEGGid<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>        hsa_info <span class="hljs-operator">&lt;-</span> keggGet<span class="hljs-punctuation">(</span>hsa_id<span class="hljs-punctuation">)</span><br>        hsa_info <span class="hljs-operator">&lt;-</span> hsa_info<span class="hljs-punctuation">[[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-operator">$</span>GENE<br>        hsa_info <span class="hljs-operator">&lt;-</span> hsa_info<span class="hljs-punctuation">[</span>seq<span class="hljs-punctuation">(</span>from <span class="hljs-operator">=</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span> to <span class="hljs-operator">=</span> <span class="hljs-built_in">length</span><span class="hljs-punctuation">(</span>hsa_info<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> by <span class="hljs-operator">=</span> <span class="hljs-number">2</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span><br>        hsa_info <span class="hljs-operator">&lt;-</span> strsplit<span class="hljs-punctuation">(</span>hsa_info<span class="hljs-punctuation">,</span>split <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;;&#x27;</span><span class="hljs-punctuation">)</span><br>        hsa_info <span class="hljs-operator">&lt;-</span> unlist<span class="hljs-punctuation">(</span>lapply<span class="hljs-punctuation">(</span>hsa_info<span class="hljs-punctuation">,</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>X<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span>X<span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>        res <span class="hljs-operator">&lt;-</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span>res<span class="hljs-punctuation">,</span> hsa_info<span class="hljs-punctuation">)</span><br>    <span class="hljs-punctuation">&#125;</span><br>    res <span class="hljs-operator">&lt;-</span> unique<span class="hljs-punctuation">(</span>res<span class="hljs-punctuation">)</span><br>    res <span class="hljs-operator">&lt;-</span> res<span class="hljs-punctuation">[</span>str_detect<span class="hljs-punctuation">(</span>res<span class="hljs-punctuation">,</span> pattern <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\\] \\[&#x27;</span><span class="hljs-punctuation">,</span> negate <span class="hljs-operator">=</span> <span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span><br>    res<br><span class="hljs-punctuation">&#125;</span><br>MMPath <span class="hljs-operator">&lt;-</span> keggGet<span class="hljs-punctuation">(</span><span class="hljs-string">&#x27;hsa01100&#x27;</span><span class="hljs-punctuation">)</span><br>MMPath <span class="hljs-operator">&lt;-</span> <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>MMPath<span class="hljs-punctuation">[[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-operator">$</span>REL_PATHWAY<span class="hljs-punctuation">)</span><br>MMgene <span class="hljs-operator">&lt;-</span> f_KEGG_id2symbol<span class="hljs-punctuation">(</span>MMPath<span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="第六步-绘制基因热图"><a href="#第六步-绘制基因热图" class="headerlink" title="第六步 绘制基因热图"></a>第六步 绘制基因热图</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs r">f_metaG2G <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>metaG<span class="hljs-punctuation">,</span> matrixN<span class="hljs-operator">=</span><span class="hljs-built_in">F</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    res  <span class="hljs-operator">&lt;-</span> <span class="hljs-built_in">list</span><span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><br>    alltype <span class="hljs-operator">&lt;-</span> unique<span class="hljs-punctuation">(</span>metaG<span class="hljs-punctuation">[[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><br>    <span class="hljs-keyword">for</span><span class="hljs-punctuation">(</span>type <span class="hljs-keyword">in</span> alltype<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>        res<span class="hljs-punctuation">[[</span>type<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> rownames<span class="hljs-punctuation">(</span>metaG<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span>metaG<span class="hljs-punctuation">[[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">==</span> type<span class="hljs-punctuation">]</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span>matrixN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>            res<span class="hljs-punctuation">[[</span>type<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> gsub<span class="hljs-punctuation">(</span><span class="hljs-string">&#x27;-&#x27;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&#x27;.&#x27;</span><span class="hljs-punctuation">,</span>res<span class="hljs-punctuation">[[</span>type<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br>    res<br><span class="hljs-punctuation">&#125;</span><br>f_matrix_groupMean <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>matrixA<span class="hljs-punctuation">,</span> group<span class="hljs-punctuation">,</span> matrixN <span class="hljs-operator">=</span> <span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    res <span class="hljs-operator">&lt;-</span> data.frame<span class="hljs-punctuation">(</span>row.names <span class="hljs-operator">=</span> rownames<span class="hljs-punctuation">(</span>matrixA<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    group <span class="hljs-operator">&lt;-</span> f_metaG2G<span class="hljs-punctuation">(</span>group<span class="hljs-punctuation">,</span> matrixN <span class="hljs-operator">=</span> matrixN<span class="hljs-punctuation">)</span><br>    <span class="hljs-keyword">for</span><span class="hljs-punctuation">(</span>name <span class="hljs-keyword">in</span> <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>group<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>        res<span class="hljs-punctuation">[[</span>name<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> rowMeans<span class="hljs-punctuation">(</span>matrixA<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span>group<span class="hljs-punctuation">[[</span>name<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><br>    <span class="hljs-punctuation">&#125;</span><br>    res<br><span class="hljs-punctuation">&#125;</span><br>require<span class="hljs-punctuation">(</span>reshape2<span class="hljs-punctuation">)</span><br>f_matrix_heatmap <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>dfA<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-comment"># 标准化一下</span><br><span class="hljs-comment">#     dfA &lt;- as.data.frame(scale(dfA))</span><br>    <span class="hljs-comment"># 转换前，先增加一列ID列，保存行名字</span><br>    dfA<span class="hljs-operator">$</span>df_ID <span class="hljs-operator">&lt;-</span> rownames<span class="hljs-punctuation">(</span>dfA<span class="hljs-punctuation">)</span><br>    dfm <span class="hljs-operator">&lt;-</span> melt<span class="hljs-punctuation">(</span>dfA<span class="hljs-punctuation">,</span> na.rm <span class="hljs-operator">=</span> <span class="hljs-built_in">T</span><span class="hljs-punctuation">,</span> id.vars <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&#x27;df_ID&#x27;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    p <span class="hljs-operator">&lt;-</span> ggplot<span class="hljs-punctuation">(</span>dfm<span class="hljs-punctuation">,</span> aes<span class="hljs-punctuation">(</span>x<span class="hljs-operator">=</span>variable<span class="hljs-punctuation">,</span> y<span class="hljs-operator">=</span>df_ID<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <br>    p <span class="hljs-operator">&lt;-</span> p <span class="hljs-operator">+</span> geom_tile<span class="hljs-punctuation">(</span>aes<span class="hljs-punctuation">(</span>fill<span class="hljs-operator">=</span>value<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    p <span class="hljs-operator">&lt;-</span> p <span class="hljs-operator">+</span> theme<span class="hljs-punctuation">(</span>axis.text.x<span class="hljs-operator">=</span>element_text<span class="hljs-punctuation">(</span>angle<span class="hljs-operator">=</span><span class="hljs-number">45</span><span class="hljs-punctuation">,</span> hjust<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span> vjust<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    p <span class="hljs-operator">&lt;-</span> p <span class="hljs-operator">+</span> scale_fill_gradient<span class="hljs-punctuation">(</span>low <span class="hljs-operator">=</span> <span class="hljs-string">&quot;blue&quot;</span><span class="hljs-punctuation">,</span> high <span class="hljs-operator">=</span> <span class="hljs-string">&quot;pink&quot;</span><span class="hljs-punctuation">)</span><br>    p <span class="hljs-operator">&lt;-</span> p <span class="hljs-operator">+</span> xlab<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;samples&quot;</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">+</span> theme_bw<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">+</span> theme<span class="hljs-punctuation">(</span>panel.grid.major <span class="hljs-operator">=</span> element_blank<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">+</span> theme<span class="hljs-punctuation">(</span>legend.key<span class="hljs-operator">=</span>element_blank<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    p<br><span class="hljs-punctuation">&#125;</span><br><br>mono <span class="hljs-operator">&lt;-</span> subset<span class="hljs-punctuation">(</span>immune<span class="hljs-punctuation">,</span> immune_type_2 <span class="hljs-operator">%in%</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&#x27;TAM&#x27;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&#x27;monocytes&#x27;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&#x27;S100A8+ monocytes&#x27;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>mono <span class="hljs-operator">&lt;-</span> sc.metabolism.Seurat<span class="hljs-punctuation">(</span>obj <span class="hljs-operator">=</span> mono<span class="hljs-punctuation">,</span> method <span class="hljs-operator">=</span> <span class="hljs-string">&quot;VISION&quot;</span><span class="hljs-punctuation">,</span> imputation <span class="hljs-operator">=</span> <span class="hljs-built_in">F</span><span class="hljs-punctuation">,</span> ncores <span class="hljs-operator">=</span> <span class="hljs-number">12</span><span class="hljs-punctuation">,</span> metabolism.type <span class="hljs-operator">=</span> <span class="hljs-string">&quot;KEGG&quot;</span><span class="hljs-punctuation">)</span><br>a <span class="hljs-operator">&lt;-</span> f_matrix_groupMean<span class="hljs-punctuation">(</span>mono<span class="hljs-operator">@</span>assays<span class="hljs-operator">$</span>METABOLISM<span class="hljs-operator">$</span>score<span class="hljs-punctuation">,</span> mono<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;patient_id&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><br>p <span class="hljs-operator">&lt;-</span> f_matrix_heatmap<span class="hljs-punctuation">(</span>a<span class="hljs-punctuation">)</span><br>ggsave<span class="hljs-punctuation">(</span>p<span class="hljs-punctuation">,</span> filename <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;mono_HSPC vs CRPC_heatmap.pdf&#x27;</span><span class="hljs-punctuation">,</span> dpi <span class="hljs-operator">=</span> <span class="hljs-number">1200</span><span class="hljs-punctuation">,</span> width <span class="hljs-operator">=</span> <span class="hljs-number">8</span><span class="hljs-punctuation">,</span> height <span class="hljs-operator">=</span> <span class="hljs-number">24</span><span class="hljs-punctuation">,</span> device <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;pdf&#x27;</span><span class="hljs-punctuation">,</span> limitsize <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="第七步-绘制交叉热图"><a href="#第七步-绘制交叉热图" class="headerlink" title="第七步 绘制交叉热图"></a>第七步 绘制交叉热图</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs r">f_metaG2G <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>metaG<span class="hljs-punctuation">,</span> matrixN<span class="hljs-operator">=</span><span class="hljs-built_in">F</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    res  <span class="hljs-operator">&lt;-</span> <span class="hljs-built_in">list</span><span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><br>    alltype <span class="hljs-operator">&lt;-</span> unique<span class="hljs-punctuation">(</span>metaG<span class="hljs-punctuation">[[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><br>    <span class="hljs-keyword">for</span><span class="hljs-punctuation">(</span>type <span class="hljs-keyword">in</span> alltype<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>        res<span class="hljs-punctuation">[[</span>type<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> rownames<span class="hljs-punctuation">(</span>metaG<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span>metaG<span class="hljs-punctuation">[[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">==</span> type<span class="hljs-punctuation">]</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span>matrixN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>            res<span class="hljs-punctuation">[[</span>type<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> gsub<span class="hljs-punctuation">(</span><span class="hljs-string">&#x27;-&#x27;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&#x27;.&#x27;</span><span class="hljs-punctuation">,</span>res<span class="hljs-punctuation">[[</span>type<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br>    res<br><span class="hljs-punctuation">&#125;</span><br>f_matrix_groupMean <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>matrixA<span class="hljs-punctuation">,</span> group<span class="hljs-punctuation">,</span> matrixN <span class="hljs-operator">=</span> <span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    res <span class="hljs-operator">&lt;-</span> data.frame<span class="hljs-punctuation">(</span>row.names <span class="hljs-operator">=</span> rownames<span class="hljs-punctuation">(</span>matrixA<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    group <span class="hljs-operator">&lt;-</span> f_metaG2G<span class="hljs-punctuation">(</span>group<span class="hljs-punctuation">,</span> matrixN <span class="hljs-operator">=</span> matrixN<span class="hljs-punctuation">)</span><br>    <span class="hljs-keyword">for</span><span class="hljs-punctuation">(</span>name <span class="hljs-keyword">in</span> <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>group<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span><span class="hljs-built_in">length</span><span class="hljs-punctuation">(</span>group<span class="hljs-punctuation">[[</span>name<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">==</span> <span class="hljs-number">1</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>            res<span class="hljs-punctuation">[[</span>name<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> matrixA<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span>group<span class="hljs-punctuation">[[</span>name<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-keyword">else</span><span class="hljs-punctuation">&#123;</span><br>            res<span class="hljs-punctuation">[[</span>name<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> rowMeans<span class="hljs-punctuation">(</span>matrixA<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span>group<span class="hljs-punctuation">[[</span>name<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br>    res<br><span class="hljs-punctuation">&#125;</span><br>require<span class="hljs-punctuation">(</span>reshape2<span class="hljs-punctuation">)</span><br>f_matrix_heatmap <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>dfA<span class="hljs-punctuation">)</span><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-comment"># 标准化一下</span><br><span class="hljs-comment">#     dfA &lt;- as.data.frame(scale(dfA))</span><br>    <span class="hljs-comment"># 转换前，先增加一列ID列，保存行名字</span><br>    dfA<span class="hljs-operator">$</span>df_ID <span class="hljs-operator">&lt;-</span> rownames<span class="hljs-punctuation">(</span>dfA<span class="hljs-punctuation">)</span><br><span class="hljs-comment">#     dfA$df_ID &lt;- factor(x = dfA$df_ID, ordered = T)</span><br>    dfm <span class="hljs-operator">&lt;-</span> melt<span class="hljs-punctuation">(</span>dfA<span class="hljs-punctuation">,</span> na.rm <span class="hljs-operator">=</span> <span class="hljs-built_in">T</span><span class="hljs-punctuation">,</span> id.vars <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&#x27;df_ID&#x27;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    dfm<span class="hljs-operator">$</span>variable <span class="hljs-operator">&lt;-</span> factor<span class="hljs-punctuation">(</span>x <span class="hljs-operator">=</span> <span class="hljs-built_in">as.character</span><span class="hljs-punctuation">(</span>dfm<span class="hljs-operator">$</span>variable<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> ordered <span class="hljs-operator">=</span> <span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span><br>    p <span class="hljs-operator">&lt;-</span> ggplot<span class="hljs-punctuation">(</span>dfm<span class="hljs-punctuation">,</span> aes<span class="hljs-punctuation">(</span>x<span class="hljs-operator">=</span>variable<span class="hljs-punctuation">,</span> y<span class="hljs-operator">=</span>df_ID<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <br>    p <span class="hljs-operator">&lt;-</span> p <span class="hljs-operator">+</span> geom_tile<span class="hljs-punctuation">(</span>aes<span class="hljs-punctuation">(</span>fill<span class="hljs-operator">=</span>value<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    p <span class="hljs-operator">&lt;-</span> p <span class="hljs-operator">+</span> scale_fill_gradient<span class="hljs-punctuation">(</span>low <span class="hljs-operator">=</span> <span class="hljs-string">&quot;white&quot;</span><span class="hljs-punctuation">,</span> high <span class="hljs-operator">=</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">)</span><br>    p <span class="hljs-operator">&lt;-</span> p <span class="hljs-operator">+</span> xlab<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;samples&quot;</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">+</span> theme_bw<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">+</span> theme<span class="hljs-punctuation">(</span>panel.grid.major <span class="hljs-operator">=</span> element_blank<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">+</span> theme<span class="hljs-punctuation">(</span>legend.key<span class="hljs-operator">=</span>element_blank<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    p <span class="hljs-operator">&lt;-</span> p <span class="hljs-operator">+</span> theme<span class="hljs-punctuation">(</span>axis.text.x<span class="hljs-operator">=</span>element_text<span class="hljs-punctuation">(</span>angle<span class="hljs-operator">=</span><span class="hljs-number">45</span><span class="hljs-punctuation">,</span> hjust<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span> vjust<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>    p<br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs r">immune<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;tmp2&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">&lt;-</span> paste<span class="hljs-punctuation">(</span><span class="hljs-built_in">as.character</span><span class="hljs-punctuation">(</span>immune<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;immune_type_2&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">[[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-built_in">as.character</span><span class="hljs-punctuation">(</span>immune<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;patient_id&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">[[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br><br>tmp2 <span class="hljs-operator">&lt;-</span> f_matrix_groupMean<span class="hljs-punctuation">(</span>immune<span class="hljs-operator">@</span>assays<span class="hljs-operator">$</span>METABOLISM<span class="hljs-operator">$</span>score<span class="hljs-punctuation">[</span>unlist<span class="hljs-punctuation">(</span>sR<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> immune<span class="hljs-punctuation">[[</span><span class="hljs-string">&#x27;tmp2&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><br>p2 <span class="hljs-operator">&lt;-</span> f_matrix_heatmap<span class="hljs-punctuation">(</span>tmp2<span class="hljs-punctuation">)</span><br>ggsave<span class="hljs-punctuation">(</span>p2<span class="hljs-punctuation">,</span> filename <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;HSPC vs CRPC_heatmap_2.pdf&#x27;</span><span class="hljs-punctuation">,</span> dpi <span class="hljs-operator">=</span> <span class="hljs-number">1200</span><span class="hljs-punctuation">,</span> width <span class="hljs-operator">=</span> <span class="hljs-number">24</span><span class="hljs-punctuation">,</span> height <span class="hljs-operator">=</span> <span class="hljs-number">24</span><span class="hljs-punctuation">,</span> device <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;pdf&#x27;</span><span class="hljs-punctuation">,</span> limitsize <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%8D%95%E7%BB%86%E8%83%9E%E4%B8%8B%E6%B8%B8%E5%88%86%E6%9E%90/" class="category-chain-item">单细胞下游分析</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>scMetabolism分析细胞代谢</div>
+      <div>https://b.limour.top/1539.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>February 9, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/1550.html" title="Seurat绘制指定基因的小提琴图">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Seurat绘制指定基因的小提琴图</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/1525.html" title="Blender渲染原神MMD (三) 选用MMM来记录物理">
+                        <span class="hidden-mobile">Blender渲染原神MMD (三) 选用MMM来记录物理</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

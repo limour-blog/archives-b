@@ -1,0 +1,703 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一步 读取数据 TCGA  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970library(TCGAbiolinks)library(plyr)library(limma)librar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCGA (三) 两组间DEGs分析">
+<meta property="og:url" content="https://b.limour.top/892.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="第一步 读取数据 TCGA  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970library(TCGAbiolinks)library(plyr)library(limma)librar">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img.limour.top/archives_2023/blog_wp/2021/10/image-1.webp">
+<meta property="article:published_time" content="2021-10-04T22:37:03.000Z">
+<meta property="article:modified_time" content="2024-03-18T09:34:16.792Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.limour.top/archives_2023/blog_wp/2021/10/image-1.webp">
+  
+  
+  
+  <title>TCGA (三) 两组间DEGs分析 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TCGA (三) 两组间DEGs分析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-10-05 06:37" pubdate>
+          October 5, 2021 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          144 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">TCGA (三) 两组间DEGs分析</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="第一步-读取数据"><a href="#第一步-读取数据" class="headerlink" title="第一步 读取数据"></a>第一步 读取数据</h2><ul>
+<li>TCGA</li>
+</ul>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-title">library</span>(<span class="hljs-type">TCGAbiolinks</span>)<br><span class="hljs-title">library</span>(plyr)<br><span class="hljs-title">library</span>(limma)<br><span class="hljs-title">library</span>(biomaRt)<br><span class="hljs-title">library</span>(<span class="hljs-type">SummarizedExperiment</span>)<br><br><span class="hljs-meta"># 配置数据路径</span><br><span class="hljs-title">root_path</span> = <span class="hljs-string">&quot;~/zlliu/R_data/TCGA&quot;</span><br> <br><span class="hljs-meta"># 配置结果保存路径</span><br><span class="hljs-title">output_path</span> = root_path<br><span class="hljs-title">if</span> (!file.exists(output_path))&#123;dir.create(output_path)&#125;<br> <br><span class="hljs-meta"># 设置工作目录，输出文件将保存在此目录下</span><br><span class="hljs-title">setwd</span>(output_path)<br><span class="hljs-title">getwd</span>()<br><br><span class="hljs-meta"># 一般的前列腺癌 GDC Data Portal 是 hg38 的</span><br><span class="hljs-type">PRAD</span> &lt;- <span class="hljs-type">GDCquery</span>(project = &#x27;<span class="hljs-type">TCGA</span>-<span class="hljs-type">PRAD&#x27;</span>,<br>                  <span class="hljs-class"><span class="hljs-keyword">data</span>.category = &quot;<span class="hljs-type">Transcriptome</span> <span class="hljs-type">Profiling</span>&quot;,</span><br>                  <span class="hljs-class"><span class="hljs-keyword">data</span>.<span class="hljs-keyword">type</span> = &quot;<span class="hljs-type">Gene</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Quantification</span>&quot;, </span><br>                  workflow.<span class="hljs-class"><span class="hljs-keyword">type</span> = &quot;<span class="hljs-type">HTSeq</span> - <span class="hljs-type">Counts</span>&quot;)</span><br><span class="hljs-meta"># mCRPC</span><br><span class="hljs-title">mCRPC</span> &lt;- <span class="hljs-type">GDCquery</span>(project = &#x27;<span class="hljs-type">WCDT</span>-<span class="hljs-type">MCRPC&#x27;</span>,<br>              <span class="hljs-class"><span class="hljs-keyword">data</span>.category = &quot;<span class="hljs-type">Transcriptome</span> <span class="hljs-type">Profiling</span>&quot;,</span><br>              <span class="hljs-class"><span class="hljs-keyword">data</span>.<span class="hljs-keyword">type</span> = &quot;<span class="hljs-type">Gene</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Quantification</span>&quot;, </span><br>              workflow.<span class="hljs-class"><span class="hljs-keyword">type</span> = &quot;<span class="hljs-type">HTSeq</span> - <span class="hljs-type">Counts</span>&quot;)</span><br> <br><span class="hljs-meta"># 选择病例列 ，不加cols参数则是完整结果的全部列</span><br><span class="hljs-type">PRAD_cases</span> &lt;- getResults(<span class="hljs-type">PRAD</span>,cols=c(<span class="hljs-string">&quot;cases&quot;</span>))<br><span class="hljs-title">mCRPC_cases</span> &lt;- getResults(mCRPC,cols=c(<span class="hljs-string">&quot;cases&quot;</span>))<br> <br><span class="hljs-meta"># 选择癌组织数据</span><br><span class="hljs-type">PRAD_tp</span>  &lt;- <span class="hljs-type">TCGAquery_SampleTypes</span>(barcode = <span class="hljs-type">PRAD_cases</span>, typesample = <span class="hljs-string">&quot;TP&quot;</span>)<br> <br><span class="hljs-type">PRAD_D</span> &lt;- <span class="hljs-type">GDCquery</span>(project = &#x27;<span class="hljs-type">TCGA</span>-<span class="hljs-type">PRAD&#x27;</span>,<br>                  <span class="hljs-class"><span class="hljs-keyword">data</span>.category = &quot;<span class="hljs-type">Transcriptome</span> <span class="hljs-type">Profiling</span>&quot;,</span><br>                  <span class="hljs-class"><span class="hljs-keyword">data</span>.<span class="hljs-keyword">type</span> = &quot;<span class="hljs-type">Gene</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Quantification</span>&quot;, </span><br>                  workflow.<span class="hljs-class"><span class="hljs-keyword">type</span> = &quot;<span class="hljs-type">HTSeq</span> - <span class="hljs-type">Counts</span>&quot;,</span><br>                  barcode = <span class="hljs-type">PRAD_tp</span>)<br><span class="hljs-title">mCRPC_D</span> &lt;- <span class="hljs-type">GDCquery</span>(project = &#x27;<span class="hljs-type">WCDT</span>-<span class="hljs-type">MCRPC&#x27;</span>,<br>              <span class="hljs-class"><span class="hljs-keyword">data</span>.category = &quot;<span class="hljs-type">Transcriptome</span> <span class="hljs-type">Profiling</span>&quot;,</span><br>              <span class="hljs-class"><span class="hljs-keyword">data</span>.<span class="hljs-keyword">type</span> = &quot;<span class="hljs-type">Gene</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Quantification</span>&quot;, </span><br>              workflow.<span class="hljs-class"><span class="hljs-keyword">type</span> = &quot;<span class="hljs-type">HTSeq</span> - <span class="hljs-type">Counts</span>&quot;,</span><br>              sample.<span class="hljs-class"><span class="hljs-keyword">type</span> = &quot;<span class="hljs-type">Metastatic</span>&quot;, #下载癌组织的数据</span><br>              barcode = mCRPC_cases)<br><span class="hljs-title">saveRDS</span>(<span class="hljs-type">PRAD_D</span>,<span class="hljs-string">&quot;PRAD_D.rds&quot;</span>)<br><span class="hljs-title">saveRDS</span>(mCRPC_D,<span class="hljs-string">&quot;mCRPC_D.rds&quot;</span>)<br> <br><span class="hljs-type">GDCdownload</span>(query = <span class="hljs-type">PRAD_D</span>)<br><span class="hljs-type">GDCdownload</span>(query = mCRPC_D)<br> <br><span class="hljs-type">PRAD_pre1</span> &lt;- <span class="hljs-type">GDCprepare</span>(query = <span class="hljs-type">PRAD_D</span>, save = <span class="hljs-type">TRUE</span>, save.filename = <span class="hljs-string">&quot;PRAD_pre1.rda&quot;</span>)<br><span class="hljs-title">mCRPC_pre1</span> &lt;- <span class="hljs-type">GDCprepare</span>(query = mCRPC_D, save = <span class="hljs-type">TRUE</span>, save.filename = <span class="hljs-string">&quot;mCRPC_pre1.rda&quot;</span>)<br> <br><span class="hljs-meta"># 导出counts矩阵</span><br><span class="hljs-meta"># PRAD_pre &lt;- PRAD_pre1@assays@data$`HTSeq - Counts`</span><br><span class="hljs-meta"># colnames(PRAD_pre) &lt;- PRAD_pre1@colData@rownames</span><br><br> <br><span class="hljs-meta"># mCRPC_pre &lt;- mCRPC_pre1@assays@data$`HTSeq - Counts`</span><br><span class="hljs-meta"># colnames(mCRPC_pre) &lt;- mCRPC_pre1@colData@rownames</span><br><br><span class="hljs-meta"># library(Matrix)</span><br><span class="hljs-meta"># library(Seurat)</span><br><span class="hljs-meta"># library(plyr)</span><br><span class="hljs-meta"># library(dplyr)</span><br><span class="hljs-meta"># library(patchwork)</span><br><span class="hljs-meta"># library(purrr)</span><br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>GEO</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs stylus">f_intersect &lt;- <span class="hljs-built_in">function</span>(lc_ol, t_low=<span class="hljs-number">1</span>)&#123;<br>    com_gene &lt;- <span class="hljs-built_in">Reduce</span>(intersect,<span class="hljs-built_in">lapply</span>(lc_ol, rownames))<br>    com_gene &lt;- com_gene<span class="hljs-selector-attr">[com_gene != <span class="hljs-string">&quot;&quot;</span>]</span><br>    res = NULL<br>    res_g &lt;- NULL<br>    <span class="hljs-built_in">for</span>(<span class="hljs-selector-tag">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>:<span class="hljs-built_in">length</span>(lc_ol))&#123;<br>        res &lt;- <span class="hljs-built_in">cbind</span>(res, lc_ol<span class="hljs-selector-attr">[[i]</span>]<span class="hljs-selector-attr">[com_gene,]</span>)<br>        res_g  &lt;- <span class="hljs-built_in">c</span>(res_g, <span class="hljs-built_in">rep</span>(<span class="hljs-built_in">names</span>(lc_ol)<span class="hljs-selector-attr">[i]</span>, <span class="hljs-built_in">ncol</span>(lc_ol<span class="hljs-selector-attr">[[i]</span>])))<br>    &#125;<br>    res &lt;- res<span class="hljs-selector-attr">[rowMeans(res) &gt; t_low,]</span><br>    <span class="hljs-built_in">list</span>(c=res, g=res_g)<br>&#125;<br><br>f_intersect_mg &lt;- <span class="hljs-built_in">function</span>(lc_glN, lc_gln)&#123;<br>    res &lt;- NULL<br>    <span class="hljs-keyword">for</span> (<span class="hljs-selector-tag">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>:<span class="hljs-built_in">length</span>(lc_glN))&#123;<br>        res  &lt;- <span class="hljs-built_in">c</span>(res, <span class="hljs-built_in">rep</span>(lc_glN<span class="hljs-selector-attr">[i]</span>, lc_gln<span class="hljs-selector-attr">[i]</span>))<br>    &#125;<br>    res<br>&#125;<br><br>f_intersect_g &lt;- <span class="hljs-built_in">function</span>(lc_counts, lc_ctN, lc_ctn, lc_trN)&#123;<br>    <span class="hljs-built_in">c</span>(<span class="hljs-built_in">rep</span>(lc_ctN, lc_ctn), <span class="hljs-built_in">rep</span>(lc_trN, <span class="hljs-built_in">ncol</span>(lc_counts)-lc_ctn))<br>&#125;<br><br>f_intersect_c &lt;- <span class="hljs-built_in">function</span>(lc_g)&#123;<br>    <span class="hljs-built_in">paste</span>(lc_g,<span class="hljs-number">1</span>:<span class="hljs-built_in">length</span>(lc_g),sep=<span class="hljs-string">&#x27;&#x27;</span>)<br>&#125;<br><br>f_intersect_r &lt;- <span class="hljs-built_in">function</span>(lc_d, lc_s, lc_e, lc_sub=F)&#123;<br>    lc_s = <span class="hljs-built_in">which</span>(<span class="hljs-built_in">colnames</span>(lc_d) == lc_s)<br>    lc_e = <span class="hljs-built_in">which</span>(<span class="hljs-built_in">colnames</span>(lc_d) == lc_e)<br>    <span class="hljs-built_in">if</span>(lc_sub)&#123;<br>        <span class="hljs-built_in">return</span>(lc_d<span class="hljs-selector-attr">[,-(lc_s:lc_e)]</span>)<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-built_in">return</span>(lc_d<span class="hljs-selector-attr">[,(lc_s:lc_e)]</span>)<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs stylus">f_id2name &lt;- <span class="hljs-built_in">function</span>(lc_exp, lc_db)&#123;<br>    <span class="hljs-built_in">if</span>(!is<span class="hljs-selector-class">.data</span><span class="hljs-selector-class">.frame</span>(lc_db))&#123;<br>        lc_ids &lt;- <span class="hljs-built_in">toTable</span>(lc_db)<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        lc_ids &lt;- lc_db<br>    &#125;<br>    res &lt;- lc_exp<span class="hljs-selector-attr">[rownames(lc_exp) %in% lc_ids[[1]</span>],]<br>    lc_ids=lc_ids<span class="hljs-selector-attr">[match(rownames(res),lc_ids[[1]</span>]),]<br>    lc_tmp = <span class="hljs-built_in">by</span>(res,<br>         lc_ids<span class="hljs-selector-attr">[[2]</span>],<br>         <span class="hljs-built_in">function</span>(x) <span class="hljs-built_in">rownames</span>(x)<span class="hljs-selector-attr">[which.max(rowMeans(x))]</span>)<br>    lc_probes = as<span class="hljs-selector-class">.character</span>(lc_tmp)<br>    res = res<span class="hljs-selector-attr">[rownames(res) %in% lc_probes,]</span><br>    <span class="hljs-built_in">rownames</span>(res)=lc_ids<span class="hljs-selector-attr">[match(rownames(res),lc_ids[[1]</span>]),<span class="hljs-number">2</span>]<br>    res<br>&#125;<br><br><span class="hljs-function"><span class="hljs-title">library</span><span class="hljs-params">(GEOquery)</span></span><br>f_getGPL &lt;- <span class="hljs-built_in">function</span>(lc_GPLN, lc_local = F)&#123;<br>    <span class="hljs-built_in">options</span>(stringsAsFactors = F)<br>    <span class="hljs-keyword">if</span> (!file<span class="hljs-selector-class">.exists</span>(lc_GPLN))&#123;dir<span class="hljs-selector-class">.create</span>(lc_GPLN)&#125;<br>    <span class="hljs-built_in">if</span>(lc_local)&#123;<br>        gpl=read<span class="hljs-selector-class">.table</span>(file<span class="hljs-selector-class">.path</span>(lc_GPLN, lc_GPLN),<br>               <span class="hljs-selector-tag">header</span> = TRUE,fill = T,sep = <span class="hljs-string">&quot;\t&quot;</span>,<br>               comment<span class="hljs-selector-class">.char</span> = <span class="hljs-string">&quot;#&quot;</span>,<br>               stringsAsFactors = FALSE,<br>               <span class="hljs-selector-tag">quote</span> = <span class="hljs-string">&quot;&quot;</span>)<br>        <span class="hljs-built_in">return</span>(gpl)<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-built_in">return</span>(<span class="hljs-built_in">Table</span>(<span class="hljs-built_in">getGEO</span>(lc_GPLN,destdir = lc_GPLN)))<br>    &#125;<br>&#125;<br><br>f_getGEO &lt;- <span class="hljs-built_in">function</span>(lc_GEOID, lc_GPLN)&#123;<br>    <span class="hljs-keyword">if</span> (!file<span class="hljs-selector-class">.exists</span>(lc_GEOID))&#123;dir<span class="hljs-selector-class">.create</span>(lc_GEOID)&#125;<br>    gset &lt;- <span class="hljs-built_in">getGEO</span>(lc_GEOID, GSEMatrix =TRUE, AnnotGPL=F, destdir=lc_GEOID)<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">length</span>(gset) &gt; <span class="hljs-number">1</span>) idx &lt;- <span class="hljs-built_in">grep</span>(lc_GPLN, <span class="hljs-built_in">attr</span>(gset, <span class="hljs-string">&quot;names&quot;</span>)) <span class="hljs-keyword">else</span> idx &lt;- <span class="hljs-number">1</span><br>    gset &lt;- gset<span class="hljs-selector-attr">[[idx]</span>]<br>    <span class="hljs-built_in">fvarLabels</span>(gset) &lt;- make<span class="hljs-selector-class">.names</span>(<span class="hljs-built_in">fvarLabels</span>(gset))<br>    <span class="hljs-built_in">exprs</span>(gset)<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs clean">GSE70768 &lt;- f_getGEO(<span class="hljs-string">&quot;GSE70768&quot;</span>, <span class="hljs-string">&quot;GPL10558&quot;</span>)<br>GPL10558 = f_getGPL(<span class="hljs-string">&#x27;GPL10558&#x27;</span>)[,c(<span class="hljs-string">&#x27;ID&#x27;</span>,<span class="hljs-string">&#x27;Symbol&#x27;</span>)]<br>GSE70768 &lt;- f_id2name(GSE70768, GPL10558)<br># GSE70768 &lt;- <span class="hljs-number">2</span>^GSE70768 # log2 transformed and quantile normalized<br># GSE70768_CRPC &lt;-  CreateSeuratObject(counts = GSE70768, project = <span class="hljs-string">&quot;GSE70768_CRPC&quot;</span>) <br># GSE70768_CRPC[[<span class="hljs-string">&#x27;group&#x27;</span>]] &lt;- <span class="hljs-string">&#x27;CRPC&#x27;</span><br><br>GPL15659 &lt;- f_getGPL(<span class="hljs-string">&#x27;GPL15659&#x27;</span>)[,c(<span class="hljs-string">&#x27;ID&#x27;</span>,<span class="hljs-string">&#x27;GENE_SYMBOL&#x27;</span>)]<br>GSE74367 &lt;-  f_getGEO(<span class="hljs-string">&quot;GSE74367&quot;</span>, <span class="hljs-string">&quot;GPL15659&quot;</span>)<br>GSE74367 &lt;- f_id2name(GSE74367, GPL15659)<br># GSE74367 &lt;- <span class="hljs-number">2</span>^GSE74367 # batch-normalized log2 Cy3 signal intensity<br># GSE74367_CRPC &lt;-  CreateSeuratObject(counts = GSE74367, project = <span class="hljs-string">&quot;GSE74367_CRPC&quot;</span>) <br># GSE74367_CRPC[[<span class="hljs-string">&#x27;group&#x27;</span>]] &lt;- <span class="hljs-string">&#x27;CRPC&#x27;</span><br><br>GSE101607 &lt;- f_getGEO(<span class="hljs-string">&quot;GSE101607&quot;</span>, <span class="hljs-string">&quot;GPL10558&quot;</span>)<br>GSE101607 &lt;- f_id2name(GSE101607, GPL10558)<br># GSE101607_CRPC &lt;-  CreateSeuratObject(counts = GSE101607, project = <span class="hljs-string">&quot;GSE101607_CRPC&quot;</span>) <br># GSE101607_CRPC[[<span class="hljs-string">&#x27;group&#x27;</span>]] &lt;- <span class="hljs-string">&#x27;CRPC&#x27;</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="第二步-整合数据"><a href="#第二步-整合数据" class="headerlink" title="第二步 整合数据"></a>第二步 整合数据</h2><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs autoit">f_tcga_fpkm &lt;- function(lc_pre1, lc_exons_gene_lens)&#123;<br>    lc_pre1_l &lt;- lc_exons_gene_lens[lc_pre1<span class="hljs-symbol">@rowRanges</span>$ensembl_gene_id,]/<span class="hljs-number">1000</span> <span class="hljs-meta"># 转kb</span><br>    lc_pre1_rpk &lt;- lc_pre1<span class="hljs-symbol">@assays</span><span class="hljs-symbol">@data</span>$`HTSeq - Counts`/lc_pre1_l<br>    lc_pre1_fpkm &lt;- t(t(lc_pre1_rpk)/colSums(lc_pre1<span class="hljs-symbol">@assays</span><span class="hljs-symbol">@data</span>$`HTSeq - Counts`) * <span class="hljs-number">10</span>^<span class="hljs-number">6</span>)<br>    lc_pre1_fpkm<br>    colnames(lc_pre1_fpkm) &lt;- lc_pre1<span class="hljs-symbol">@colData</span><span class="hljs-symbol">@rownames</span><br>    rownames(lc_pre1_fpkm) &lt;- lc_pre1<span class="hljs-symbol">@rowRanges</span>$external_gene_name<br>    lc_pre1_fpkm<br>&#125;<br>f_tcga_row &lt;- function(lc_pre1)&#123;<br>    lc_counts &lt;- lc_pre1<span class="hljs-symbol">@assays</span><span class="hljs-symbol">@data</span>$`HTSeq - Counts`<br>    colnames(lc_counts) &lt;- lc_pre1<span class="hljs-symbol">@colData</span><span class="hljs-symbol">@rownames</span><br>    rownames(lc_counts) &lt;- lc_pre1<span class="hljs-symbol">@rowRanges</span>$external_gene_name<br>    lc_counts<br>&#125;<br>fpkmToTpm &lt;- function(fpkm)&#123;<br>    <span class="hljs-built_in">exp</span>(<span class="hljs-built_in">log</span>(fpkm) - <span class="hljs-built_in">log</span>(sum(fpkm)) + <span class="hljs-built_in">log</span>(<span class="hljs-number">1e6</span>))<br>&#125;<br>f_fpkmToTpm &lt;- function(l_e)&#123;<br>     apply(l_e,<span class="hljs-number">2</span>,fpkmToTpm)<br>&#125;<br>f_tcga_getSampleID &lt;- function(lc_pre1)&#123;<br>    cn &lt;- lc_pre1<span class="hljs-symbol">@colData</span><span class="hljs-symbol">@rownames</span><br>    cn &lt;- unlist(t(data.frame(strsplit(a, <span class="hljs-string">&quot;-&quot;</span>))[<span class="hljs-number">4</span>,])[,<span class="hljs-number">1</span>])<br>    names(cn) &lt;- <span class="hljs-literal">NULL</span><br>    substr(cn,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs subunit"># https://api.gdc.cancer.gov/data/25aa497c-e615<span class="hljs-string">-4</span>cb7<span class="hljs-string">-8751</span><span class="hljs-string">-71</span>f744f9691f<br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://img.limour.top/archives_2023/blog_wp/2021/10/image-1.webp"><img src="https://img.limour.top/archives_2023/blog_wp/2021/10/image-1.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></a></p>
+<p>下载解压</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">library</span><span class="hljs-params">(GenomicFeatures)</span></span><br>txdb &lt;- <span class="hljs-built_in">makeTxDbFromGFF</span>(<span class="hljs-string">&quot;gencode.v22.annotation.gtf&quot;</span>,format=<span class="hljs-string">&quot;gtf&quot;</span>)<br>exons_gene &lt;- <span class="hljs-built_in">exonsBy</span>(txdb, by = <span class="hljs-string">&quot;gene&quot;</span>)<br>exons_gene_lens &lt;- <span class="hljs-built_in">lapply</span>(exons_gene,<span class="hljs-built_in">function</span>(x)&#123;<span class="hljs-built_in">sum</span>(<span class="hljs-attribute">width</span>(<span class="hljs-built_in">reduce</span>(x)))&#125;)<br>exons_gene_lens1 &lt;- as<span class="hljs-selector-class">.data</span><span class="hljs-selector-class">.frame</span>(exons_gene_lens)<br>exons_gene_lens1 &lt;- <span class="hljs-built_in">t</span>(exons_gene_lens1)<br>exons_gene_lens1 &lt;- as<span class="hljs-selector-class">.data</span><span class="hljs-selector-class">.frame</span>(exons_gene_lens1)<br><span class="hljs-function"><span class="hljs-title">rownames</span><span class="hljs-params">(exons_gene_lens1)</span></span> &lt;- <span class="hljs-built_in">gsub</span>(<span class="hljs-string">&quot;\\.(\\.?\\d*)&quot;</span>,<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-built_in">rownames</span>(exons_gene_lens1))<br><span class="hljs-function"><span class="hljs-title">saveRDS</span><span class="hljs-params">(exons_gene_lens1,<span class="hljs-string">&#x27;exons_gene_lens.rds&#x27;</span>)</span></span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-title">sym2id</span>.db &lt;- <span class="hljs-class"><span class="hljs-keyword">data</span>.frame(<span class="hljs-title">sym</span>=<span class="hljs-type">PRAD_pre1</span>@<span class="hljs-title">rowRanges</span>$<span class="hljs-title">external_gene_name</span>, <span class="hljs-type">ID</span>=<span class="hljs-type">PRAD_pre1</span>@<span class="hljs-title">rowRanges</span>$<span class="hljs-title">ensembl_gene_id</span>)</span><br><span class="hljs-title">saveRDS</span>(sym2id.db,&#x27;sym2id.db&#x27;)<br><span class="hljs-title">f_GEO2fpkm</span> &lt;- function(lc_exp, lc_exons_gene_lens)&#123;<br>        lc_pre1_l &lt;- lc_exons_gene_lens[rownames(lc_exp),]/<span class="hljs-number">1000</span> # 转kb<br>        lc_pre1_rpk &lt;-lc_exp/lc_pre1_l<br>        lc_pre1_fpkm &lt;- t(t(lc_pre1_rpk)/colSums(lc_exp) * <span class="hljs-number">10</span>^<span class="hljs-number">6</span>)<br>        lc_pre1_fpkm<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs subunit"># PRAD_pre &lt;- f_intersect_sub(PRAD_pre, c(&#x27;TCGA-HC<span class="hljs-string">-8265</span><span class="hljs-string">-01</span>B<span class="hljs-string">-04</span>R<span class="hljs-string">-2302</span><span class="hljs-string">-07</span>&#x27;,&#x27;TCGA-HC<span class="hljs-string">-8258</span><span class="hljs-string">-01</span>B<span class="hljs-string">-05</span>R<span class="hljs-string">-2302</span><span class="hljs-string">-07</span>&#x27;, &#x27;TCGA-HC<span class="hljs-string">-7740</span><span class="hljs-string">-01</span>B<span class="hljs-string">-04</span>R<span class="hljs-string">-2302</span><span class="hljs-string">-07</span>&#x27;))<br>GSE101607 &lt;- f_log2(GSE101607)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs stylus">tcga &lt;- <span class="hljs-built_in">f_intersect</span>(<span class="hljs-built_in">list</span>(tcga_PRAD=<span class="hljs-built_in">f_tcga_row</span>(PRAD_pre1), tcga_mCRPC=<span class="hljs-built_in">f_tcga_row</span>(mCRPC_pre1)))<br><br>GSE70768_CRPC &lt;- GSE70768<span class="hljs-selector-attr">[,1:13]</span><br>GSE70768_PRAD &lt;- <span class="hljs-built_in">f_intersect_r</span>(GSE70768, <span class="hljs-string">&#x27;GSM1817720&#x27;</span>, <span class="hljs-string">&#x27;GSM1817832&#x27;</span>)<br><br>GSE74367_CRPC &lt;- GSE74367<span class="hljs-selector-attr">[,21:65]</span><br>GSE74367_PRAD &lt;- <span class="hljs-built_in">f_intersect_r</span>(GSE74367, <span class="hljs-string">&#x27;GSM1918981&#x27;</span>, <span class="hljs-string">&#x27;GSM1918991&#x27;</span>)<br><br>GSE101607_CRPC &lt;- GSE101607<span class="hljs-selector-attr">[,1:40]</span><br>GSE101607_PRAD1 &lt;- <span class="hljs-built_in">f_intersect_r</span>(GSE101607, <span class="hljs-string">&#x27;GSM2710899&#x27;</span>, <span class="hljs-string">&#x27;GSM2710905&#x27;</span>)<br>GSE101607_PRAD2 &lt;- GSE101607<span class="hljs-selector-attr">[, <span class="hljs-string">&#x27;GSM2710886&#x27;</span>]</span><br>GSE101607_PRAD &lt;- <span class="hljs-built_in">cbind</span>(GSE101607_PRAD2, GSE101607_PRAD1)<br><span class="hljs-function"><span class="hljs-title">colnames</span><span class="hljs-params">(GSE101607_PRAD)</span></span><span class="hljs-selector-attr">[[1]</span>] &lt;- <span class="hljs-string">&#x27;GSM2710886&#x27;</span><br><br>GSE28403_CRPC &lt;- <span class="hljs-built_in">f_intersect_sub</span>(GSE28403, <span class="hljs-built_in">c</span>(<span class="hljs-string">&#x27;GSM701959&#x27;</span>,<span class="hljs-string">&#x27;GSM701961&#x27;</span>, <span class="hljs-string">&#x27;GSM701962&#x27;</span>, <span class="hljs-string">&#x27;GSM701963&#x27;</span>))<br>GSE28403_PRAD &lt;- GSE28403<span class="hljs-selector-attr">[, c(<span class="hljs-string">&#x27;GSM701959&#x27;</span>,<span class="hljs-string">&#x27;GSM701961&#x27;</span>, <span class="hljs-string">&#x27;GSM701962&#x27;</span>, <span class="hljs-string">&#x27;GSM701963&#x27;</span>)]</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="第三步-批次效应"><a href="#第三步-批次效应" class="headerlink" title="第三步 批次效应"></a>第三步 批次效应</h2><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">f_pca &lt;- <span class="hljs-keyword">function</span>(lc_counts, lc_g)&#123;<br>    res &lt;- prcomp(lc_counts)<br>    res &lt;- data.frame(res$rotation, g = lc_g)<br>    res$CB &lt;- rownames(res)<br>    res<br>&#125;<br><br>library(ggplot2)<br>library(tidyverse)<br>f_pca_p &lt;- <span class="hljs-keyword">function</span>(lc_pca, x=&#x27;PC1&#x27;, y=&#x27;PC2&#x27;)&#123;<br>    ggplot(lc_pca,aes(x=!!sym(x),y=!!sym(y),color=g))+<br>    geom<span class="hljs-constructor">_point()</span>+<br>    theme<span class="hljs-constructor">_bw()</span>+<br>    theme(panel.border=element<span class="hljs-constructor">_blank()</span>,panel.grid.major=element<span class="hljs-constructor">_blank()</span>,<br>          panel.grid.minor=element<span class="hljs-constructor">_blank()</span>,axis.line= element<span class="hljs-constructor">_line(<span class="hljs-params">colour</span> = <span class="hljs-string">&quot;blue&quot;</span>)</span>)<br>&#125;<br><br>library(umap)<br>f_umap &lt;- <span class="hljs-keyword">function</span>(lc_pca,dims=<span class="hljs-number">1</span>:<span class="hljs-number">30</span>)&#123;<br>    res &lt;- umap(lc_pca<span class="hljs-literal">[,<span class="hljs-identifier">dims</span>]</span>)<br>    res &lt;- data.frame(res$layout)<br>    colnames(res) &lt;- c(&#x27;UMAP1&#x27;, &#x27;UMAP2&#x27;)<br>    res$CB &lt;- rownames(res)<br>    tp &lt;- lc_pca<span class="hljs-literal">[,<span class="hljs-identifier">c</span>(&#x27;<span class="hljs-identifier">g</span>&#x27;,&#x27;CB&#x27;)]</span><br>    res &lt;- merge(res, tp, by=<span class="hljs-string">&quot;CB&quot;</span>)<br>    res<br>&#125;<br>f_umap_p &lt;- <span class="hljs-keyword">function</span>(lc_umap)&#123;<br>    ggplot(lc_umap,aes(x=UMAP1,y=UMAP2,color=g))+<br>    geom<span class="hljs-constructor">_point()</span>+<br>    theme<span class="hljs-constructor">_bw()</span>+<br>    theme(panel.border=element<span class="hljs-constructor">_blank()</span>,panel.grid.major=element<span class="hljs-constructor">_blank()</span>,<br>          panel.grid.minor=element<span class="hljs-constructor">_blank()</span>,axis.line= element<span class="hljs-constructor">_line(<span class="hljs-params">colour</span> = <span class="hljs-string">&quot;blue&quot;</span>)</span>)<br>&#125;<br><br>library(ggplot2)<br>library(reshape2)<br>library(plyr)<br>library(dplyr)<br>library(patchwork)<br>library(purrr)<br> <br>f_gl_boxp &lt;- <span class="hljs-keyword">function</span>(lc_exp, lc_g, lc_delta_ylim)&#123;<br>    lc_exp_L = melt(lc_exp)<br>    colnames(lc_exp_L) = c(&#x27;symbol<span class="hljs-character">&#x27;,&#x27;</span>sample<span class="hljs-character">&#x27;,&#x27;</span>value&#x27;)<br>    lc_exp_L$group = lc_g<br>    p=ggplot(lc_exp_L,aes(x=sample,y=value,fill=group))+geom<span class="hljs-constructor">_boxplot(<span class="hljs-params">outlier</span>.<span class="hljs-params">shape</span> = NA)</span><br>    p=p+theme<span class="hljs-constructor">_set(<span class="hljs-params">theme_set</span>(<span class="hljs-params">theme_bw</span>(<span class="hljs-params">base_size</span>=20)</span>))<br>    p=p+theme(text=element<span class="hljs-constructor">_text(<span class="hljs-params">face</span>=&#x27;<span class="hljs-params">bold</span>&#x27;)</span>,axis.text.x=element<span class="hljs-constructor">_text(<span class="hljs-params">angle</span>=30,<span class="hljs-params">hjust</span>=1)</span>,axis.title=element<span class="hljs-constructor">_blank()</span>)<br>    lc_ylim = unlist(by(lc_exp_L,<br>     lc_exp_L$sample,<br>     <span class="hljs-keyword">function</span>(x)&#123;boxplot.stats(x$value)$stats<span class="hljs-literal">[<span class="hljs-identifier">c</span>(<span class="hljs-number">1</span>, <span class="hljs-number">5</span>)]</span>&#125;))<br>    lc_ylim &lt;- c(min(lc_ylim), max(lc_ylim)) + lc_delta_ylim<br>    p=p + coord<span class="hljs-constructor">_cartesian(<span class="hljs-params">ylim</span> = <span class="hljs-params">lc_ylim</span>)</span><br>    p<br>&#125;<br> <br>f_icg_boxp &lt;- <span class="hljs-keyword">function</span>(lc_exp, lc_icg, lc_g)&#123;<br>    lc_exp_L = melt(lc_exp<span class="hljs-literal">[<span class="hljs-identifier">lc_icg</span>,]</span>)<br>    lc_exp_L &lt;- cbind(lc_exp_L, rownames(lc_exp_L))<br>    colnames(lc_exp_L)=c(&#x27;value<span class="hljs-character">&#x27;,&#x27;</span>sample&#x27;)<br>    lc_exp_L$group = lc_g<br>    p=ggplot(lc_exp_L,aes(x=group,y=value,fill=group))+geom<span class="hljs-constructor">_boxplot()</span><br>    p=p+stat<span class="hljs-constructor">_summary(<span class="hljs-params">fun</span>=<span class="hljs-string">&quot;mean&quot;</span>,<span class="hljs-params">geom</span>=<span class="hljs-string">&quot;point&quot;</span>,<span class="hljs-params">shape</span>=23,<span class="hljs-params">size</span>=3,<span class="hljs-params">fill</span>=<span class="hljs-string">&quot;red&quot;</span>)</span><br>    p=p+theme<span class="hljs-constructor">_set(<span class="hljs-params">theme_set</span>(<span class="hljs-params">theme_bw</span>(<span class="hljs-params">base_size</span>=20)</span>))<br>    p=p+theme(text=element<span class="hljs-constructor">_text(<span class="hljs-params">face</span>=&#x27;<span class="hljs-params">bold</span>&#x27;)</span>,axis.text.x=element<span class="hljs-constructor">_text(<span class="hljs-params">angle</span>=30,<span class="hljs-params">hjust</span>=1)</span>,axis.title=element<span class="hljs-constructor">_blank()</span>)<br>    p=p+ggtitle(lc_icg)+theme(plot.title = element<span class="hljs-constructor">_text(<span class="hljs-params">hjust</span> = 0.5)</span>)<br>    p<br>&#125;<br><br># 若缺少sva包，则安装<br># options(BioC_mirror=<span class="hljs-string">&quot;https://mirrors.tuna.tsinghua.edu.cn/bioconductor&quot;</span>)<br># BiocManager::install(<span class="hljs-string">&quot;sva&quot;</span>, update=F)<br>library(sva)<br>library(limma)<br>f_removeBE &lt;- <span class="hljs-keyword">function</span>(lc_dat, lc_batch, lc_g, use_ComBat=F)&#123;<br>    <span class="hljs-keyword">if</span>(use_ComBat)&#123;<br>        lc_mod &lt;- model.matrix(~<span class="hljs-keyword">as</span>.factor(lc_g))<br>        res &lt;- <span class="hljs-constructor">ComBat(<span class="hljs-params">dat</span> = <span class="hljs-params">lc_dat</span>, <span class="hljs-params">batch</span> = <span class="hljs-params">as</span>.<span class="hljs-params">factor</span>(<span class="hljs-params">lc_batch</span>)</span>, <span class="hljs-keyword">mod</span> = lc_mod)<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        lc_mod &lt;- model.matrix(~<span class="hljs-number">0</span>+<span class="hljs-keyword">as</span>.factor(lc_g))<br>        res &lt;- remove<span class="hljs-constructor">BatchEffect(<span class="hljs-params">lc_dat</span>, <span class="hljs-params">batch</span> = <span class="hljs-params">as</span>.<span class="hljs-params">factor</span>(<span class="hljs-params">lc_batch</span>)</span>, design = lc_mod)<br>    &#125;<br>    res<br>&#125;<br><br>library(ggdendro)<br>f_DEG_hclust &lt;- <span class="hljs-keyword">function</span>(lc_counts)&#123;<br>    ggdendrogram(hclust(dist(t(lc_counts))), rotate = T, size = <span class="hljs-number">3</span>)+theme(axis.text = element<span class="hljs-constructor">_text(<span class="hljs-params">size</span>=14,<span class="hljs-params">face</span> = <span class="hljs-string">&quot;bold&quot;</span>)</span>)<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs stylus">gse<span class="hljs-variable">$m</span> &lt;- <span class="hljs-built_in">f_removeBE</span>(gse<span class="hljs-variable">$c</span>, gse<span class="hljs-variable">$b</span>, gse<span class="hljs-variable">$t</span>, use_ComBat = T)<br><span class="hljs-function"><span class="hljs-title">f_icg_boxp</span><span class="hljs-params">(gse<span class="hljs-variable">$m</span>, <span class="hljs-string">&#x27;GAPDH&#x27;</span>, gse<span class="hljs-variable">$t</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">f_icg_boxp</span><span class="hljs-params">(normalizeBetweenArrays(cbind(GSE74367_PRAD,GSE74367_CRPC)</span></span>),<span class="hljs-string">&#x27;GAPDH&#x27;</span>,<br>           <span class="hljs-built_in">f_intersect_mg</span>(<span class="hljs-built_in">c</span>(<span class="hljs-string">&#x27;PRAD&#x27;</span>, <span class="hljs-string">&#x27;CRPC&#x27;</span>),<span class="hljs-built_in">c</span>(<span class="hljs-built_in">ncol</span>(GSE74367_PRAD),<span class="hljs-built_in">ncol</span>(GSE74367_CRPC))))<br><span class="hljs-function"><span class="hljs-title">f_icg_boxp</span><span class="hljs-params">(normalizeBetweenArrays(gse<span class="hljs-variable">$m</span>)</span></span>, <span class="hljs-string">&#x27;GAPDH&#x27;</span>, gse<span class="hljs-variable">$t</span>)<br><span class="hljs-function"><span class="hljs-title">options</span><span class="hljs-params">(repr.plot.width=<span class="hljs-number">10</span>, repr.plot.height=<span class="hljs-number">10</span>)</span></span><br>(<span class="hljs-built_in">f_icg_boxp</span>(gse<span class="hljs-variable">$c</span>, <span class="hljs-string">&#x27;GAPDH&#x27;</span>, gse<span class="hljs-variable">$g</span>) + <span class="hljs-built_in">f_icg_boxp</span>(gse<span class="hljs-variable">$m</span>, <span class="hljs-string">&#x27;GAPDH&#x27;</span>, gse<span class="hljs-variable">$g</span>))/<br>(<span class="hljs-built_in">f_icg_boxp</span>(gse<span class="hljs-variable">$c</span>, <span class="hljs-string">&#x27;GAPDH&#x27;</span>, gse<span class="hljs-variable">$t</span>) + <span class="hljs-built_in">f_icg_boxp</span>(gse<span class="hljs-variable">$m</span>, <span class="hljs-string">&#x27;GAPDH&#x27;</span>, gse<span class="hljs-variable">$t</span>))<br>(<span class="hljs-built_in">f_pca_p</span>(<span class="hljs-built_in">f_pca</span>(gse<span class="hljs-variable">$c</span>,gse<span class="hljs-variable">$g</span>)) + <span class="hljs-built_in">f_pca_p</span>(<span class="hljs-built_in">f_pca</span>(gse<span class="hljs-variable">$m</span>,gse<span class="hljs-variable">$g</span>)))/<br>(<span class="hljs-built_in">f_pca_p</span>(<span class="hljs-built_in">f_pca</span>(gse<span class="hljs-variable">$c</span>,gse<span class="hljs-variable">$t</span>)) + <span class="hljs-built_in">f_pca_p</span>(<span class="hljs-built_in">f_pca</span>(gse<span class="hljs-variable">$m</span>,gse<span class="hljs-variable">$t</span>)))<br>(<span class="hljs-built_in">f_umap_p</span>(<span class="hljs-built_in">f_umap</span>(<span class="hljs-built_in">f_pca</span>(gse<span class="hljs-variable">$c</span>,gse<span class="hljs-variable">$g</span>))) + <span class="hljs-built_in">f_umap_p</span>(<span class="hljs-built_in">f_umap</span>(<span class="hljs-built_in">f_pca</span>(gse<span class="hljs-variable">$m</span>,gse<span class="hljs-variable">$g</span>))))/<br>(<span class="hljs-built_in">f_umap_p</span>(<span class="hljs-built_in">f_umap</span>(<span class="hljs-built_in">f_pca</span>(gse<span class="hljs-variable">$c</span>,gse<span class="hljs-variable">$t</span>))) + <span class="hljs-built_in">f_umap_p</span>(<span class="hljs-built_in">f_umap</span>(<span class="hljs-built_in">f_pca</span>(gse<span class="hljs-variable">$m</span>,gse<span class="hljs-variable">$t</span>))))<br></code></pre></td></tr></table></figure>
+
+<h2 id="第四步-计算DEGs"><a href="#第四步-计算DEGs" class="headerlink" title="第四步 计算DEGs"></a>第四步 计算DEGs</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">library</span><span class="hljs-params">(limma)</span></span><br><span class="hljs-function"><span class="hljs-title">library</span><span class="hljs-params">(pheatmap)</span></span><br>f_getDEG &lt;- <span class="hljs-built_in">function</span>(lc_counts, lc_group_list, lc_contrasts)&#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">length</span>(lc_contrasts) == <span class="hljs-number">2</span>)&#123;lc_contrasts = <span class="hljs-built_in">paste0</span>(lc_contrasts,collapse = <span class="hljs-string">&quot;-&quot;</span>)&#125;<br>    lc_design &lt;- model<span class="hljs-selector-class">.matrix</span>(~<span class="hljs-number">0</span>+<span class="hljs-built_in">factor</span>(lc_group_list))<br>    <span class="hljs-built_in">colnames</span>(lc_design) &lt;- <span class="hljs-built_in">levels</span>(<span class="hljs-built_in">factor</span>(lc_group_list))<br>    <span class="hljs-built_in">rownames</span>(lc_design) &lt;- <span class="hljs-built_in">colnames</span>(lc_counts)<br>    lc_fit &lt;- <span class="hljs-built_in">lmFit</span>(lc_counts, lc_design)<br>    lc_cont<span class="hljs-selector-class">.matrix</span> &lt;- <span class="hljs-built_in">makeContrasts</span>(contrasts=lc_contrasts, levels=lc_design)<br>    <span class="hljs-built_in">print</span>(lc_cont.matrix)<br>    lc_fit2 &lt;- contrasts<span class="hljs-selector-class">.fit</span>(lc_fit, lc_cont.matrix)<br>    lc_fit2 &lt;- <span class="hljs-built_in">eBayes</span>(lc_fit2, <span class="hljs-number">0.01</span>)<br>    <span class="hljs-built_in">topTable</span>(lc_fit2, adjust=<span class="hljs-string">&quot;fdr&quot;</span>, sort.by=<span class="hljs-string">&quot;B&quot;</span>, number=Inf)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-title">library</span><span class="hljs-params">(ggplot2)</span></span><br><span class="hljs-function"><span class="hljs-title">library</span><span class="hljs-params">(ggrepel)</span></span><br>f_DEG_Volcano &lt;- <span class="hljs-built_in">function</span>(lc_logFC, lc_p, lc_gene, Threshold_logFC = <span class="hljs-number">1</span>, Threshold_p = <span class="hljs-number">0.05</span>, lc_rep=<span class="hljs-number">1</span>:<span class="hljs-number">10</span>, lc_p_m=<span class="hljs-number">1</span>e-<span class="hljs-number">10</span>)&#123;<br>    col_vector = <span class="hljs-built_in">rep</span>(<span class="hljs-built_in">rgb</span>(<span class="hljs-number">108</span>, <span class="hljs-number">200</span>, <span class="hljs-number">228</span>, maxColorValue = <span class="hljs-number">255</span>), <span class="hljs-built_in">length</span>(lc_logFC))<br>    col_vector<span class="hljs-selector-attr">[lc_p &lt; Threshold_p &amp; lc_logFC &gt; Threshold_logFC]</span> = <span class="hljs-built_in">rgb</span>(<span class="hljs-number">226</span>, <span class="hljs-number">61</span>, <span class="hljs-number">75</span>, maxColorValue = <span class="hljs-number">255</span>)<br>    col_vector<span class="hljs-selector-attr">[lc_p &lt; Threshold_p &amp; lc_logFC &lt; -Threshold_logFC]</span> = <span class="hljs-built_in">rgb</span>(<span class="hljs-number">232</span>, <span class="hljs-number">168</span>, <span class="hljs-number">71</span>, maxColorValue = <span class="hljs-number">255</span>)<br>    lc_p<span class="hljs-selector-attr">[lc_p &lt; lc_p_m]</span> = lc_p_m<br>    lc_p<span class="hljs-selector-attr">[lc_p &gt; 1  is.na(lc_p)]</span> = <span class="hljs-number">1</span><br>    df = data<span class="hljs-selector-class">.frame</span>(logFC &lt;- lc_logFC, `<span class="hljs-built_in">-log10</span>(P)` &lt;- <span class="hljs-built_in">-log10</span>(lc_p), col &lt;- col_vector, gene &lt;- lc_gene)<br>    <span class="hljs-built_in">colnames</span>(df) &lt;- <span class="hljs-built_in">c</span>(<span class="hljs-string">&#x27;logFC&#x27;</span>, <span class="hljs-string">&#x27;-log10(P)&#x27;</span>, <span class="hljs-string">&quot;col&quot;</span>, <span class="hljs-string">&quot;gene&quot;</span>)<br>    lc_tp_logFC &lt;- df<span class="hljs-variable">$logFC</span><br>    lc_tp_logFC<span class="hljs-selector-attr">[lc_p&gt;=Threshold_p]</span> = <span class="hljs-number">0</span><br>    lc_idx &lt;- <span class="hljs-attribute">order</span>(lc_tp_logFC)[<span class="hljs-built_in">c</span>(lc_rep, <span class="hljs-built_in">length</span>(lc_gene)+<span class="hljs-number">1</span>-lc_rep)]<br>    res &lt;- <span class="hljs-built_in">ggplot</span>() + <span class="hljs-built_in">geom_point</span>(<span class="hljs-built_in">aes</span>(logFC, `<span class="hljs-built_in">-log10</span>(P)`, col=<span class="hljs-built_in">I</span>(col)), data = df) <br>    res &lt;- res + <span class="hljs-built_in">theme_bw</span>() + <span class="hljs-built_in">theme</span>(panel.<span class="hljs-attribute">grid</span>=<span class="hljs-built_in">element_line</span>(colour=NA))<br>    res &lt;- res + <span class="hljs-built_in">geom_hline</span>(yintercept=<span class="hljs-built_in">-log10</span>(Threshold_p), linetype=<span class="hljs-string">&quot;longdash&quot;</span>)<br>    res &lt;- res + <span class="hljs-built_in">geom_vline</span>(xintercept=<span class="hljs-built_in">c</span>(Threshold_logFC, -Threshold_logFC), linetype=<span class="hljs-string">&quot;longdash&quot;</span>)<br>    res &lt;- res + <span class="hljs-built_in">geom_text_repel</span>(data=df<span class="hljs-selector-attr">[lc_idx,]</span>,<span class="hljs-built_in">aes</span>(logFC,`<span class="hljs-built_in">-log10</span>(P)`,label=gene), force=T, max.overlaps=Inf)<br>    res<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">library(DESeq2)<br>f_dds &lt;- <span class="hljs-keyword">function</span>(l_counts, lc_g, lc_batch=NULL, t_low=<span class="hljs-number">1</span>)&#123;<br>    lc_cond &lt;- factor(lc_g)<br>    lc_coldata = data.frame(row.names=colnames(l_counts), lc_cond)<br>    <span class="hljs-keyword">if</span>(length(lc_batch) != <span class="hljs-number">0</span> )&#123;<br>        lc_bt &lt;- factor(lc_batch)<br>        lc_dds &lt;- <span class="hljs-constructor">DESeqDataSetFromMatrix(<span class="hljs-params">countData</span> = <span class="hljs-params">l_counts</span>, <span class="hljs-params">colData</span> = <span class="hljs-params">lc_coldata</span>, <span class="hljs-params">design</span>= ~<span class="hljs-params">lc_bt</span> + <span class="hljs-params">lc_cond</span>)</span><br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        lc_dds &lt;- <span class="hljs-constructor">DESeqDataSetFromMatrix(<span class="hljs-params">countData</span> = <span class="hljs-params">l_counts</span>, <span class="hljs-params">colData</span> = <span class="hljs-params">lc_coldata</span>, <span class="hljs-params">design</span>= ~<span class="hljs-params">lc_cond</span>)</span><br>    &#125;<br>    lc_dds &lt;- lc_dds<span class="hljs-literal">[<span class="hljs-identifier">rowSums</span>(<span class="hljs-identifier">counts</span>(<span class="hljs-identifier">lc_dds</span>))&gt;<span class="hljs-identifier">t_low</span>, ]</span><br>    dds_out &lt;- <span class="hljs-constructor">DESeq(<span class="hljs-params">lc_dds</span>)</span><br>    res &lt;- results(dds_out)<br>    data.frame(res)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">options</span><span class="hljs-params">(repr.plot.width=<span class="hljs-number">10</span>, repr.plot.height=<span class="hljs-number">10</span>)</span></span><br>gse<span class="hljs-variable">$deg</span> &lt;- <span class="hljs-built_in">f_getDEG</span>(gse<span class="hljs-variable">$m</span>,gse<span class="hljs-variable">$t</span>,<span class="hljs-built_in">c</span>(<span class="hljs-string">&#x27;CRPC&#x27;</span>,<span class="hljs-string">&#x27;PRAD&#x27;</span>))<br><span class="hljs-function"><span class="hljs-title">f_DEG_Volcano</span><span class="hljs-params">(gse<span class="hljs-variable">$deg</span><span class="hljs-variable">$logFC</span>, gse<span class="hljs-variable">$deg</span><span class="hljs-variable">$adj</span>.P.Val, rownames(gse<span class="hljs-variable">$deg</span>)</span></span>, Threshold_logFC = <span class="hljs-number">0.5</span>, lc_p_m = <span class="hljs-number">1</span>e-<span class="hljs-number">30</span>)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs stylus">tcga<span class="hljs-variable">$c</span> &lt;- tcga<span class="hljs-variable">$c</span><span class="hljs-selector-attr">[rownames(tcga$c) %in% rownames(gse$m),]</span><br>tcga<span class="hljs-variable">$m</span> &lt;- <span class="hljs-built_in">normalizeBetweenArrays</span>(tcga<span class="hljs-variable">$c</span>)<br><span class="hljs-function"><span class="hljs-title">options</span><span class="hljs-params">(repr.plot.width=<span class="hljs-number">10</span>, repr.plot.height=<span class="hljs-number">15</span>)</span></span><br>(<span class="hljs-built_in">f_icg_boxp</span>(tcga<span class="hljs-variable">$c</span>, <span class="hljs-string">&#x27;GAPDH&#x27;</span>, tcga<span class="hljs-variable">$g</span>) + <span class="hljs-built_in">f_icg_boxp</span>(tcga<span class="hljs-variable">$m</span>, <span class="hljs-string">&#x27;GAPDH&#x27;</span>, tcga<span class="hljs-variable">$g</span>))/<br>(<span class="hljs-built_in">f_pca_p</span>(<span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$c</span>,tcga<span class="hljs-variable">$g</span>)) + <span class="hljs-built_in">f_pca_p</span>(<span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$m</span>,tcga<span class="hljs-variable">$g</span>)))/<br>(<span class="hljs-built_in">f_umap_p</span>(<span class="hljs-built_in">f_umap</span>(<span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$c</span>,tcga<span class="hljs-variable">$g</span>))) + <span class="hljs-built_in">f_umap_p</span>(<span class="hljs-built_in">f_umap</span>(<span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$m</span>,tcga<span class="hljs-variable">$g</span>))))<br>tcga<span class="hljs-variable">$pca</span> &lt;- <span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$m</span>,tcga<span class="hljs-variable">$g</span>)<br>tcga<span class="hljs-variable">$t</span> &lt;- tcga<span class="hljs-variable">$g</span><br><span class="hljs-function"><span class="hljs-title">names</span><span class="hljs-params">(tcga<span class="hljs-variable">$t</span>)</span></span> &lt;- <span class="hljs-built_in">colnames</span>(tcga<span class="hljs-variable">$c</span>)<br>tcga<span class="hljs-variable">$pca</span> &lt;- <span class="hljs-built_in">subset</span>(tcga<span class="hljs-variable">$pca</span>, (PC1 &gt; <span class="hljs-number">0.04</span>  PC1 &lt; <span class="hljs-number">0.03</span>)&amp;(PC2 &gt; <span class="hljs-number">0.06</span>  PC2 &lt; <span class="hljs-number">0.01</span>))<br>tcga<span class="hljs-variable">$t</span> &lt;- tcga<span class="hljs-variable">$t</span><span class="hljs-selector-attr">[rownames(tcga$pca)]</span><br><span class="hljs-selector-tag">table</span>(tcga<span class="hljs-variable">$t</span>)<br>tcga<span class="hljs-variable">$m</span> &lt;- tcga<span class="hljs-variable">$m</span><span class="hljs-selector-attr">[,rownames(tcga$pca)]</span><br><span class="hljs-function"><span class="hljs-title">options</span><span class="hljs-params">(repr.plot.width=<span class="hljs-number">10</span>, repr.plot.height=<span class="hljs-number">15</span>)</span></span><br>(<span class="hljs-built_in">f_icg_boxp</span>(tcga<span class="hljs-variable">$c</span>, <span class="hljs-string">&#x27;GAPDH&#x27;</span>, tcga<span class="hljs-variable">$g</span>) + <span class="hljs-built_in">f_icg_boxp</span>(tcga<span class="hljs-variable">$m</span>, <span class="hljs-string">&#x27;GAPDH&#x27;</span>, tcga<span class="hljs-variable">$t</span>))/<br>(<span class="hljs-built_in">f_pca_p</span>(<span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$c</span>,tcga<span class="hljs-variable">$g</span>)) + <span class="hljs-built_in">f_pca_p</span>(<span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$m</span>,tcga<span class="hljs-variable">$t</span>)))/<br>(<span class="hljs-built_in">f_umap_p</span>(<span class="hljs-built_in">f_umap</span>(<span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$c</span>,tcga<span class="hljs-variable">$g</span>))) + <span class="hljs-built_in">f_umap_p</span>(<span class="hljs-built_in">f_umap</span>(<span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$m</span>,tcga<span class="hljs-variable">$t</span>))))<br>tcga<span class="hljs-variable">$pca</span> &lt;- <span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$m</span>,tcga<span class="hljs-variable">$t</span>)<br>tcga<span class="hljs-variable">$pca</span> &lt;- <span class="hljs-built_in">subset</span>(tcga<span class="hljs-variable">$pca</span>, (PC1 &gt; -<span class="hljs-number">0.03</span> &amp; PC2 &gt;<span class="hljs-number">0.05</span>)  (PC1 &lt; -<span class="hljs-number">0.04</span> &amp; PC2 &lt; <span class="hljs-number">0.03</span>))<br>tcga<span class="hljs-variable">$t</span> &lt;- tcga<span class="hljs-variable">$t</span><span class="hljs-selector-attr">[rownames(tcga$pca)]</span><br><span class="hljs-selector-tag">table</span>(tcga<span class="hljs-variable">$t</span>)<br>tcga<span class="hljs-variable">$m</span> &lt;- tcga<span class="hljs-variable">$m</span><span class="hljs-selector-attr">[,rownames(tcga$pca)]</span><br><span class="hljs-function"><span class="hljs-title">options</span><span class="hljs-params">(repr.plot.width=<span class="hljs-number">10</span>, repr.plot.height=<span class="hljs-number">15</span>)</span></span><br>(<span class="hljs-built_in">f_icg_boxp</span>(tcga<span class="hljs-variable">$c</span>, <span class="hljs-string">&#x27;GAPDH&#x27;</span>, tcga<span class="hljs-variable">$g</span>) + <span class="hljs-built_in">f_icg_boxp</span>(tcga<span class="hljs-variable">$m</span>, <span class="hljs-string">&#x27;GAPDH&#x27;</span>, tcga<span class="hljs-variable">$t</span>))/<br>(<span class="hljs-built_in">f_pca_p</span>(<span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$c</span>,tcga<span class="hljs-variable">$g</span>)) + <span class="hljs-built_in">f_pca_p</span>(<span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$m</span>,tcga<span class="hljs-variable">$t</span>)))/<br>(<span class="hljs-built_in">f_umap_p</span>(<span class="hljs-built_in">f_umap</span>(<span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$c</span>,tcga<span class="hljs-variable">$g</span>))) + <span class="hljs-built_in">f_umap_p</span>(<span class="hljs-built_in">f_umap</span>(<span class="hljs-built_in">f_pca</span>(tcga<span class="hljs-variable">$m</span>,tcga<span class="hljs-variable">$t</span>))))<br><span class="hljs-function"><span class="hljs-title">names</span><span class="hljs-params">(tcga<span class="hljs-variable">$g</span>)</span></span> &lt;- <span class="hljs-built_in">colnames</span>(tcga<span class="hljs-variable">$c</span>)<br>tcga<span class="hljs-variable">$c</span> &lt;- tcga<span class="hljs-variable">$c</span><span class="hljs-selector-attr">[,rownames(tcga$pca)]</span><br>tcga<span class="hljs-variable">$g</span> &lt;- tcga<span class="hljs-variable">$g</span><span class="hljs-selector-attr">[rownames(tcga$pca)]</span><br>tcga<span class="hljs-variable">$deg</span> &lt;- <span class="hljs-built_in">f_dds</span>(tcga<span class="hljs-variable">$c</span>, tcga<span class="hljs-variable">$g</span>, t_low=<span class="hljs-number">10</span>)<br>tcga<span class="hljs-variable">$logFC_cutoff</span> &lt;- <span class="hljs-built_in">mean</span>(<span class="hljs-built_in">abs</span>(tcga<span class="hljs-variable">$deg</span><span class="hljs-variable">$log2FoldChange</span>)) + <span class="hljs-number">2</span>*<span class="hljs-built_in">sd</span>(<span class="hljs-built_in">abs</span>(tcga<span class="hljs-variable">$deg</span><span class="hljs-variable">$log2FoldChange</span>))<br><span class="hljs-function"><span class="hljs-title">f_DEG_Volcano</span><span class="hljs-params">(tcga<span class="hljs-variable">$deg</span><span class="hljs-variable">$log2FoldChange</span>, tcga<span class="hljs-variable">$deg</span><span class="hljs-variable">$padj</span>, rownames(tcga<span class="hljs-variable">$deg</span>)</span></span>, Threshold_logFC = <span class="hljs-built_in">mean</span>(<span class="hljs-built_in">abs</span>(tcga<span class="hljs-variable">$deg</span><span class="hljs-variable">$log2FoldChange</span>)) + <span class="hljs-number">2</span>*<span class="hljs-built_in">sd</span>(<span class="hljs-built_in">abs</span>(tcga<span class="hljs-variable">$deg</span><span class="hljs-variable">$log2FoldChange</span>)), lc_p_m = <span class="hljs-number">1</span>e-<span class="hljs-number">300</span>)<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BB%84%E7%BB%87%E6%B5%8B%E5%BA%8F%E5%88%86%E6%9E%90/" class="category-chain-item">组织测序分析</a>
+  
+  
+
+      </span>
+    
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF%E5%AD%A6/" class="category-chain-item">生物信息学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TCGA (三) 两组间DEGs分析</div>
+      <div>https://b.limour.top/892.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 5, 2021</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/784.html" title="TCGA (四) 生存分析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TCGA (四) 生存分析</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/886.html" title="Seurat (五) 简单总结">
+                        <span class="hidden-mobile">Seurat (五) 简单总结</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

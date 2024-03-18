@@ -1,0 +1,731 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前置要求pyscenic (一) 转录因子分析 pySCENIC aertslab&#x2F;pySCENIC第一步 准备数据库 设置工作目录  123456789101112import os# 配置数据路径root_path &#x3D; os.path.expanduser(&quot;~&#x2F;zlliu&#x2F;R_output&#x2F;21.10.23.pyscenic&quot;) # 配置结果保存路径output">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pyscenic (二) 转录因子分析">
+<meta property="og:url" content="https://b.limour.top/1111.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="前置要求pyscenic (一) 转录因子分析 pySCENIC aertslab&#x2F;pySCENIC第一步 准备数据库 设置工作目录  123456789101112import os# 配置数据路径root_path &#x3D; os.path.expanduser(&quot;~&#x2F;zlliu&#x2F;R_output&#x2F;21.10.23.pyscenic&quot;) # 配置结果保存路径output">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-23T05:42:47.000Z">
+<meta property="article:modified_time" content="2023-09-01T13:32:00.625Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>pyscenic (二) 转录因子分析 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="pyscenic (二) 转录因子分析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-10-23 13:42" pubdate>
+          October 23, 2021 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.4k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          37 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">pyscenic (二) 转录因子分析</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="前置要求"><a href="#前置要求" class="headerlink" title="前置要求"></a>前置要求</h2><p><a target="_blank" rel="noopener" href="https://limour.top/1063.html">pyscenic (一) 转录因子分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://pyscenic.readthedocs.io/en/latest/index.html">pySCENIC</a></p>
+<h4 id="aertslab-pySCENIC"><a href="#aertslab-pySCENIC" class="headerlink" title="aertslab&#x2F;pySCENIC"></a><a target="_blank" rel="noopener" href="https://github.com/aertslab">aertslab</a>&#x2F;<strong><a target="_blank" rel="noopener" href="https://github.com/aertslab/pySCENIC">pySCENIC</a></strong></h4><h2 id="第一步-准备数据库"><a href="#第一步-准备数据库" class="headerlink" title="第一步 准备数据库"></a>第一步 准备数据库</h2><ul>
+<li>设置工作目录</li>
+</ul>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs pf">import <span class="hljs-keyword">os</span><br><span class="hljs-comment"># 配置数据路径</span><br>root_path = <span class="hljs-keyword">os</span>.path.expanduser(<span class="hljs-string">&quot;~/zlliu/R_output/21.10.23.pyscenic&quot;</span>)<br> <br><span class="hljs-comment"># 配置结果保存路径</span><br>output_path = root_path<br>if not <span class="hljs-keyword">os</span>.path.isdir(output_path):<br>    <span class="hljs-keyword">os</span>.makedirs(output_path)<br><br><span class="hljs-comment"># 设置工作目录，输出文件将保存在此目录下</span><br><span class="hljs-keyword">os</span>.chdir(output_path) <br><span class="hljs-keyword">os</span>.getcwd()<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>下载智人的转录因子列表 <a target="_blank" rel="noopener" href="https://github.com/aertslab/pySCENIC/tree/master/resources">https://github.com/aertslab/pySCENIC/tree/master/resources</a></li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">!wget https:<span class="hljs-regexp">//</span>raw.githubusercontent.com<span class="hljs-regexp">/aertslab/</span>pySCENIC<span class="hljs-regexp">/master/</span>resources/hs_hgnc_tfs.txt<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>下载 annotations file <a target="_blank" rel="noopener" href="https://pyscenic.readthedocs.io/en/latest/installation.html#auxiliary-datasets">https://pyscenic.readthedocs.io/en/latest/installation.html#auxiliary-datasets</a></li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">!wget https:<span class="hljs-regexp">//</span>resources.aertslab.org<span class="hljs-regexp">/cistarget/m</span>otif2tf/motifs-v9-nr.hgnc-m0.<span class="hljs-number">001</span>-o0.<span class="hljs-number">0</span>.tbl<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>下载 Auxiliary datasets <a target="_blank" rel="noopener" href="https://resources.aertslab.org/cistarget/">https://resources.aertslab.org/cistarget/</a></li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">!wget https:<span class="hljs-regexp">//</span>resources.aertslab.org<span class="hljs-regexp">/cistarget/</span>databases<span class="hljs-regexp">/homo_sapiens/</span>hg38<span class="hljs-regexp">/refseq_r80/m</span>c9nr<span class="hljs-regexp">/gene_based/</span>hg38__refseq-r80__10kb_up_and_down_tss.mc9nr.feather<br></code></pre></td></tr></table></figure>
+
+<h2 id="第二步-输出-ex-matrix"><a href="#第二步-输出-ex-matrix" class="headerlink" title="第二步 输出 ex_matrix"></a>第二步 输出 ex_matrix</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs lua">%%R<br><span class="hljs-built_in">require</span>(Seurat)<br>SeuratObject = subset(SeuratObject, CellType == <span class="hljs-string">&#x27;fibroblast&#x27;</span>)<br><span class="hljs-built_in">write</span>.csv(as.matrix(SeuratObject<span class="hljs-string">[[&#x27;RNA&#x27;]]</span>@counts), file = <span class="hljs-string">&quot;ex_matrix.csv&quot;</span>)<br>cellInfo = SeuratObject@metadata<br></code></pre></td></tr></table></figure>
+
+<h2 id="第三步-计算"><a href="#第三步-计算" class="headerlink" title="第三步 计算"></a>第三步 计算</h2><ul>
+<li>导入包和数据</li>
+</ul>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-keyword">import</span> glob<br><span class="hljs-keyword">import</span> pickle<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br> <br><span class="hljs-title">from</span> dask.diagnostics <span class="hljs-keyword">import</span> ProgressBar<br> <br><span class="hljs-title">from</span> arboreto.utils <span class="hljs-keyword">import</span> load_tf_names<br><span class="hljs-title">from</span> arboreto.algo <span class="hljs-keyword">import</span> grnboost2<br> <br><span class="hljs-title">from</span> ctxcore.rnkdb <span class="hljs-keyword">import</span> FeatherRankingDatabase <span class="hljs-keyword">as</span> RankingDatabase<br><span class="hljs-title">from</span> pyscenic.utils <span class="hljs-keyword">import</span> modules_from_adjacencies, load_motifs<br><span class="hljs-title">from</span> pyscenic.prune <span class="hljs-keyword">import</span> prune2df, df2regulons<br><span class="hljs-title">from</span> pyscenic.aucell <span class="hljs-keyword">import</span> aucell<br> <br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs routeros">SC_EXP_FNAME = <span class="hljs-string">&#x27;ex_matrix.csv&#x27;</span><br>TFS_FNAME = <span class="hljs-string">&#x27;hs_hgnc_tfs.txt&#x27;</span><br>DATABASES_GLOB = <span class="hljs-string">&quot;hg38*.mc9nr.feather&quot;</span><br>MOTIF_ANNOTATIONS_FNAME = <span class="hljs-string">&#x27;motifs-v9-nr.hgnc-m0.001-o0.0.tbl&#x27;</span><br><br>ex_matrix = pd.read_csv(SC_EXP_FNAME, <span class="hljs-attribute">sep</span>=<span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-attribute">header</span>=0, <span class="hljs-attribute">index_col</span>=0).T<br>ex_matrix.shape<br><br>tf_names = load_tf_names(TFS_FNAME)<br><br>db_fnames = glob.glob(DATABASES_GLOB)<br>def name(fname):<br>    return os.path.splitext(os.path.basename(fname))[0]<br>dbs = [RankingDatabase(<span class="hljs-attribute">fname</span>=fname, <span class="hljs-attribute">name</span>=name(fname)) <span class="hljs-keyword">for</span> fname <span class="hljs-keyword">in</span> db_fnames]<br>dbs<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>计算 grn</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">adjacencies = grnboost2(ex_matrix, <span class="hljs-attribute">tf_names</span>=tf_names, <span class="hljs-attribute">verbose</span>=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sml"><span class="hljs-keyword">with</span> <span class="hljs-keyword">open</span>(<span class="hljs-symbol">&#x27;adjacencies</span>.pydata&#x27;,<span class="hljs-symbol">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    pickle.dump(adjacencies,f)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>计算 ctx</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">modules = <span class="hljs-built_in">list</span>(modules<span class="hljs-constructor">_from_adjacencies(<span class="hljs-params">adjacencies</span>, <span class="hljs-params">ex_matrix</span>)</span>)<br><span class="hljs-keyword">with</span> <span class="hljs-constructor">ProgressBar()</span>:<br>    df = prune2df(dbs, modules, MOTIF_ANNOTATIONS_FNAME)<br>regulons = df2regulons(df)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sml"><span class="hljs-keyword">with</span> <span class="hljs-keyword">open</span>(<span class="hljs-symbol">&#x27;modules</span>.pydata&#x27;,<span class="hljs-symbol">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    pickle.dump(modules,f)<br><span class="hljs-keyword">with</span> <span class="hljs-keyword">open</span>(<span class="hljs-symbol">&#x27;df</span>.pydata&#x27;,<span class="hljs-symbol">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    pickle.dump(df,f)<br><span class="hljs-keyword">with</span> <span class="hljs-keyword">open</span>(<span class="hljs-symbol">&#x27;regulons</span>.pydata&#x27;,<span class="hljs-symbol">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    pickle.dump(regulons,f)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>计算 AUCell</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">regulons</span> = [r.rename(r.name.replace(<span class="hljs-string">&#x27;(+)&#x27;</span>,<span class="hljs-string">&#x27; (&#x27;</span>+str(len(r))+<span class="hljs-string">&#x27;g)&#x27;</span>)) for r in regulons] <span class="hljs-comment"># 第四步 导入方法二</span><br><span class="hljs-attr">auc_mtx</span> = aucell(ex_matrix, regulons, num_workers=<span class="hljs-number">4</span>)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sml"><span class="hljs-keyword">with</span> <span class="hljs-keyword">open</span>(<span class="hljs-symbol">&#x27;auc_mtx</span>.pydata&#x27;,<span class="hljs-symbol">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    pickle.dump(auc_mtx,f)<br></code></pre></td></tr></table></figure>
+
+<h2 id="第四步-导入R中出图"><a href="#第四步-导入R中出图" class="headerlink" title="第四步 导入R中出图"></a>第四步 导入R中出图</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/eccfe2d1b2c7">pySCENIC</a></p>
+<ul>
+<li>导入方法一 （不推荐）</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">from</span> pyscenic.export <span class="hljs-keyword">import</span> export2loom<br>#  regulons = [r.<span class="hljs-keyword">rename</span>(r.name.replace(<span class="hljs-string">&#x27;(+)&#x27;</span>,<span class="hljs-string">&#x27; (&#x27;</span>+str(len(r))+<span class="hljs-string">&#x27;g)&#x27;</span>)) <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> regulons]<br>export2loom(ex_mtx = ex_matrix, auc_mtx = auc_mtx, regulons=regulons, out_fname = &quot;results.loom&quot;)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">%%R<br>require(ggplot2)<br>require(SCENIC)<br>require(SCopeLoomR)<br><br>loom &lt;- <span class="hljs-keyword">open</span><span class="hljs-constructor">_loom(<span class="hljs-string">&quot;results.loom&quot;</span>, <span class="hljs-params">mode</span>=<span class="hljs-string">&quot;r&quot;</span>)</span><br><br># Read information from loom file:<br>regulons_incidMat &lt;- get<span class="hljs-constructor">_regulons(<span class="hljs-params">loom</span>)</span><br>regulons &lt;- regulons<span class="hljs-constructor">ToGeneLists(<span class="hljs-params">regulons_incidMat</span>)</span><br>regulonsAUC &lt;- get<span class="hljs-constructor">_regulonsAuc(<span class="hljs-params">loom</span>)</span><br>regulonsAucThresholds &lt;- get<span class="hljs-constructor">_regulonThresholds(<span class="hljs-params">loom</span>)</span><br>embeddings &lt;- get<span class="hljs-constructor">_embeddings(<span class="hljs-params">loom</span>)</span><br><br>exprMat &lt;- get<span class="hljs-constructor">_dgem(<span class="hljs-params">loom</span>)</span><br>cellInfo &lt;- get<span class="hljs-constructor">_cellAnnotation(<span class="hljs-params">loom</span>)</span><br>clusterings &lt;- get<span class="hljs-constructor">_clusterings_withName(<span class="hljs-params">loom</span>)</span><br><br>close<span class="hljs-constructor">_loom(<span class="hljs-params">loom</span>)</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>导入方法二 （推荐）</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">auc_mtx.<span class="hljs-keyword">to</span><span class="hljs-constructor">_csv(&#x27;<span class="hljs-params">auc_mtx</span>.<span class="hljs-params">tsv</span>&#x27;)</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs zephir">%%R<br><span class="hljs-keyword">require</span>(ggplot2)<br><span class="hljs-keyword">require</span>(SCENIC)<br><span class="hljs-keyword">require</span>(SCopeLoomR)<br><span class="hljs-keyword">require</span>(AUCell)<br><br>regulonAUC &lt;- importAUCfromText(<span class="hljs-string">&#x27;auc_mtx.tsv&#x27;</span>)<br>regulonAUC &lt;- regulonAUC[onlyNonDuplicatedExtended(rownames(regulonAUC)),]<br># cellInfo = SeuratObject@metadata<br>regulonActivity_byCellType &lt;- sapply(split(rownames(cellInfo), cellInfo$CellType),<br>                                     <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(cells)</span> <span class="hljs-title">rowMeans</span><span class="hljs-params">(getAUC<span class="hljs-params">(regulonAUC)</span>[,cells])</span>)</span><br><span class="hljs-function"><span class="hljs-title">regulonActivity_byCellType_Scaled</span> &lt;- <span class="hljs-title">t</span><span class="hljs-params">(scale<span class="hljs-params">(t<span class="hljs-params">(regulonActivity_byCellType)</span>, center = T, scale=T)</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">pheatmap</span>::<span class="hljs-title">pheatmap</span><span class="hljs-params">(regulonActivity_byCellType_Scaled, #fontsize_row=<span class="hljs-number">3</span>, </span></span><br><span class="hljs-params"><span class="hljs-function">                   color=colorRampPalette<span class="hljs-params">(c<span class="hljs-params">(<span class="hljs-string">&quot;blue&quot;</span>,<span class="hljs-string">&quot;white&quot;</span>,<span class="hljs-string">&quot;red&quot;</span>)</span>)</span><span class="hljs-params">(<span class="hljs-number">100</span>)</span>, breaks=seq<span class="hljs-params">(<span class="hljs-number">-3</span>, <span class="hljs-number">3</span>, length.out = <span class="hljs-number">100</span>)</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">                   treeheight_row=<span class="hljs-number">10</span>, treeheight_col=<span class="hljs-number">10</span>, border_color=NA)</span></span><br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b0fd795ad05c">SCENIC—Single Cell rEgulatory Network Inference and Clustering</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%8D%95%E7%BB%86%E8%83%9E%E4%B8%8B%E6%B8%B8%E5%88%86%E6%9E%90/" class="category-chain-item">单细胞下游分析</a>
+  
+  
+
+      </span>
+    
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF%E5%AD%A6/" class="category-chain-item">生物信息学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>pyscenic (二) 转录因子分析</div>
+      <div>https://b.limour.top/1111.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 23, 2021</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/1116.html" title="Oracle 开启IPv6">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Oracle 开启IPv6</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/1102.html" title="复旦高性能计算 (七) Python调用R">
+                        <span class="hidden-mobile">复旦高性能计算 (七) Python调用R</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

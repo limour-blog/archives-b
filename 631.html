@@ -1,0 +1,727 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一步 ssh登录到终端推荐使用 [FinalShell](https:&#x2F;&#x2F;www.hostbuf.com&#x2F;) 或 MobaXterm 或者 PowerShell 也可以用，下面是 PowerShell 优化SSH连接体验的方法  打开 C:\Users 找到自己的 home，比如我是C:\Users\11248 新建 C:\Users\11248\.ssh 目录，或打开已有的这个目录 新建 co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复旦高性能计算 (一) Linux无root权限安装软件：以R为示例">
+<meta property="og:url" content="https://b.limour.top/631.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="第一步 ssh登录到终端推荐使用 [FinalShell](https:&#x2F;&#x2F;www.hostbuf.com&#x2F;) 或 MobaXterm 或者 PowerShell 也可以用，下面是 PowerShell 优化SSH连接体验的方法  打开 C:\Users 找到自己的 home，比如我是C:\Users\11248 新建 C:\Users\11248\.ssh 目录，或打开已有的这个目录 新建 co">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img.limour.top/archives_2023/blog_wp/2021/09/image.webp">
+<meta property="article:published_time" content="2021-09-19T11:08:22.000Z">
+<meta property="article:modified_time" content="2024-03-18T09:34:16.764Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.limour.top/archives_2023/blog_wp/2021/09/image.webp">
+  
+  
+  
+  <title>复旦高性能计算 (一) Linux无root权限安装软件：以R为示例 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="复旦高性能计算 (一) Linux无root权限安装软件：以R为示例"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-09-19 19:08" pubdate>
+          September 19, 2021 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">复旦高性能计算 (一) Linux无root权限安装软件：以R为示例</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="第一步-ssh登录到终端"><a href="#第一步-ssh登录到终端" class="headerlink" title="第一步 ssh登录到终端"></a>第一步 ssh登录到终端</h2><p>推荐使用 <code>[FinalShell](https://www.hostbuf.com/)</code> 或 <a href="https://b.limour.top/go/#aHR0cHM6Ly9tb2JheHRlcm0ubW9iYXRlay5uZXQv" rel="noopener external nofollow noreferrer"><code>MobaXterm</code></a></p>
+<p>或者 <code>PowerShell</code> 也可以用，下面是 <code>PowerShell</code> 优化SSH连接体验的方法</p>
+<ul>
+<li>打开 C:\Users 找到自己的 home，比如我是C:\Users\11248</li>
+<li>新建 C:\Users\11248\.ssh 目录，或打开已有的这个目录</li>
+<li>新建 config 配置文件，并且没有后缀名</li>
+<li>记事本打开 C:\Users\11248\.ssh\ config</li>
+<li>添加内容 <code>ServerAliveInterval 60</code> 并保存</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://img.limour.top/archives_2023/blog_wp/2021/09/image.webp"><img src="https://img.limour.top/archives_2023/blog_wp/2021/09/image.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></a></p>
+<ul>
+<li>按下 <code>win+R</code> 快捷键</li>
+<li>输入 <code>powershell</code> 确定</li>
+<li>输入 <code>ssh userName@server</code> 回车，如 <code>pi@192.168.1.2</code> 或 <code>pi@raspberrypi</code></li>
+</ul>
+<h2 id="第二步-建立相关文件夹"><a href="#第二步-建立相关文件夹" class="headerlink" title="第二步 建立相关文件夹"></a>第二步 建立相关文件夹</h2><ul>
+<li>bin: <code>mkdir ~/zlliu/bin</code></li>
+<li>lib: <code>mkdir ~/zlliu/lib</code></li>
+<li>include: <code>mkdir ~/zlliu/include</code></li>
+<li>源码存放位置<code>libsource</code>：<code>mkdir ~/zlliu/libsource</code></li>
+<li>软件存放位置<code>dev</code>：<code>mkdir ~/zlliu/dev</code></li>
+</ul>
+<h2 id="第三步-安装编译器"><a href="#第三步-安装编译器" class="headerlink" title="第三步 安装编译器"></a>第三步 安装编译器</h2><ul>
+<li>下载 <a href="https://b.limour.top/go/#aHR0cHM6Ly9taXJyb3JzLnVzdGMuZWR1LmNuL2dudS9nY2MvZ2NjLTExLjEuMC9nY2MtMTEuMS4wLnRhci5neg==" rel="noopener external nofollow noreferrer">https://mirrors.ustc.edu.cn/gnu/gcc/gcc-11.1.0/gcc-11.1.0.tar.gz</a> 并通过ssh上传到 <code>libsource</code> 目录</li>
+<li>打开 <code>libsource</code> 目录：<code>cd ~/zlliu/libsource</code></li>
+<li>解压 <code>[gcc-11.1.0.tar.gz](https://mirrors.ustc.edu.cn/gnu/gcc/gcc-11.1.0/gcc-11.1.0.tar.gz)</code>：<code>tar -zvxf gcc-11.1.0.tar.gz</code></li>
+<li>进入 <code>gcc-11.1.0</code> 目录，创建 <code>gcc-build</code> 目录：<code>cd gcc-11.1.0 &amp;&amp; mkdir gcc-build</code></li>
+<li>安装依赖库：<code>./contrib/download_prerequisites</code></li>
+<li>编译前配置：<code>cd gcc-build &amp;&amp; ../configure --prefix=$HOME/zlliu/dev/gcc11 --enable-checking=release --enable-languages=c,c++,fortran,d,go,lto,objc,obj-c++ --disable-multilib</code></li>
+<li>编译并安装：<code>make -j8 &amp;&amp; make install</code></li>
+<li>创建动态链接1：<code>ln -s /home/rqzhang/zlliu/dev/gcc11/lib64/lib* ~/zlliu/lib/</code></li>
+<li>创建动态链接2：<code>ln -s /home/rqzhang/zlliu/dev/gcc11/bin/* ~/zlliu/bin/</code></li>
+<li>创建动态链接3：<code>ln -s /home/rqzhang/zlliu/dev/gcc11/include/* ~/zlliu/include/</code></li>
+<li>修改 <code>~/.bash_profile</code> 文件，添加如下内容：<br><a href="https://b.limour.top/go/#aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vbGlkYWJvL3AvNjA2ODQ0OC5odG1s" rel="noopener external nofollow noreferrer">Makefile编译选项CC与CXX&#x2F;CPPFLAGS、CFLAGS与CXXFLAGS&#x2F;LDFLAGS</a></li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">export</span> <span class="hljs-attribute">PATH</span>=<span class="hljs-variable">$HOME</span>/zlliu/bin:$HOME/zlliu/lib:$HOME/zlliu/include:$PATH:$HOME/.local/bin:$HOME/bin<br><br><span class="hljs-built_in">export</span> <span class="hljs-attribute">LD_LIBRARY_PATH</span>=<span class="hljs-variable">$HOME</span>/zlliu/lib/<br><span class="hljs-built_in">export</span> <span class="hljs-attribute">LIBRARY_PATH</span>=<span class="hljs-variable">$HOME</span>/zlliu/lib/ <br><span class="hljs-built_in">export</span> <span class="hljs-attribute">CPLUS_INCLUDE_PATH</span>=<span class="hljs-variable">$HOME</span>/zlliu/include/<br><span class="hljs-built_in">export</span> <span class="hljs-attribute">C_INCLUDE_PATH</span>=<span class="hljs-variable">$HOME</span>/zlliu/include/<br><span class="hljs-built_in">export</span> <span class="hljs-attribute">BOOST_ROOT</span>=<span class="hljs-variable">$HOME</span>/zlliu/dev/boost<br><br><span class="hljs-built_in">export</span> <span class="hljs-attribute">CC</span>=<span class="hljs-variable">$HOME</span>/zlliu/bin/gcc<br><span class="hljs-built_in">export</span> <span class="hljs-attribute">CXX</span>=<span class="hljs-variable">$HOME</span>/zlliu/bin/g++<br><span class="hljs-built_in">export</span> <span class="hljs-attribute">FC</span>=<span class="hljs-variable">$HOME</span>/zlliu/bin/gfortran<br><br><span class="hljs-built_in">export</span> <span class="hljs-attribute">CXXFLAGS</span>=<span class="hljs-string">&quot;-ggdb -pipe -Wall -pedantic -I/home/rqzhang/zlliu/include&quot;</span> <br><span class="hljs-built_in">export</span> <span class="hljs-attribute">CPPFLAGS</span>=<span class="hljs-string">&#x27;-I/home/rqzhang/zlliu/include&#x27;</span><br><span class="hljs-built_in">export</span> <span class="hljs-attribute">LDFLAGS</span>=<span class="hljs-string">&#x27;-L/home/rqzhang/zlliu/lib -Wl,-R/home/rqzhang/zlliu/lib&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>激活配置：<code>source .bash_profile</code></li>
+<li>测试是否成功：<code>gcc --version</code></li>
+</ul>
+<h2 id="第四步-编译安装R"><a href="#第四步-编译安装R" class="headerlink" title="第四步 编译安装R"></a>第四步 编译安装R</h2><ul>
+<li>下载R语言安装文件：<a href="https://b.limour.top/go/#aHR0cHM6Ly9taXJyb3JzLnR1bmEudHNpbmdodWEuZWR1LmNuL0NSQU4v" rel="noopener external nofollow noreferrer">https://mirrors.tuna.tsinghua.edu.cn/CRAN/</a></li>
+<li>上传解压进入并创建r-build目录</li>
+<li>编译配置：<code>../`configure` </code> <code>--prefix=$HOME/zlliu/dev/r4 --enable-R-shlib --with-x=no</code> <code>--with-cairo</code></li>
+<li>编译并安装：<code>make -j8 &amp;&amp; make install</code></li>
+<li>创建动态链接1：<code>ln -s /home/rqzhang/zlliu/dev/r4/bin/* ~/zlliu/bin/</code></li>
+<li>创建动态链接2：<code>ln -s /home/rqzhang/zlliu/dev/`r4`/lib64/R/lib/lib* ~/zlliu/lib/</code></li>
+<li>测试是否成功：<code>R --version</code></li>
+</ul>
+<h2 id="第五步-依次解决编译过程中的依赖缺失报错"><a href="#第五步-依次解决编译过程中的依赖缺失报错" class="headerlink" title="第五步 依次解决编译过程中的依赖缺失报错"></a>第五步 依次解决编译过程中的依赖缺失报错</h2><ul>
+<li>修改 <strong><code>config.site</code></strong> 文件<br><code>nano -K ../**config.site**</code><br><code>CPPFLAGS=&#39;-I/es01/paratera/sce2622/include&#39;   LDFLAGS=&#39;-L/es01/paratera/sce2622/lib&#39;</code></li>
+<li>configure: error: –with-readline&#x3D;yes (default) and headers&#x2F;libs are not available<br>下载源码：<a href="https://b.limour.top/go/#aHR0cHM6Ly9mdHAuZ251Lm9yZy9nbnUvcmVhZGxpbmUvP0M9TTtPPUQ=" rel="noopener external nofollow noreferrer">https://ftp.gnu.org/gnu/readline/?C=M;O=D</a><br><code>tar -zxvf readline-master.tar.gz   ./configure --prefix=$HOME/dev/readline</code><br><code>make -j8 &amp;&amp; make install</code><br><code>ln -s /es01/paratera/sce2622/dev/readline/lib/lib* ~/lib/   ln -s /es01/paratera/sce2622/dev/readline/include/* ~/include/</code><br>下载源码：<a href="https://b.limour.top/go/#aHR0cHM6Ly9mdHAuZ251Lm9yZy9nbnUvdGVybWNhcC8=" rel="noopener external nofollow noreferrer">https://ftp.gnu.org/gnu/termcap/</a><br>安装同上</li>
+<li>configure: error: bzip2 library and headers are required<br>下载源码：<a href="https://b.limour.top/go/#aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvYnppcDIvZmlsZXMv" rel="noopener external nofollow noreferrer">https://sourceforge.net/projects/bzip2/files/</a><br><code>make &amp;&amp; make install PREFIX=$HOME/dev/bzip2</code><br><code>ln -s /es01/paratera/sce2622/dev/bzip2/lib/lib* ~/lib/   ln -s /es01/paratera/sce2622/dev/bzip2/bin/* ~/bin/   ln -s /es01/paratera/sce2622/dev/bzip2/include/* ~/include/</code></li>
+<li>configure: error: “liblzma library and headers are required”<br>下载源码：<a href="https://b.limour.top/go/#aHR0cHM6Ly90dWthYW5pLm9yZy94ei8=" rel="noopener external nofollow noreferrer">https://tukaani.org/xz/</a><br>安装同上</li>
+<li>configure: error: PCRE2 library and headers are required, or use –with-pcre1 and PCRE &gt;&#x3D; 8.32 with UTF-8 support<br>下载源码：<a href="https://b.limour.top/go/#aHR0cDovL3d3dy5wY3JlLm9yZy8=" rel="noopener external nofollow noreferrer">http://www.pcre.org/</a><br>安装同上</li>
+<li>configure: error: libcurl &gt;&#x3D; 7.28.0 library and headers are required with support for https<br>确保有 openssl<br>下载源码：<a href="https://b.limour.top/go/#aHR0cHM6Ly9jdXJsLmhheHguc2UvZG93bmxvYWQuaHRtbA==" rel="noopener external nofollow noreferrer">https://curl.haxx.se/download.html</a><br><code>whereis openssl</code><br><code>./configure --with-ssl --prefix=$HOME/dev/curl</code><br>安装同上</li>
+<li>编译安装新版make<br>下载源码：<a href="https://b.limour.top/go/#aHR0cHM6Ly9mdHAuZ251Lm9yZy9nbnUvbWFrZS8=" rel="noopener external nofollow noreferrer">https://ftp.gnu.org/gnu/make/</a><br>安装同上</li>
+<li>编译安装binutils<br>下载源码：<a href="https://b.limour.top/go/#aHR0cHM6Ly9mdHAuZ251Lm9yZy9nbnUvYmludXRpbHMv" rel="noopener external nofollow noreferrer">https://ftp.gnu.org/gnu/binutils/</a><br>安装同上</li>
+<li>libbz2.a(blocksort.o): warning: relocation against <code>memset@@GLIBC_2.2.5&#39; in read-only section</code>.text’<br>修改bzip2-1.0.6的Makefile文件 <br>CC&#x3D;gcc —&gt; CC&#x3D;gcc -fPIC<br>LDFLAGS&#x3D; -L&#x2F;es01&#x2F;paratera&#x2F;sce2622&#x2F;lib -Wl,-R&#x2F;es01&#x2F;paratera&#x2F;sce2622&#x2F;lib<br>重编译 bzip2</li>
+<li>libtermcap.a(tparam.o): relocation R_X86_64_32 against `.rodata’ can not be used when making a shared object; recompile with -fPIC<br>处理同上</li>
+</ul>
+<h2 id="第七步-删除无效软连接"><a href="#第七步-删除无效软连接" class="headerlink" title="第七步 删除无效软连接"></a>第七步 删除无效软连接</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#! /bin/bash</span><br><br><span class="hljs-built_in">read</span> path<br><br><span class="hljs-keyword">if</span> [ -z <span class="hljs-variable">$path</span> ] <br><span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;please enter scan path&quot;</span><br>    <span class="hljs-built_in">exit</span> <br><span class="hljs-keyword">fi</span> <br><span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> $(find <span class="hljs-variable">$path</span> -<span class="hljs-built_in">type</span> l) <br><span class="hljs-keyword">do</span><br>    <span class="hljs-keyword">if</span> [ ! -e <span class="hljs-variable">$file</span> ]<br>    <span class="hljs-keyword">then</span><br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;rm <span class="hljs-variable">$file</span>&quot;</span><br>        <span class="hljs-built_in">rm</span> -f <span class="hljs-variable">$file</span><br>    <span class="hljs-keyword">fi</span> <br><span class="hljs-keyword">done</span> <br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF%E5%AD%A6/" class="category-chain-item">生物信息学</a>
+  
+  
+
+      </span>
+    
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%B6%85%E7%AE%97%E5%9F%BA%E7%A1%80/" class="category-chain-item">超算基础</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>复旦高性能计算 (一) Linux无root权限安装软件：以R为示例</div>
+      <div>https://b.limour.top/631.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 19, 2021</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/637.html" title="复旦高性能计算 (二) qsub使用方法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">复旦高性能计算 (二) qsub使用方法</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/612.html" title="生成一份手写文件的详细步骤">
+                        <span class="hidden-mobile">生成一份手写文件的详细步骤</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

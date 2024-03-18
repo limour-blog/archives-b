@@ -1,0 +1,685 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="PPT是现代商务中不可或缺的工具，它可以帮助我们展示自己的想法、产品或服务。但是，创建一个高质量的PPT需要花费大量的时间和精力。幸运的是，现在有一种名为GPT-3.5的人工智能模型可以帮助我们自动化PPT工作流程。（本文例子：sharegpt） 第一步 搜集资料12345678910111213141516171819202122232425262728293031323334353637383">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【AIGC：PPT】GPT-3.5自动化PPT工作流">
+<meta property="og:url" content="https://b.limour.top/2180.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="PPT是现代商务中不可或缺的工具，它可以帮助我们展示自己的想法、产品或服务。但是，创建一个高质量的PPT需要花费大量的时间和精力。幸运的是，现在有一种名为GPT-3.5的人工智能模型可以帮助我们自动化PPT工作流程。（本文例子：sharegpt） 第一步 搜集资料12345678910111213141516171819202122232425262728293031323334353637383">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img.limour.top/archives_2023/2023/03/26/64204d9778426.webp">
+<meta property="og:image" content="https://img.limour.top/archives_2023/2023/03/26/64204edd797d3.webp">
+<meta property="article:published_time" content="2023-03-26T05:58:50.000Z">
+<meta property="article:modified_time" content="2024-03-18T09:34:16.744Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.limour.top/archives_2023/2023/03/26/64204d9778426.webp">
+  
+  
+  
+  <title>【AIGC：PPT】GPT-3.5自动化PPT工作流 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【AIGC：PPT】GPT-3.5自动化PPT工作流"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-26 13:58" pubdate>
+          March 26, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">【AIGC：PPT】GPT-3.5自动化PPT工作流</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>PPT是现代商务中不可或缺的工具，它可以帮助我们展示自己的想法、产品或服务。但是，创建一个高质量的PPT需要花费大量的时间和精力。幸运的是，现在有一种名为GPT-3.5的人工智能模型可以帮助我们自动化PPT工作流程。（本文例子：<a href="https://b.limour.top/go/#aHR0cHM6Ly9zaGFyZWdwdC5jb20vYy9TRjF6dmkx" rel="noopener external nofollow noreferrer">sharegpt</a>）</p>
+<h2 id="第一步-搜集资料"><a href="#第一步-搜集资料" class="headerlink" title="第一步 搜集资料"></a>第一步 搜集资料</h2><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs txt">颈部包块也称颈部肿块。颈部由于其特定的解剖结构,由于肿瘤、炎症、畸形或一些内分泌疾病等所形成的颈部包块,相对容易发现。包块可由病人自己、他人或在医师体格检查时被发现。有时病人把舌骨、喉等正常结构误认为是包块,应通过检查明确。<br><br>病因<br><br>1.肿瘤 甲状腺瘤甲状腺癌、恶性淋巴瘤淋巴结转移癌甲状旁腺肿瘤、血管瘤<br>2.肿块瘤样结节性甲状腺肿舌下囊肿。<br>3.炎症急慢性淋巴结炎、颈淋巴结结核涎腺炎软组织化脓性感染。<br>4.先天畸形 甲状腺舌管囊肿胸腺咽管囊肿颈部囊性淋巴管瘤颈动脉体瘤神经源性肿瘤。<br><br>体征<br><br>1.视诊 面对病人,充分暴露颈部,注意包括所在的位置形状大小表面皮肤颜色包块周围血管情况,以及颈部活动、吞咽动作对包块的影响。<br>2.触诊 是颈部包块的主要检查方法,可面向病人,或从病人后面检查。仔细触诊,了解包块的形状、大小、硬度、个数、表面情况、移动度,有无压痛、颤和搏动感。一般囊性肿块,如甲状舌骨囊肿甲状腺囊肿,多是圆形、有弹性、孤立可随吞咽上下移动;癌肿多是粘连、界线不清、表面不光滑;有震颤和搏动,多与颈动脉病变及甲状腺功能亢进有关。<br>3.听诊 颈总颈内颈外动脉瘤可听到收缩期杂音。动静脉痿可听到收缩期与舒张期杂音。甲状腺功能亢进症可听到动静脉杂音。<br>4全面的体格检查 由于包块可能是全身性疾病和邻近器官病变引起,进行全身仔细的体格检查对颈部包块的鉴别也有重要意义<br><br>常见包块<br><br>甲状腺功能亢进症<br>病史：女性、中年,有甲状腺功能亢进的高代谢综合征等表现<br>包块特点：甲状腺为弥漫性肿大,包块随吞咽上下移动.对称质地不等无压痛。甲状腺上下极可触及震颤包块上可闻及血管杂音<br>伴随症状与体征：甲状腺功能亢进症的单纯性突眼或浸润性突眼征<br><br>淋巴结转移癌<br>病史：多在40岁后<br>包块特点：颈上部淋巴结肿大质硬,多为鼻咽癌:颈下部和锁骨上淋巴结多个肿大、质硬,多为食管癌、胃癌、肺癌、乳腺癌等<br>伴随症状与体征：鼻咽癌有头痛、鼻出血、鼻塞、耳鸣;食管癌有吞咽困难肺癌有血痰咳嗽、胸痛<br><br>颈部血管瘤<br>病史：临床好发于儿童和青少年，常以出生后发现就诊<br>包块特点： 颈部血管瘤常为无痛性质软包块，多为海绵状血管瘤，发生于部肌肉、肌间或皮下软组织内，部分血管瘤内血栓发生圆点状钙化而形成静脉石。<br>伴随症状与体征：皮下出血 吞咽困难 杂音 触摸时搏动<br><br>鉴别诊断<br><br>1.病史<br>(1)发现包块的情况:无意中发现的包块,多为囊肿或肿瘤;先由疼痛后发现包块者,多为炎症引起;出生后即存在,多是先天性囊肿。<br>(2)包块存在的时间:数周以上,多为肿瘤:一周以内,多为炎症。<br>2.伴随症状和体征<br>(1)全身症状,低热、虚弱消瘦考虑淋巴结结核或转移性肿瘤<br>(2)高代谢症状群特有眼征者,是甲状腺功能亢进症。<br>(3)双侧颈前淋巴结肿大、压痛,稍后又出现颈后淋巴结也肿大,多见于链球菌性咽炎和感染性单核细胞增多症。<br>(4)单侧颈部淋巴结肿大,压痛,多见于牙、鼻窦耳和面部皮肤感染。<br>(5)吸烟者伴鼻涕带血颈前淋巴结肿大质硬,应怀疑鼻咽癌。<br>(6)单个颈部包块,随后伴有局部淋巴结肿大,较固定晚期甚至使甲状腺不能随吞咽上下移动,考虑甲状腺癌。<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>主题：颈部包块诊断与鉴别诊断</li>
+<li>围绕主题，从《诊断学》等教材上搜集相应的资料，利用OCR得到以上资料文本</li>
+</ul>
+<h2 id="第二步-生成PPT大纲"><a href="#第二步-生成PPT大纲" class="headerlink" title="第二步 生成PPT大纲"></a>第二步 生成PPT大纲</h2><ul>
+<li>将资料以System的角色输入</li>
+<li>以用户身份输入以下prompt：<code>请根据资料生成一份PPT大纲，用markdown格式，大段文字请提取要点关键词，但不要漏掉知识点</code></li>
+</ul>
+<h2 id="第三步-MD文件转Word"><a href="#第三步-MD文件转Word" class="headerlink" title="第三步 MD文件转Word"></a>第三步 MD文件转Word</h2><ul>
+<li>所用工具：<a href="https://b.limour.top/go/#aHR0cHM6Ly9naXRodWIuY29tL2pnbS9wYW5kb2MvcmVsZWFzZXM=" rel="noopener external nofollow noreferrer">pandoc</a></li>
+<li>将GPT生成的大纲保存为markdown文件</li>
+<li>在MD文件目录执行：<code>pandoc.exe -s jbbk.md -o jbbk.docx</code></li>
+</ul>
+<h2 id="第四步-Word格式化"><a href="#第四步-Word格式化" class="headerlink" title="第四步 Word格式化"></a>第四步 Word格式化</h2><ul>
+<li>技巧1：word开始菜单下的右侧的选择，下拉，选择所有相似的格式</li>
+<li>技巧2：格式化点两次可以固定一个格式刷</li>
+<li>每一页PPT为标题1，内容依次为标题2、3等等</li>
+</ul>
+<p><img src="https://img.limour.top/archives_2023/2023/03/26/64204d9778426.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></p>
+<p>转化完成的导航<br>（按下“Ctrl”和“F”键，即可呼出导航面板。）</p>
+<h2 id="第五步-大纲生成PPT"><a href="#第五步-大纲生成PPT" class="headerlink" title="第五步 大纲生成PPT"></a>第五步 大纲生成PPT</h2><ul>
+<li>新建一个PPT</li>
+<li>开始菜单下的新建幻灯片，下拉，幻灯片(从大纲)，选择第四步的word文件</li>
+<li>通过ondrive，使用MS 365的设计菜单栏的设计器，对每一个PPT自动美化</li>
+</ul>
+<h2 id="最终效果展示"><a href="#最终效果展示" class="headerlink" title="最终效果展示"></a>最终效果展示</h2><p><img src="https://img.limour.top/archives_2023/2023/03/26/64204edd797d3.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/uncategorized/" class="category-chain-item">uncategorized</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【AIGC：PPT】GPT-3.5自动化PPT工作流</div>
+      <div>https://b.limour.top/2180.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 26, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2182.html" title="Docker部署drawio，并支持保存到github">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Docker部署drawio，并支持保存到github</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2179.html" title="让你反代的openai的API支持key轮询">
+                        <span class="hidden-mobile">让你反代的openai的API支持key轮询</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

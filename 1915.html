@@ -1,0 +1,702 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="模型来源，参考1、参考2 安装补充包 conda activate ggsurvplot conda install -c conda-forge r-timeroc -y conda install -c conda-forge r-gert -y conda install -c conda-forge r-devtools -y conda install -c r r-proc -y #">
+<meta property="og:type" content="article">
+<meta property="og:title" content="评价临床预测模型">
+<meta property="og:url" content="https://b.limour.top/1915.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="模型来源，参考1、参考2 安装补充包 conda activate ggsurvplot conda install -c conda-forge r-timeroc -y conda install -c conda-forge r-gert -y conda install -c conda-forge r-devtools -y conda install -c r r-proc -y #">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img.limour.top/archives_2023/2022/07/17/62d373489eed0.webp">
+<meta property="article:published_time" content="2022-07-16T19:27:54.000Z">
+<meta property="article:modified_time" content="2024-03-18T09:34:16.840Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.limour.top/archives_2023/2022/07/17/62d373489eed0.webp">
+  
+  
+  
+  <title>评价临床预测模型 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="评价临床预测模型"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-17 03:27" pubdate>
+          July 17, 2022 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">评价临床预测模型</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><a target="_blank" rel="noopener" href="https://occdn.limour.top/2110.html">模型来源</a>，<a href="https://b.limour.top/go/#aHR0cHM6Ly9tLmlpa3guY29tL2UvYWN0aW9uL1Nob3dJbmZvLnBocD9jbGFzc2lkPTE3JmlkPTEwNTk3JnBhZ2U9Mw==" rel="noopener external nofollow noreferrer">参考1</a>、<a href="https://b.limour.top/go/#aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80MTc2ODMxNTA=" rel="noopener external nofollow noreferrer">参考2</a></p>
+<h2 id="安装补充包"><a href="#安装补充包" class="headerlink" title="安装补充包"></a>安装补充包</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://occdn.limour.top/1820.html">conda activate ggsurvplot</a></li>
+<li>conda install -c conda-forge r-timeroc -y</li>
+<li>conda install -c conda-forge r-gert -y</li>
+<li>conda install -c conda-forge r-devtools -y</li>
+<li>conda install -c r r-proc -y</li>
+<li># conda install -c r r-nricens -y</li>
+<li>~&#x2F;dev&#x2F;xray&#x2F;xray -c ~&#x2F;etc&#x2F;xui2.json &amp;</li>
+<li>wget -e “https_proxy&#x3D;<a href="https://b.limour.top/go/#aHR0cDovLzEyNy4wLjAuMToyMDgwOS8=" rel="noopener external nofollow noreferrer">http://127.0.0.1:20809</a>“ <a href="https://b.limour.top/go/#aHR0cHM6Ly9naXRodWIuY29tL3lpa2VzaHUwNjExL2dnRENBL2FyY2hpdmUvcmVmcy9oZWFkcy9tYXN0ZXIuemlw" rel="noopener external nofollow noreferrer">https://github.com/yikeshu0611/ggDCA/archive/refs/heads/master.zip</a> -O ggDCA-master.zip</li>
+<li>install.packages(‘nricens’)</li>
+<li># install.packages(‘ggDCA’)</li>
+<li>devtools::install_local(‘ggDCA-master.zip’)</li>
+<li>install.packages(‘rmda’)</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs R">library<span class="hljs-punctuation">(</span>pROC<span class="hljs-punctuation">)</span> <span class="hljs-comment">#绘制ROC曲线</span><br>library<span class="hljs-punctuation">(</span>timeROC<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>ggDCA<span class="hljs-punctuation">)</span> <span class="hljs-comment">#绘制DCA曲线</span><br>library<span class="hljs-punctuation">(</span>nricens<span class="hljs-punctuation">)</span> <span class="hljs-comment">#计算NRI值</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Logistic回归的诺莫图的校准图"><a href="#Logistic回归的诺莫图的校准图" class="headerlink" title="Logistic回归的诺莫图的校准图"></a>Logistic回归的诺莫图的校准图</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs R">fit <span class="hljs-operator">&lt;-</span> lrm<span class="hljs-punctuation">(</span>formula<span class="hljs-punctuation">(</span>lrmf<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> data<span class="hljs-operator">=</span>df<span class="hljs-punctuation">,</span> x<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span> y<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span> maxit<span class="hljs-operator">=</span><span class="hljs-number">1000</span><span class="hljs-punctuation">)</span><br>cal <span class="hljs-operator">&lt;-</span> calibrate<span class="hljs-punctuation">(</span>fit<span class="hljs-punctuation">,</span> method<span class="hljs-operator">=</span><span class="hljs-string">&quot;boot&quot;</span><span class="hljs-punctuation">,</span> B<span class="hljs-operator">=</span><span class="hljs-number">1000</span><span class="hljs-punctuation">)</span><br>plot<span class="hljs-punctuation">(</span>cal<span class="hljs-punctuation">,</span><br>　　xlab<span class="hljs-operator">=</span><span class="hljs-string">&quot;Nomogram-predicted probability of nonadherence&quot;</span><span class="hljs-punctuation">,</span><br>　　ylab<span class="hljs-operator">=</span><span class="hljs-string">&quot;Actual diagnosed nonadherence (proportion)&quot;</span><span class="hljs-punctuation">,</span><br>　　sub<span class="hljs-operator">=</span><span class="hljs-built_in">F</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<p>其中Bias-corrected为校正曲线，而对角线Ideal为理想的曲线。校正曲线与理想曲线之间越相近，说明模型的预测能力越好。</p>
+<h2 id="COX回归的诺莫图的校准图"><a href="#COX回归的诺莫图的校准图" class="headerlink" title="COX回归的诺莫图的校准图"></a>COX回归的诺莫图的校准图</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs R">f_cph_2 <span class="hljs-operator">&lt;-</span> cph<span class="hljs-punctuation">(</span>formula<span class="hljs-punctuation">(</span>coxmf<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>               x<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">,</span> y<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">,</span> surv<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">,</span><br>               data<span class="hljs-operator">=</span>df<span class="hljs-punctuation">)</span><br>cal_2 <span class="hljs-operator">&lt;-</span> calibrate<span class="hljs-punctuation">(</span>f_cph_2<span class="hljs-punctuation">,</span> u<span class="hljs-operator">=</span><span class="hljs-number">5</span><span class="hljs-punctuation">,</span> cmethod<span class="hljs-operator">=</span><span class="hljs-string">&#x27;KM&#x27;</span><span class="hljs-punctuation">,</span> m<span class="hljs-operator">=</span><span class="hljs-number">15</span><span class="hljs-punctuation">,</span> B<span class="hljs-operator">=</span><span class="hljs-number">200</span><span class="hljs-punctuation">)</span><span class="hljs-comment"># usually B=200 or 300, u=5表示五年</span><br>options<span class="hljs-punctuation">(</span>repr.plot.width<span class="hljs-operator">=</span><span class="hljs-number">10</span><span class="hljs-punctuation">,</span> repr.plot.height<span class="hljs-operator">=</span><span class="hljs-number">10</span><span class="hljs-punctuation">)</span><br>plot<span class="hljs-punctuation">(</span>cal_2<span class="hljs-punctuation">,</span>lwd<span class="hljs-operator">=</span><span class="hljs-number">2</span><span class="hljs-punctuation">,</span>lty<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">##设置线条宽度和线条类型</span><br>     errbar.col<span class="hljs-operator">=</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span>rgb<span class="hljs-punctuation">(</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><span class="hljs-number">118</span><span class="hljs-punctuation">,</span><span class="hljs-number">192</span><span class="hljs-punctuation">,</span>maxColorValue <span class="hljs-operator">=</span> <span class="hljs-number">255</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">##设置一个颜色</span><br>     xlab<span class="hljs-operator">=</span><span class="hljs-string">&#x27;Nomogram-Predicted Probability of 5 years DFS&#x27;</span><span class="hljs-punctuation">,</span><span class="hljs-comment">#便签</span><br>     ylab<span class="hljs-operator">=</span><span class="hljs-string">&#x27;Actual 5 years DFS(proportion)&#x27;</span><span class="hljs-punctuation">,</span><span class="hljs-comment">#标签</span><br>     col<span class="hljs-operator">=</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span>rgb<span class="hljs-punctuation">(</span><span class="hljs-number">192</span><span class="hljs-punctuation">,</span><span class="hljs-number">98</span><span class="hljs-punctuation">,</span><span class="hljs-number">83</span><span class="hljs-punctuation">,</span>maxColorValue <span class="hljs-operator">=</span> <span class="hljs-number">255</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-comment">#设置一个颜色</span><br>     xlim <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>ylim <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-comment">##x轴和y轴范围</span><br>     mgp <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">2</span><span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-comment">#控制坐标轴的位置</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="计算C指数"><a href="#计算C指数" class="headerlink" title="计算C指数"></a><strong>计算C指数</strong></h2><ul>
+<li>rcorrcens((dcf_status&#x3D;&#x3D;0)~predict(f2), data &#x3D; df)</li>
+<li>&lt;0.5 模型没有任何预测能力</li>
+<li>0.51-0.7 较差的准确性</li>
+<li>0.71-0.9 中等的准确性</li>
+<li>&gt; 0.9 高度的准确性</li>
+</ul>
+<h2 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a><strong>ROC曲线</strong></h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs R">gfit <span class="hljs-operator">&lt;-</span> roc<span class="hljs-punctuation">(</span><span class="hljs-punctuation">(</span>dcf_status<span class="hljs-operator">==</span><span class="hljs-number">0</span><span class="hljs-punctuation">)</span><span class="hljs-operator">~</span>predict<span class="hljs-punctuation">(</span>f2<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> data <span class="hljs-operator">=</span> df<span class="hljs-punctuation">)</span><br>options<span class="hljs-punctuation">(</span>repr.plot.width<span class="hljs-operator">=</span><span class="hljs-number">6</span><span class="hljs-punctuation">,</span> repr.plot.height<span class="hljs-operator">=</span><span class="hljs-number">6</span><span class="hljs-punctuation">)</span><br>plot<span class="hljs-punctuation">(</span>gfit<span class="hljs-punctuation">,</span><br>　　print.auc<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#输出AUC值</span><br>　　print.thres<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#输出cut-off值</span><br>　　main <span class="hljs-operator">=</span> <span class="hljs-string">&quot;ROC CURVE&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#设置图形的标题</span><br>　　col<span class="hljs-operator">=</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#曲线颜色</span><br>　　print.thres.col<span class="hljs-operator">=</span><span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#cut-off值字体的颜色</span><br>　　identity.col<span class="hljs-operator">=</span><span class="hljs-string">&quot;blue&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#对角线颜色</span><br>　　identity.lty<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span>identity.lwd<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>AUC值为 0.656</li>
+<li>0.5~0.7 模型的效果较低</li>
+<li>0.7~0.85 效果一般</li>
+<li>0.85~0.95 效果很好</li>
+<li>最佳截断值cut 2.898</li>
+<li>当以2.898进行分组时，两组之间具有最佳的区分度</li>
+</ul>
+<p><img src="https://img.limour.top/archives_2023/2022/07/17/62d373489eed0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></p>
+<h2 id="Logistic回归的DCA曲线"><a href="#Logistic回归的DCA曲线" class="headerlink" title="Logistic回归的DCA曲线"></a>Logistic回归的<strong>DCA曲线</strong></h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs R">library<span class="hljs-punctuation">(</span>rmda<span class="hljs-punctuation">)</span> <span class="hljs-comment">#绘制DCA曲线</span><br>modul<span class="hljs-operator">&lt;-</span> decision_curve<span class="hljs-punctuation">(</span>data<span class="hljs-operator">=</span> df<span class="hljs-punctuation">,</span><br>　　formula<span class="hljs-punctuation">(</span>lrmf<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>　　family <span class="hljs-operator">=</span> binomial<span class="hljs-punctuation">(</span>link <span class="hljs-operator">=</span><span class="hljs-string">&#x27;logit&#x27;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>　　thresholds<span class="hljs-operator">=</span> seq<span class="hljs-punctuation">(</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span> by <span class="hljs-operator">=</span> <span class="hljs-number">0.01</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>　　confidence.intervals <span class="hljs-operator">=</span> <span class="hljs-number">0.95</span><span class="hljs-punctuation">)</span><br>plot_decision_curve<span class="hljs-punctuation">(</span>modul<span class="hljs-punctuation">,</span><br>　　curve.names<span class="hljs-operator">=</span><span class="hljs-string">&quot;Nonadherence prediction nomogram&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#曲线名称</span><br>　　xlab<span class="hljs-operator">=</span><span class="hljs-string">&quot;Threshold probability&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#x轴名称</span><br>　　cost.benefit.axis <span class="hljs-operator">=</span><span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span> col<span class="hljs-operator">=</span> <span class="hljs-string">&quot;blue&quot;</span><span class="hljs-punctuation">,</span><br>　　confidence.intervals<span class="hljs-operator">=</span><span class="hljs-literal">FALSE</span><span class="hljs-punctuation">,</span><br>　　standardize <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="COX回归的DCA曲线"><a href="#COX回归的DCA曲线" class="headerlink" title="COX回归的DCA曲线"></a>COX回归的<strong>DCA曲线</strong></h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs R">library<span class="hljs-punctuation">(</span>car<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>rms<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>pROC<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>timeROC<span class="hljs-punctuation">)</span><br>library<span class="hljs-punctuation">(</span>ggDCA<span class="hljs-punctuation">)</span><br>df <span class="hljs-operator">&lt;-</span> readRDS<span class="hljs-punctuation">(</span><span class="hljs-string">&#x27;Cox_df.rds&#x27;</span><span class="hljs-punctuation">)</span><br>df<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-string">&#x27;dcf_status&#x27;</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">=</span> ifelse<span class="hljs-punctuation">(</span>df<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-string">&#x27;dcf_status&#x27;</span><span class="hljs-punctuation">]</span><span class="hljs-operator">==</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">)</span><br>dd<span class="hljs-operator">=</span>datadist<span class="hljs-punctuation">(</span>df<span class="hljs-punctuation">)</span><br>options<span class="hljs-punctuation">(</span>datadist<span class="hljs-operator">=</span><span class="hljs-string">&quot;dd&quot;</span><span class="hljs-punctuation">)</span> <br>coxmf <span class="hljs-operator">&lt;-</span> paste0<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;Surv(dcf_time, dcf_status)~&quot;</span><span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>colnames<span class="hljs-punctuation">(</span>df<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-operator">:</span><span class="hljs-number">10</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> collapse <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;+&#x27;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>coxmf<br>f_cph_2 <span class="hljs-operator">&lt;-</span> cph<span class="hljs-punctuation">(</span>formula<span class="hljs-punctuation">(</span>coxmf<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><br>               x<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">,</span> y<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">,</span> surv<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">,</span><br>               data<span class="hljs-operator">=</span>df<span class="hljs-punctuation">)</span><br>dca_training <span class="hljs-operator">&lt;-</span> dca<span class="hljs-punctuation">(</span>f_cph_2<span class="hljs-punctuation">,</span> times<span class="hljs-operator">=</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">5</span><span class="hljs-operator">*</span><span class="hljs-number">365</span><span class="hljs-punctuation">,</span> <span class="hljs-number">10</span><span class="hljs-operator">*</span><span class="hljs-number">365</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-comment">#五年、十年</span><br>ggplot<span class="hljs-punctuation">(</span>dca_training<span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Logistic回归的NRI指数"><a href="#Logistic回归的NRI指数" class="headerlink" title="Logistic回归的NRI指数"></a>Logistic回归的<strong>NRI指数</strong></h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs R">lrmf_a <span class="hljs-operator">&lt;-</span> paste0<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;factor(dcf_status)~&quot;</span><span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>colnames<span class="hljs-punctuation">(</span>df<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-operator">:</span><span class="hljs-number">9</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> collapse <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;+&#x27;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>lrmf_b <span class="hljs-operator">&lt;-</span> paste0<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;factor(dcf_status)~&quot;</span><span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>colnames<span class="hljs-punctuation">(</span>df<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-operator">:</span><span class="hljs-number">10</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> collapse <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;+&#x27;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><br>fit_A <span class="hljs-operator">&lt;-</span> glm<span class="hljs-punctuation">(</span>formula<span class="hljs-punctuation">(</span>lrmf_a<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> data <span class="hljs-operator">=</span> df<span class="hljs-punctuation">,</span> family <span class="hljs-operator">=</span> binomial<span class="hljs-punctuation">(</span>link<span class="hljs-operator">=</span><span class="hljs-string">&quot;logit&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> x<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span><br>fit_B <span class="hljs-operator">&lt;-</span> glm<span class="hljs-punctuation">(</span>formula<span class="hljs-punctuation">(</span>lrmf_b<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> data <span class="hljs-operator">=</span> df<span class="hljs-punctuation">,</span> family <span class="hljs-operator">=</span> binomial<span class="hljs-punctuation">(</span>link<span class="hljs-operator">=</span><span class="hljs-string">&quot;logit&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> x<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span><br>gfit <span class="hljs-operator">&lt;-</span> roc<span class="hljs-punctuation">(</span>factor<span class="hljs-punctuation">(</span>dcf_status<span class="hljs-punctuation">)</span><span class="hljs-operator">~</span>predict<span class="hljs-punctuation">(</span>fit_A<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> data <span class="hljs-operator">=</span> df<span class="hljs-punctuation">)</span><br>options<span class="hljs-punctuation">(</span>repr.plot.width<span class="hljs-operator">=</span><span class="hljs-number">10</span><span class="hljs-punctuation">,</span> repr.plot.height<span class="hljs-operator">=</span><span class="hljs-number">10</span><span class="hljs-punctuation">)</span><br>plot<span class="hljs-punctuation">(</span>gfit<span class="hljs-punctuation">,</span><br>　　print.auc<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#输出AUC值</span><br>　　print.thres<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#输出cut-off值</span><br>　　main <span class="hljs-operator">=</span> <span class="hljs-string">&quot;ROC CURVE&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#设置图形的标题</span><br>　　col<span class="hljs-operator">=</span> <span class="hljs-string">&quot;red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#曲线颜色</span><br>　　print.thres.col<span class="hljs-operator">=</span><span class="hljs-string">&quot;black&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#cut-off值字体的颜色</span><br>　　identity.col<span class="hljs-operator">=</span><span class="hljs-string">&quot;blue&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">#对角线颜色</span><br>　　identity.lty<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span>identity.lwd<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-punctuation">)</span><br>NRI <span class="hljs-operator">&lt;-</span> nribin<span class="hljs-punctuation">(</span>mdl.std <span class="hljs-operator">=</span> fit_A<span class="hljs-punctuation">,</span> mdl.new <span class="hljs-operator">=</span> fit_B<span class="hljs-punctuation">,</span><br>　　updown <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;diff&#x27;</span><span class="hljs-punctuation">,</span><br>　　cut <span class="hljs-operator">=</span> <span class="hljs-number">0.05</span><span class="hljs-punctuation">,</span> niter <span class="hljs-operator">=</span> <span class="hljs-number">500</span><span class="hljs-punctuation">,</span> alpha <span class="hljs-operator">=</span> <span class="hljs-number">0.05</span><span class="hljs-punctuation">)</span><br>NRI <span class="hljs-operator">&lt;-</span> nribin<span class="hljs-punctuation">(</span>mdl.std <span class="hljs-operator">=</span> fit_A<span class="hljs-punctuation">,</span> mdl.new <span class="hljs-operator">=</span> fit_B<span class="hljs-punctuation">,</span><br>　　updown <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;category&#x27;</span><span class="hljs-punctuation">,</span><br>　　cut <span class="hljs-operator">=</span> <span class="hljs-number">1.791</span><span class="hljs-punctuation">,</span> niter <span class="hljs-operator">=</span> <span class="hljs-number">500</span><span class="hljs-punctuation">,</span> alpha <span class="hljs-operator">=</span> <span class="hljs-number">0.05</span><span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
+
+<p>根据之前模型的ROC分析确定的切点cut，之后的分析见<a href="https://b.limour.top/go/#aHR0cHM6Ly9tLmlpa3guY29tL2UvYWN0aW9uL1Nob3dJbmZvLnBocD9jbGFzc2lkPTE3JmlkPTEwNTk3JnBhZ2U9Mw==" rel="noopener external nofollow noreferrer">爱科学</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/uncategorized/" class="category-chain-item">uncategorized</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>评价临床预测模型</div>
+      <div>https://b.limour.top/1915.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 17, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/1916.html" title="Docker：部署青龙面板">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Docker：部署青龙面板</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/1914.html" title="诺莫图（Nomogram）展示回归分析的结果">
+                        <span class="hidden-mobile">诺莫图（Nomogram）展示回归分析的结果</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

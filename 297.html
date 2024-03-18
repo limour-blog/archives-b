@@ -1,0 +1,682 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="123456789101112131415161718192021222324252627282930313233343536from PIL import Image#from itertools import cycleimport os, randomimport pytesseractconfig &#x3D; &quot;--psm 8 --oem 0 -c tessedit_char_white">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pytesseract测试">
+<meta property="og:url" content="https://b.limour.top/297.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536from PIL import Image#from itertools import cycleimport os, randomimport pytesseractconfig &#x3D; &quot;--psm 8 --oem 0 -c tessedit_char_white">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img.limour.top/archives_2023/blog_wp/2020/07/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20200702203134.webp">
+<meta property="article:published_time" content="2020-07-02T11:37:35.000Z">
+<meta property="article:modified_time" content="2024-03-18T09:34:16.772Z">
+<meta property="article:author" content="Limour">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="tesseract">
+<meta property="article:tag" content="Captcha">
+<meta property="article:tag" content="OCR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.limour.top/archives_2023/blog_wp/2020/07/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20200702203134.webp">
+  
+  
+  
+  <title>pytesseract测试 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="pytesseract测试"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-07-02 19:37" pubdate>
+          July 2, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">pytesseract测试</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><span class="hljs-comment">#from itertools import cycle</span><br><span class="hljs-keyword">import</span> os, random<br><span class="hljs-keyword">import</span> pytesseract<br>config = <span class="hljs-string">&quot;--psm 8 --oem 0 -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyz&quot;</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">tesOCR</span>(<span class="hljs-params">img</span>):<br>    <span class="hljs-keyword">return</span> pytesseract.image_to_string(img, lang=<span class="hljs-string">&#x27;eng&#x27;</span>, config=config)<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Fileset</span>(<span class="hljs-title class_ inherited__">list</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name,  ext=<span class="hljs-string">&#x27;&#x27;</span>, _read=<span class="hljs-literal">None</span>, root=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(name, <span class="hljs-built_in">str</span>)  :<br>            self.root = os.path.join(root <span class="hljs-keyword">or</span> os.getcwd(), name)<br>            self.extend(f <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> os.listdir(self.root) <span class="hljs-keyword">if</span> f.endswith(ext))<br>            self._read = _read<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__getitem__</span>(<span class="hljs-params">self, index</span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(index, <span class="hljs-built_in">int</span>):<span class="hljs-comment"># index是索引</span><br>            <span class="hljs-keyword">return</span> os.path.join(self.root, <span class="hljs-built_in">super</span>().__getitem__(index))<br>        <span class="hljs-keyword">else</span>:<span class="hljs-comment"># index是切片</span><br>            fileset = Fileset(<span class="hljs-literal">None</span>)<br>            fileset.root = self.root<br>            fileset._read = self._read<br>            fileset.extend(<span class="hljs-built_in">super</span>().__getitem__(index))<br>            <span class="hljs-keyword">return</span> fileset<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getFileName</span>(<span class="hljs-params">self, index</span>):<br>        fname, ext = os.path.splitext(<span class="hljs-built_in">super</span>().__getitem__(index))<br>        <span class="hljs-keyword">return</span> fname<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__iter__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> (os.path.join(self.root, f) <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> <span class="hljs-built_in">super</span>().__iter__())<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__call__</span>(<span class="hljs-params">self</span>):<br>        retn = random.choice(self)<br>        <span class="hljs-keyword">if</span> self._read: <span class="hljs-keyword">return</span> self._read(retn)<br>        <span class="hljs-keyword">else</span>: <span class="hljs-keyword">return</span> retn<br><br>sample = Fileset(<span class="hljs-string">&#x27;Captcha&#x27;</span>, <span class="hljs-string">&#x27;.jpg&#x27;</span>, Image.<span class="hljs-built_in">open</span>)<br><br></code></pre></td></tr></table></figure>
+
+<p><a href="https://b.limour.top/go/#aHR0cHM6Ly9saW1vdXIubGFuem91cy5jb20vaXFISmZkeHJpcGc=" rel="noopener external nofollow noreferrer"><img src="data:image/png;base64,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" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></a></p>
+<p>测试用验证码文件</p>
+<p><img src="https://img.limour.top/archives_2023/blog_wp/2020/07/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20200702203134.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></p>
+<p>与百度OCR的对比,第一个是tesseractOCR</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-meta">#tesOCR.py</span><br><span class="hljs-title">from</span> <span class="hljs-type">PIL</span> <span class="hljs-keyword">import</span> Image<br><span class="hljs-keyword">import</span> pytesseract<br><span class="hljs-title">from</span> io <span class="hljs-keyword">import</span> BytesIO<br><br><span class="hljs-title">config</span> = <span class="hljs-string">&quot;--psm 8 --oem 0 -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyz&quot;</span><br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#baiduOCR.py</span><br><span class="hljs-keyword">from</span> aip <span class="hljs-keyword">import</span> AipOcr<br><span class="hljs-string">&quot;&quot;&quot; 你的 APPID AK SK &quot;&quot;&quot;</span><br>APP_ID = <span class="hljs-string">&#x27;&#x27;</span><br>API_KEY = <span class="hljs-string">&#x27;&#x27;</span><br>SECRET_KEY = <span class="hljs-string">&#x27;&#x27;</span><br><br>client = AipOcr(APP_ID, API_KEY, SECRET_KEY)<br>options = &#123;&#125;<br>options[<span class="hljs-string">&quot;language_type&quot;</span>] = <span class="hljs-string">&quot;ENG&quot;</span><br>options[<span class="hljs-string">&quot;detect_direction&quot;</span>] = <span class="hljs-string">&quot;true&quot;</span><br>options[<span class="hljs-string">&quot;detect_language&quot;</span>] = <span class="hljs-string">&quot;true&quot;</span><br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#test.py</span><br><span class="hljs-keyword">import</span> os, random<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Fileset</span>(<span class="hljs-title class_ inherited__">list</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name,  ext=<span class="hljs-string">&#x27;&#x27;</span>, _read=<span class="hljs-literal">None</span>, root=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(name, <span class="hljs-built_in">str</span>)  :<br>            self.root = os.path.join(root <span class="hljs-keyword">or</span> os.getcwd(), name)<br>            self.extend(f <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> os.listdir(self.root) <span class="hljs-keyword">if</span> f.endswith(ext))<br>            self._read = _read<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__getitem__</span>(<span class="hljs-params">self, index</span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(index, <span class="hljs-built_in">int</span>):<span class="hljs-comment"># index是索引</span><br>            <span class="hljs-keyword">return</span> os.path.join(self.root, <span class="hljs-built_in">super</span>().__getitem__(index))<br>        <span class="hljs-keyword">else</span>:<span class="hljs-comment"># index是切片</span><br>            fileset = Fileset(<span class="hljs-literal">None</span>)<br>            fileset.root = self.root<br>            fileset._read = self._read<br>            fileset.extend(<span class="hljs-built_in">super</span>().__getitem__(index))<br>            <span class="hljs-keyword">return</span> fileset<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getFileName</span>(<span class="hljs-params">self, index</span>):<br>        fname, ext = os.path.splitext(<span class="hljs-built_in">super</span>().__getitem__(index))<br>        <span class="hljs-keyword">return</span> fname<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__iter__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> (os.path.join(self.root, f) <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> <span class="hljs-built_in">super</span>().__iter__())<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__call__</span>(<span class="hljs-params">self</span>):<br>        retn = random.choice(self)<br>        <span class="hljs-keyword">if</span> self._read: <span class="hljs-keyword">return</span> self._read(retn)<br>        <span class="hljs-keyword">else</span>: <span class="hljs-keyword">return</span> retn<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">fopen</span>(<span class="hljs-params">path</span>):<br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(path, <span class="hljs-string">&#x27;rb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>        <span class="hljs-keyword">return</span> f.read()<br>sample = Fileset(<span class="hljs-string">&#x27;Captcha&#x27;</span>, <span class="hljs-string">&#x27;.jpg&#x27;</span>, fopen)<br><br>OCR = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请选择验证码识别方式(默认为tesseract, 1为百度OCR):&#x27;</span>)<br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> OCR: <span class="hljs-keyword">from</span> tesOCR <span class="hljs-keyword">import</span> tesOCR <span class="hljs-keyword">as</span> OCR<br><span class="hljs-keyword">elif</span> OCR == <span class="hljs-string">&quot;1&quot;</span> : <span class="hljs-keyword">from</span> baiduOCR <span class="hljs-keyword">import</span> BaiduOCR <span class="hljs-keyword">as</span> OCR<br><span class="hljs-keyword">from</span> baiduOCR <span class="hljs-keyword">import</span> BaiduOCR<br><br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python%E7%BB%83%E4%B9%A0/" class="category-chain-item">Python练习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/" class="print-no-link">#Python</a>
+      
+        <a href="/tags/tesseract/" class="print-no-link">#tesseract</a>
+      
+        <a href="/tags/Captcha/" class="print-no-link">#Captcha</a>
+      
+        <a href="/tags/OCR/" class="print-no-link">#OCR</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>pytesseract测试</div>
+      <div>https://b.limour.top/297.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 2, 2020</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/309.html" title="LSTM应用于验证码识别">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LSTM应用于验证码识别</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/288.html" title="学年总结-有机化学">
+                        <span class="hidden-mobile">学年总结-有机化学</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

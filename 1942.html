@@ -1,0 +1,688 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="文章原文：Comprehensive Evaluation of Machine Learning Models and Gene Expression Signatures for Prostate Cancer Prognosis Using Large Population Cohorts，该文章的代码托管在GitHub上，数据托管在PCaDB上。本博客的历史博文拥有部分背景知识、周支瑞老师">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【翻译】利用大队列对前列腺癌预后的机器学习模型和基因表达特征进行综合评价">
+<meta property="og:url" content="https://b.limour.top/1942.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="文章原文：Comprehensive Evaluation of Machine Learning Models and Gene Expression Signatures for Prostate Cancer Prognosis Using Large Population Cohorts，该文章的代码托管在GitHub上，数据托管在PCaDB上。本博客的历史博文拥有部分背景知识、周支瑞老师">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-30T08:38:53.000Z">
+<meta property="article:modified_time" content="2023-09-01T13:32:00.901Z">
+<meta property="article:author" content="Limour">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>【翻译】利用大队列对前列腺癌预后的机器学习模型和基因表达特征进行综合评价 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【翻译】利用大队列对前列腺癌预后的机器学习模型和基因表达特征进行综合评价"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-30 16:38" pubdate>
+          July 30, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          86 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">【翻译】利用大队列对前列腺癌预后的机器学习模型和基因表达特征进行综合评价</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>文章原文：<a target="_blank" rel="noopener" href="https://doi.org/10.1158/0008-5472.CAN-21-3074">Comprehensive Evaluation of Machine Learning Models and Gene Expression Signatures for Prostate Cancer Prognosis Using Large Population Cohorts</a>，该文章的代码托管在<a target="_blank" rel="noopener" href="https://github.com/rli012/PCaSignatures">GitHub</a>上，数据托管在<a target="_blank" rel="noopener" href="http://bioinfo.jialab-ucr.org/PCaDB/">PCaDB</a>上。本博客的历史博文拥有部分背景知识、周支瑞老师在丁香公开课上所授课程拥有另一部分背景知识，具体请点击文章中对应词的超链接。其余背景知识可以通过关键词检索进行了解，但其实对于临床帮助不大，更多的是机器学习方面的知识，所构建的模型具有黑盒特性，难以进行临床意义解读，不是非常建议使用。周支瑞老师的课程在本博客的文件服务器上拥有备份，可<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA">点此进行浏览</a>。</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>由于高度可变和惰性发展的病程，过度治疗在前列腺癌控制中是仍是一个非常普遍的问题。源自基因表达谱的分子特征在前列腺癌治疗决策中发挥了重要的作用。许多基因表达特征已经被开发出来以提高前列腺癌的风险分层，并且其中一些已应用于临床实践。然而，这些特征的实际性能还没有进行过综合评估。在这个研究中，我们使用了公开数据库上的十个数据集1558位前列腺癌原发患者，对15种机器学习算法和30种已发表的基因表达特征进行了系统无偏的评估。这项分析表明，生存分析模型在风险评估方面优于二分类模型，并且生存分析模型中使用<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/11-5.1%20%E6%9C%80%E4%BC%98%E5%AD%90%E9%9B%86%E4%B8%8E%E5%B2%AD%E5%9B%9E%E5%BD%92%E5%BB%BA%E6%A8%A1-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">岭回归</a>和偏最小二乘回归进行正则化的<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/16-6.2%20Cox%E6%AF%94%E4%BE%8B%E9%A3%8E%E9%99%A9%E6%A8%A1%E5%9E%8B-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">Cox模型</a>比其他模型更具鲁棒性。基于<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/11-5.1%20%E6%9C%80%E4%BC%98%E5%AD%90%E9%9B%86%E4%B8%8E%E5%B2%AD%E5%9B%9E%E5%BD%92%E5%BB%BA%E6%A8%A1-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">岭回归</a>正则化的COX模型(Cox-Ridge)，几个靠前的预后特征的表现与商业基因表达测试相当，甚至更好。这些发现将有助于在已有的预后特征中识别那些很有希望在前瞻性研究中得到进一步验证的特征，并促进鲁棒预后模型的发展以指导临床决策。此外，这项研究提供了一个宝贵的<a target="_blank" rel="noopener" href="http://bioinfo.jialab-ucr.org/PCaDB/">前列腺癌原发患者大队列</a>，可以用来开发、验证、评估新型统计方法和分子特征，以提高对前列腺癌患者的健康管理水平。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>前列腺癌是世界第二大男性癌症，2020年有一百四十万新增确诊病例和37.5万死亡病例。局限性前列腺癌是高度异质性的疾病，可能导致不同的临床结果。大部分前列腺癌生长缓慢，低风险患者只需要主动监测，但那些患有高度侵袭性前列腺癌的患者则需要立即进行治疗。根治性前列腺切除术(RP)是对局限性前列腺癌的初级治疗，并且拥有预后良好。然而，大约20%~40%的患者会经历生化复发(<strong>BCR</strong>)，例如那些RP后十年内PSA水平升高的患者。尽管付出了巨大努力，在诊断时准确预测前列腺癌的侵袭性仍是一个挑战，这可以帮助区分只需要主动监测的患者，并且可以帮助甄选在RP后可能可以从例如化疗、放疗、免疫治疗等辅助治疗中获益的患者。因此可能导致许多副作用并影响患者生活质量的过度治疗，一直是前列腺癌健康管理中的普遍问题。</p>
+<p>在过去的几十年里，研究者使用各种计算方法和统计算法，开发了很多用于前列腺癌风险评估的基于基因表达的特征。这旨在识别出癌症相关的基因集，用于构建可以预测临床预后的统计学模型。许多机器学习算法可以高效地处理转录组数据，通常这些数据的变量(例如基因)比观测(例如患者)更多。这些算法在癌症研究被广泛用于构建预后模型。这些机器学习算法可以分成两类：一类是监督学习，例如<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/12-5.2%20Lasso%20%E5%9B%9E%E5%BD%92%E5%BB%BA%E6%A8%A1-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">LASSO回归</a>、<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/37-13.2%20%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">支持向量机</a>、<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/40-14.3%20%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">随机森林</a>等；另一类是无监督学习。例如<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/33-12.1%20%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">主成分分析</a>、变分自编码器等。两类都可以用来对临床数据进行建模。例如，一些预后模型将患者分成两个风险组，如侵袭组和惰性组，来识别特征基因(例如差异基因)，来建立二分类模型，但是其他更多的模型则是通过与BCR的时间的相关性来挑选预后基因，然后通过对经审查的肿瘤事件时间数据进行建模，来预测无复发生存率(<strong>RFS</strong>)。此外，无监督机器学习模型，例如<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/35-12.3%20%E8%81%9A%E7%B1%BB%E5%88%86%E6%9E%90-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">层次聚类</a>、非负矩阵分解聚类和<a target="_blank" rel="noopener" href="http://www.dcs.gla.ac.uk/~srogers/old/lpd/lpd.html">LPD</a>，也常被用于鉴定具有临床相关性的癌症亚型，最终构建一个能进行患者分层的二分类或多分类器。</p>
+<p>从基因表达谱中发展出来的分子特征已经成为了重要的风险评估工具，它可以用来辅助对前列腺癌的临床决策，包括对主动监测患者的鉴别、治疗方式和强度的选择、辅助治疗或多模态治疗的收益等。这些已发表的特征中的一些已经被应用于临床实践，例如Decipher、Oncotype DX Genomic Prostate Score、Prolaris。已经在乳腺癌、肺癌等几种癌症中进行了预后特征的评估，但是，在前列腺癌中，还没有进行过对机器学习算法和预后特征的系统性无偏评估。通常，使用新事件时间(如BCR时间)数据得到的生存模型表现比二分类模型更好，后者只是简单地将患者按五年随访时间里是否发生BCR分成侵袭组和惰性组。两种生存分析方法，例如Cox-Ridge和Cox-PLS，都比其他方法和算法更具鲁棒性。30组预后特征中的绝大部分都展现了一定的预测能力，其中一些特征，如Penney、Wu、Li和Sinnott所提出的特征，有比商业基因表达测试相当或更好的表现。这些有前景的特征，一旦被前瞻性实验验证，可能会成为临床诊疗实践的一部分，改善前列腺癌的健康管理。此外，我们的研究证明，使用随机基因子集、全转录组或已发布的预后特征的单个基因的预后能力基本低于完整使用这些预后特征本身。这说明从转录组中鉴定出与临床结局显著相关的特征基因子集对在癌症预后中获得较高的准确度是非常重要的。</p>
+<p>这是第一个使用大样本前列腺癌人群队列来对机器学习算法和已发表的预后特征进行全面评估的研究。这项研究的发现证实了从转录组谱中找出分子特征的必要性和临床影响，极大地促进了前瞻性实验对未来所验证的预后特征的选择，并且帮助完善了新的鲁棒预后模型的开发策略，将有助于做出前列腺癌治疗的临床决策。此外，我们建立了一个宝贵的数据资源，它包括了十个转录组学数据集总计1558位前列腺癌病例和30种基因表达预后特征，能对可以提升前列腺癌健康管理的新的统计方法和分子特征进行开发、验证和评估。</p>
+<h2 id="材料和方法"><a href="#材料和方法" class="headerlink" title="材料和方法"></a>材料和方法</h2><h3 id="从公共数据库中收集前列腺癌转录组学数据"><a href="#从公共数据库中收集前列腺癌转录组学数据" class="headerlink" title="从公共数据库中收集前列腺癌转录组学数据"></a>从公共数据库中收集前列腺癌转录组学数据</h3><p>在公共数据库中针对原发性前列腺癌患者的转录组学数据进行了全面的搜索，包括<a target="_blank" rel="noopener" href="https://portal.gdc.cancer.gov/">TCGA</a>、<a target="_blank" rel="noopener" href="https://www.cbioportal.org/">cBioportal</a> 、<a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/geo/">GEO</a>和<a target="_blank" rel="noopener" href="https://www.ebi.ac.uk/arrayexpress/">ArrayExpress</a>（博主补充：其实<a target="_blank" rel="noopener" href="https://dcc.icgc.org/">ICGC</a>、<a target="_blank" rel="noopener" href="http://bioinfo.jialab-ucr.org/PCaDB/">PCaDB</a>、<a target="_blank" rel="noopener" href="http://www.cpgea.com/">CPGEA</a>上也有前列腺癌的数据）。以下标准用来进行数据筛选：1、该数据集必须拥有完整的BCR时间记录，如果没有治疗后没有发生BCR，则必须有最后随访时间记录；2、样本容量必须大于80；3、该数据集必须有全基因组基因表达谱分析平台数据。最终有十个数据集被选择出来，它们的详细信息在附表S1中。</p>
+<p><a target="_blank" rel="noopener" href="https://occdn.limour.top/2091.html">TCGA数据集</a>使用<a target="_blank" rel="noopener" href="https://occdn.limour.top/1655.html">R包_GDCRNATools_下载</a>。四个基因芯片数据集CPC-Gene (GSE107299)、Taylor (GSE21034)、CancerMap (GSE94764)和CIT (E-MTAB-6128) 的原始数据.CEL文件从GEO&#x2F;ArrayExpress上下载，并使用R包_oligo_的<a target="_blank" rel="noopener" href="https://occdn.limour.top/2165.html">RMA方法进行标准化</a>。 GSE54460数据集的原始数据使用SRA工具集中的_fasterq-dump_工具以SRP036848的访问编码<a target="_blank" rel="noopener" href="https://occdn.limour.top/1957.html">下载了SRA文件</a>。 <a target="_blank" rel="noopener" href="https://occdn.limour.top/1934.html">_STAR_软件用于序列比对</a>，_featureCounts_用于基因表达定量。Counts数据使用R包_edgeR_的<a target="_blank" rel="noopener" href="https://occdn.limour.top/2159.html">TMM方法进行标准化</a>。DFKZ数据集的RPKM矩阵<a target="_blank" rel="noopener" href="https://occdn.limour.top/1956.html">从cBioPortal上下载</a>，并进行了log2转换。Cambridge (GSE70768)、Stockholm (GSE70769)和Belfast (GSE116918)等其他数据集的处理后的强度数据使用R包_GEOquery_从<a target="_blank" rel="noopener" href="https://occdn.limour.top/2165.html">GEO上下载</a>。所有数据集的基因ID和探针ID都被转换为Ensembl IDs。如果有多个基因&#x2F;探针匹配到了相同的Ensembl ID，则<a target="_blank" rel="noopener" href="https://occdn.limour.top/2157.html">通过IQR保留信息量最大的一个</a>。所有标准化后的基因表达数据集和对应的元数据都存储在<a target="_blank" rel="noopener" href="http://bioinfo.jialab-ucr.org/PCaDB/">PCaDB</a>上。每个数据集的基因表达值在模型评估时都进行了z-score转换。</p>
+<h3 id="从已发表的文献中收集前列腺癌预后基因表达特征"><a href="#从已发表的文献中收集前列腺癌预后基因表达特征" class="headerlink" title="从已发表的文献中收集前列腺癌预后基因表达特征"></a>从已发表的文献中收集前列腺癌预后基因表达特征</h3><p>前列腺癌预后的基因表达特征通过一个广度优先的文献筛选策略进行收集。“prostate cancer” 、“prognosis” 和“gene expression signature” 三个关键词用来对PubMed数据库进行检索。一些基因特征是在最近的综述文献和比较研究文献中收集的。因为原始文献中可能使用各种类型的基因标识，所以通过搜索Ensembl、the HUGO Gene Nomenclature Committee和the NCBI Entrez Gene databases将基因ID都转换成了Ensembl的形式。总过收集到了30组前列腺癌预后基因表达特征，并在本研究中对它们进行了评估(附表S2)。这30组前列腺癌预后基因表达特征在附表S3中列出。</p>
+<h3 id="二分类算法"><a href="#二分类算法" class="headerlink" title="二分类算法"></a>二分类算法</h3><p>这样研究评估了九种二分类算法，包括<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/13-5.3%20%E5%BC%B9%E6%80%A7%E7%BD%91%E7%BB%9C%E5%BB%BA%E6%A8%A1-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">弹性网络</a>、<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/37-13.2%20%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">支持向量机</a>、<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/40-14.3%20%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">随机森林</a>、偏最小二乘回归、线性鉴别分析(linear discriminant analysis)、XGBoost。</p>
+<p>R包_caret_有一系列函数用于简化预测模型的创建过程，因此被用来进行模型训练和参数调整。在每个模型中，预测变量是给定的一组基因表达特征，因变量是5年BCR状态，0表示未发生BCR，1表示发生了BCR。使用10等分的格搜索进行参数选择。使用<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/14-5.4%20%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E4%B8%8E%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">10折交叉验证</a>重抽样方法和<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/31-11.2%20ROC%E6%9B%B2%E7%BA%BF%E7%BB%98%E5%88%B6%E5%8F%8AAUC%E8%AE%A1%E7%AE%97-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">ROC曲线</a>来选择最佳模型。模型对每一个病人都预测了一个BCR概率分数，分数越高越可能经历BCR。</p>
+<h3 id="生存分析方法"><a href="#生存分析方法" class="headerlink" title="生存分析方法"></a>生存分析方法</h3><p>这项研究评估了六种生存分析方法，包括<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/16-6.2%20Cox%E6%AF%94%E4%BE%8B%E9%A3%8E%E9%99%A9%E6%A8%A1%E5%9E%8B-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">COX比例风险模型</a>、<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/11-5.1%20%E6%9C%80%E4%BC%98%E5%AD%90%E9%9B%86%E4%B8%8E%E5%B2%AD%E5%9B%9E%E5%BD%92%E5%BB%BA%E6%A8%A1-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">岭回归正则化COX模型</a>、<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/12-5.2%20Lasso%20%E5%9B%9E%E5%BD%92%E5%BB%BA%E6%A8%A1-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">Lasso回归正则化COX模型</a>，监督主成分分析、Cox-PLS和随机生存森林。</p>
+<p>Cox比例风险模型使用R包_survival_构建，计算基因特征表达值的线性组合作为患者的风险分数。岭回归和Lasso回归正则化的Cox模型使用R包_glmnet_构建，惩罚系数α分别为0和1（博主补充：λ才是惩罚系数，这个α应该是指L1比例系数）。R包_superpc_用于构建监督主成分分析模型。特征基因集中单变量回归系数超过阈值0.3的那些基因的子集被用来计算主成分以构建模型。R包_plsRcox_用于构建Cox-PLS模型。R包_randomForestSRC_用于构建拥有100颗决策树的随机生存森林。</p>
+<h3 id="机器学习模型和预后特征比较"><a href="#机器学习模型和预后特征比较" class="headerlink" title="机器学习模型和预后特征比较"></a>机器学习模型和预后特征比较</h3><h4 id="数据集内比较"><a href="#数据集内比较" class="headerlink" title="数据集内比较"></a>数据集内比较</h4><p><a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/14-5.4%20%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E4%B8%8E%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">10折交叉验证</a>用于评估预测模型在数据集内的表现，病例被随机划分为等大的10部分。每次迭代中，九部分数据用于训练模型，剩下一部分数据用来计算风险分数或分类可能性进行验证。这个过程重复十次因此每一部分都有且仅有一次被作为验证数据集。对于评估所有模型的10折划分的数据是相同的。</p>
+<h4 id="跨数据集比较"><a href="#跨数据集比较" class="headerlink" title="跨数据集比较"></a>跨数据集比较</h4><p>对于跨数据集比较，预测模型使用一个数据集训练，然后使用其余九个数据集进行验证。注：我们选择了十个符合本研究三条选择标准的数据集。</p>
+<h4 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h4><p>我们使用了三个评价指标来计算机器学习算法和预后特征：<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/26-10.1%20C-statistics%E4%B8%8EC-index%E8%AE%A1%E7%AE%97-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">C-index</a>、<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/31-11.2%20ROC%E6%9B%B2%E7%BA%BF%E7%BB%98%E5%88%B6%E5%8F%8AAUC%E8%AE%A1%E7%AE%97-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">时间依赖ROC曲线</a>、经过KM检验的<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/16-6.2%20Cox%E6%AF%94%E4%BE%8B%E9%A3%8E%E9%99%A9%E6%A8%A1%E5%9E%8B-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">HR值</a>。使用R包_survcomp_计算C-index，使用R包_survivalROC_计算ROC曲线下面积(AUC)值，使用R包_survival_计算HR值的95%CI。对于KM检验，根据风险分数的中位数将患者分成低风险组和高风险组。</p>
+<h4 id="差异表达分析，Cox比例风险模型、富集分析"><a href="#差异表达分析，Cox比例风险模型、富集分析" class="headerlink" title="差异表达分析，Cox比例风险模型、富集分析"></a>差异表达分析，Cox比例风险模型、富集分析</h4><p>在TCGA的数据上，使用<a target="_blank" rel="noopener" href="https://occdn.limour.top/2171.html">R包_limma_</a>进行<a target="_blank" rel="noopener" href="https://occdn.limour.top/2132.html">差异表达分析</a>、使用R包_survival_进行<a target="_blank" rel="noopener" href="https://alist.j11.fun/Onedrive/techvideo/bio/Prognosis/%E5%8C%BB%E5%AD%A6%E7%94%9F%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0R%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E4%B8%B4%E5%BA%8A%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA/16-6.2%20Cox%E6%AF%94%E4%BE%8B%E9%A3%8E%E9%99%A9%E6%A8%A1%E5%9E%8B-720P%20%E9%AB%98%E6%B8%85-AVC.mp4">COX比例风险模型</a>分析，根据分析结果判断预后特征中的基因在肿瘤组和普通组中是否存在差异以及它们是否与RFS显著相关。使用R包_clusterProfiler_进行KEGG和DO的<a target="_blank" rel="noopener" href="https://occdn.limour.top/2128.html">富集分析</a>。</p>
+<h3 id="数据可及性"><a href="#数据可及性" class="headerlink" title="数据可及性"></a>数据可及性</h3><p>分析代码托管在<a target="_blank" rel="noopener" href="https://github.com/rli012/PCaSignatures">GitHub</a>上，表达数据和临床数据托管在<a target="_blank" rel="noopener" href="http://bioinfo.jialab-ucr.org/PCaDB/">PCaDB</a>上</p>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><h3 id="研究设计概述"><a href="#研究设计概述" class="headerlink" title="研究设计概述"></a>研究设计概述</h3><p>从前文的数据库中搜集了50个数据集，其中只有14个有BCR数据，最后只有10个满足前面的三个条件。这十个数据集的临床数据在附表S4中有总结。我们通过广泛的检索收集了30个基因表达特征。使用这些数据和特征，我们构建了9个二分类模型和6个生存分析模型。对模型的以下方面进行了综合评估：1、不同二分类模型的预测能力vs.不同生存分析模型的预测能力；2、鲁棒生存分析算法的预后表现；3、随机基因子集、独立特征基因、全部特征基因和全转录组的预测表现。同时进行了数据集内验证和独立数据集验证，比较指标有C指数、AUC、HR。</p>
+<h3 id="特征基因的功能"><a href="#特征基因的功能" class="headerlink" title="特征基因的功能"></a>特征基因的功能</h3><p>这30个特征集中有1032个不同的基因。在TCGA数据上的癌与癌旁的比较，这些基因中的21%(223)是差异基因(logFC&gt;1&amp;FDR&lt;0.01)。在TCGA数据上进行单因素Cox回归，其中有54%(558)与RFS有显著关联(P&lt;0.05)。这1032个基因显著富集到了许多重要的癌症相关通路上，有细胞周期、凋亡、P53、PI3K-Akt、前列腺癌通路等。这说明了这些特征基因具有生物学意义。前述通路的常规基因集展现在附图S1里。</p>
+<p>对这些特征集进行重叠度分析，发现特征基因鉴别方面存在相当大的异质性。例如，三个最大的特征集之间只有一两个共同的基因和八个其他特征。在1032个基因中，13.8%(142)在超过两个特征集中同时存在，3.9%(40)在三个或更多的特征集中同时存在。基于TCGA数据集，这40个基因中有70%(28)是癌vs.癌旁的显著差异基因，并且90%(36)与RFS显著相关。DO富集分析显示这40个基因都是重要的癌症通路相关基因，特别是前列腺癌通路。总之，这些结果表明许多特征基因确实和前列腺癌以及疾病预后相关。</p>
+<h3 id="二分类模型vs-生存分析模型"><a href="#二分类模型vs-生存分析模型" class="headerlink" title="二分类模型vs.生存分析模型"></a>二分类模型vs.生存分析模型</h3><p>我们首先比较了9个二分类模型和6个生存分析模型在风险评估方面的表现。这些模型使用的数据集大小在附表S5里。对于每个算法，30个特征集都在训练集上独立用于构建预测模型并在验证集上进行验证。具体来说，在内部数据集比较中，我们使用10折交叉验证进行了评估，而在外部数据集上 ，一个数据集用来训练，其他数据集用于验证。在每个算法上，计算了不同数据集和特征集的C指数、AUC、HR的中位数，用来对算法进行排序。结果显示，在内部数据集验证中，几乎所有的生存分析模型都比二分类模型表现更好；外部数据集验证的结果几乎一致。一些二分类算法，例如PLS、弹性网络和随机森林的表现比Cox比例风险模型和监督主成分生存分析模型相当或稍微好一点，但是，在外部数据集比较上，像Cox-Ridge、Cox-PLS和RFS这样最好的生存分析模型的表现比所有的二分类模型都好（博主补充：这其实是显而易见的结论，这三种方法都有控制过拟合的策略，在外部数据集上表现肯定会更好；并且Cox模型充分利用了截尾数据，而其他二分类模型则只能将截尾数据按某一标准转换成二分类数据，不得不说半参数模型既具有强大的适应性又具有良好的可解释性，还是很适合临床数据分析的）。</p>
+<p>这里有两种可能的解释可以说明为什么生存分析模型更好。1、数据清洗后，二分类模型可使用的数据的样本容量会变得比较小(附表S5)。2、生存分析模型中生存时间的高可变性比二分类结局拥有更多的信息，这提高了数据分辨率和统计效能。为了证明这个假设，我们通过数据移除的方法，对生存分析模型和二分类模型使用了清洗后样本容量相等的数据。结果显示，生存分析模型的预测能力随样本容量的增加而增加(附图S2)，并且生存分析模型在相同的样本容量下也比二分类模型表现更好(附图S3)，在内部数据集比较上这一点更甚，这证明了我们的假设。</p>
+<h3 id="生存分析模型的表现评估"><a href="#生存分析模型的表现评估" class="headerlink" title="生存分析模型的表现评估"></a>生存分析模型的表现评估</h3><p>基于内部数据集的10折交叉验证，Cox-Ridge和Cox-PLS比其他模型表现更好，而使用最广泛的Cox比例风险模型则垫底。SuperPC和RSF对数据集非常敏感，波动很大。例如，RSF的C指数与Cox-Ridge和Cox-PLS这两个头部的模型在DKFZ、GSE54460和Cambridge这三个数据集上的表现表现接近，但是在CPC-Gene、Stockholm、CancerMap、CIT和Belfast数据集上的表现则是倒数一二。Cox-Lasso模型的表现通常比RSF、SuperPC和CoxPH要好，但是比Cox-Ridge和Cox-PLS差。而外部数据集验证上，结果略有不同，Cox-Ridge、Cox-PLS和RSF的表现相当，且比其他模型要好。 Cox-Lasso、CoxPH和SuperPC在内部数据集验证上差不多，其中Cox-Lasso要好一点。</p>
+<p>和预期一样，生存分析模型在内部数据集验证上的表现优于外部数据集上的表现。这主要是因为内部数据集比较中，训练和验证数据数据都来自同一批次，而外部数据集验证中，测序技术不同、测序平台不同、甚至用来产生训练数据和测试数据的生物信息学处理流程也不同。不同研究的队列也会有非常大的差异，这产生了非常大异质性。这些结果强烈说明了在不同数据集上进行训练和验证的重要性。</p>
+<h3 id="对已发表的前列腺癌预后基因特征的评估"><a href="#对已发表的前列腺癌预后基因特征的评估" class="headerlink" title="对已发表的前列腺癌预后基因特征的评估"></a>对已发表的前列腺癌预后基因特征的评估</h3><p>基于前面的结果，我们选择了表现一致最优的Cox-Ridge模型进行这里的分析。和前面一样的方法，计算了不同特征集在不同数据集上的C指数、AUC和HR的中位数。结果表明，内部数据集相比外部数据集，所有特征集的中位C指数差不多，而中位AUC值高0.5，中位HR值高1。Penny, Li, Klein, Sinnott, Wu, Erho, Kamoun, Planche和Long提出的预后特征集在这三项指标中都差不多排在前十。已经应用于商业的三个预后特征集中的两个由Klein (Oncotype DX GPS) 和 Erho (Decipher)所提出的特征集，在所有的数据集上表现都很好。Penney特征集通常排第一，而Klein排第二。Li, Sinnott和Wu的特征集在内部数据集上总是比Erho排名高，而Wu在外部数据集比较上也比Erho高。</p>
+<p>我们也用Cox-PLS模型进行了相同的研究。结果虽然略有不同，但Cox-Ridge中前部的特征集在Cox-PLS也是名列前茅(附图S4)。Ramaswamy特征集在Cox-PLS上的表现要好一些，能一直排在前10。</p>
+<p>因为那三个特征在不同数据集上可能不同，我们使用中位数作为排名的依据。图六图七显示了一些细节，啰里吧嗦的图片描述跳过。我们发现一些特征集在特定的数据集上进行训练和验证，表现很好，但是换一个数据集则效果很差，甚至胡乱预测。这个结果说明使用不同队列的数据进行模型的训练和评估非常重要。</p>
+<h3 id="从基因表达谱中找出分子特征集的必要性和重要性"><a href="#从基因表达谱中找出分子特征集的必要性和重要性" class="headerlink" title="从基因表达谱中找出分子特征集的必要性和重要性"></a>从基因表达谱中找出分子特征集的必要性和重要性</h3><p>我们使用从基因集中乱选一个基因子集、直接用整个基因集，或只用前面特征集中的某个基因或全部特征集的并集来研究找出使用特征集进行预后的必要性和重要性。我们尝试了10个胡乱构造的基因子集，每个子集包含了50个基因，这些基因子集使用前面的Cox-Ridge模型进行评估，和之前一些研究的结果一致，这些基因子集虽然和临床癌症预后相关，但是附表S6中列出的前面测试过的优先的特征集的表现始终比这些乱选的基因子集效果好。<strong>我们也直接摆烂，使用整个转录组进行了测试，发现总体表现良好</strong>，比那些辛苦水已经发表的文章中找到的特征集中的2&#x2F;3都要好，但是比顶级的特征集还是差了点。为了研究独立的基因是不是和整个特征集具有相同的风险评估能力，我们对特征集的每个基因都进行了前面的分析，和预期一样，前十的结果比某些特征集更好，不过没有一个基因表现比附图S8中列出的特征集更好(博主吐槽：某些文章可不可以再水一点额，整个特征集出来，还没有单个基因的效果好)。我们研究了全部特征集的并集的建模表现，结果表明基本可以和顶级的特征集相媲美，在所有比较中都排在前五。另一方面，这也说明一个相对小但是拥有大部分显著基因的特征集可以有大特征集一样好的表现，而将小特征集转换到临床实践上显然要容易得多。这些结果汇总起来说明我们需要从转录组中挑选最显著的预后特征集来开发预后模型。</p>
+<h3 id="不同人种间的预后特征有潜在可迁移性"><a href="#不同人种间的预后特征有潜在可迁移性" class="headerlink" title="不同人种间的预后特征有潜在可迁移性"></a>不同人种间的预后特征有潜在可迁移性</h3><p>尽管大部分预后模型都是在白人上开发的，但是用来预测其他人种的预后效果也还行，因此这潜在地证明了一个设计优秀的临床试验也能帮助那些不是白人的种族。为了证明这个猜想，我们对TCGA上的386名白人、52名非裔、12名亚裔进行了分析。在386名白人的数据上使用Cox-Ridge模型对每一个特征集进行了建模，然后分别在52名非裔数据集和52+12的非裔亚裔混合数据集上进行验证。结果有12个特征集可以在非裔数据集上得到验证，而有19个特征集可以在非裔亚裔混合数据集上得到验证。尽管样本容量小，这个结果为进一步的混合人种大队列验证提供了有希望的保证。</p>
+<h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><p>和其他类型的癌症不同，局限性前列腺癌需要诊断时准确预测疾病进展的风险，因为大部分患者进展缓慢以至于终身无需治疗，而许多病人依然进行了RP，前列腺切除后严重影响了生活质量。前列腺癌临床决策急需准确的健康评估工具。基因谱分子特征越来越成为重要的工具，对前列腺癌临床健康管理产生了巨大影响。一旦在多样的临床环境中得到了验证，这些分子特征将发挥巨大作用：1、区分只需要主动监测的患者和需要立即进行治疗的患者；2、确定治疗的类型和强度；3、评估进行多元模式治疗的需求和从辅助治疗中获益的可能性；4、最终治疗后，定期监测是否发生局部复发和远距离转移。</p>
+<p>在这些投入临床实践之前，使用大队列，对机器学习算法和基因表达特征进行系统性无偏评估，对选择建立预后模型的方法、甄选最有前景的预后特征进行前瞻性研究验证来说非常重要。我们的研究结果表明生存分析模型比二分类模型更优秀。这主要是因为前面说过的两点原因。生存分析模型中Cox-Ridge和Cox-PLS普遍更好，而普遍使用的CoxPH表现则相当差。RSF在内部数据集的表现可能不太行，但是在外部数据集中具有很好的鲁棒性，不容易过拟合。原因前面也说过。这说明了前面标题说明过的事情：从基因表达谱中找出分子特征集的必要性和重要性。</p>
+<p>因为原始文献中使用了不同的数据集和统计方法，复现这些预后模型是非常困难的。这些研究的重点不是对具体哪个预后模型进行复现，而是评估同样算法、训练数据集、验证数据集下这些特征集的表现。研究过程中发现Klein和Erho的特征集几乎总是在所有的比较中排在前列。我们也发现有其他一小部分发表的特征集，像Penney、Wu、Li和Sinnott的特征集，有可以媲美甚至超越商业基因特征分析的表现。这四个特征集与Kamoun、Planche和Long的特征集都非常有前景，可以在未来的前瞻性研究验证中开出出鲁棒的预后模型，成为临床实践的一部分。在特定的算法和数据集中，一个特征集表现很好，而换一下算法和数据集则完全丧失预后能力，这是非常有可能的。因此非常有必要在开发特征集时使用多元数据集和大队列进行验证。一些之前发表的文献证明随机选择的基因子集可能与预后有显著相关性，我们的研究也证明了这一点，不过，是金子总是会发光的，前部的特征集总是比它们的表现更好。我们也评估了使用整个转录组的预后能力，发现它比大部分特征集要好，不过也比不过金子。尽管将所有特征集取并集的表现和金子差不多，甚至在某些病例上的表现更好，但将如此大一个基因集转换成一个可以使用的临床实践工具既困难又不划算。我们的研究发现找一个和预后高度相关的小特征集是非常有必要的。</p>
+<p>通过综合审视和评估，我们提出了以下几点在前列腺癌预后基因特征集开发和评估中应该遵守的原则：1、重视临床应用转化潜力；2、选择最相关的队列和终点；3、尽可能选择生存时间数据；4、多进行外部数据集验证；5、与已发表的预后特征集和已有的临床病理学决策工具进行比较。这些原则中的一些可能已经广泛地被其他文献讨论过。临床应用是特征集开发最重要的标准。大部分已发表的预后特征集都是基于手术队列的RP问题。因此，这些特征集可能和评估初步治疗后患者的生化复发、转移、前列腺癌别死亡、以及确定患者是否能从辅助治疗中获益更相关。尽管其中一些特征集也已经被证明对有前列腺穿刺活检样本的病人可以辅助判断其是否只需要主动监测，这些从前列腺穿刺活检背景中直接得到的特征集的统计敏感性和特异性仍需要进一步提高。选择最相关的终点对于未来的分特征集的开发和验证也很重要。BCR是最常用来定义疾病进展和侵袭性的代理终点，然而，许多在最终治疗后有PSA水平升高的患者在未来几年内可能不会发生局部复发和远距离转移。临床复发、转移和前列腺癌别死亡可能是更好的终点选择，如果可能的话，新肿瘤事件时间也应该使用最鲁棒的生存分析方法进行建模，以提高风险分层的准确性。活检时不利的病理学终点也可以用于定义疾病的侵袭性。临床验证是特征集开发的另一个重要的标准。预后特征不经过设计优秀的外部验证是无效的。使用任何模型计算的预后分数都会和训练数据集中关注的终点显著相关。我们的研究发现强调了使用独立验证的重要性。此外，任何新的预后特征集都应该和已经发表的优先预后集和临床病理决策进行比较以改进预测能力。</p>
+<p>总的来说，和标题说的一样。这项研究的发现可以极大促进前面研究内容的发展。此外，这项研究也收集整理了非常宝贵的数据集。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/uncategorized/" class="category-chain-item">uncategorized</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【翻译】利用大队列对前列腺癌预后的机器学习模型和基因表达特征进行综合评价</div>
+      <div>https://b.limour.top/1942.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 30, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/1943.html" title="Docker：部署自己的搜索引擎SearXNG">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Docker：部署自己的搜索引擎SearXNG</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/1941.html" title="使用limma包进行差异基因分析">
+                        <span class="hidden-mobile">使用limma包进行差异基因分析</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>

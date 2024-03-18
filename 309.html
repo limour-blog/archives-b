@@ -1,0 +1,701 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+  <script async src="https://analytics.umami.is/script.js" data-website-id="e59ec28a-c9a7-4104-9e62-a9f7eb3fac0b"></script>
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <link rel="icon" href="https://img.limour.top/2023/08/29/64ee07361815a.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Limour">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="jTessBoxEditorFX-2.3.0  预训练数据 1234567#For CentOS 7 run the following as root to install Tesseract with English language traineddata:yum -y install yum-utilsyum-config-manager --add-repo https:&#x2F;&#x2F;down">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LSTM应用于验证码识别">
+<meta property="og:url" content="https://b.limour.top/309.html">
+<meta property="og:site_name" content="Limour&#39;s Blog">
+<meta property="og:description" content="jTessBoxEditorFX-2.3.0  预训练数据 1234567#For CentOS 7 run the following as root to install Tesseract with English language traineddata:yum -y install yum-utilsyum-config-manager --add-repo https:&#x2F;&#x2F;down">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img.limour.top/archives_2023/blog_wp/2020/07/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20200710090821.webp">
+<meta property="article:published_time" content="2020-07-11T12:12:46.000Z">
+<meta property="article:modified_time" content="2024-03-18T09:34:16.768Z">
+<meta property="article:author" content="Limour">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="LSTM">
+<meta property="article:tag" content="tesseract">
+<meta property="article:tag" content="验证码">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.limour.top/archives_2023/blog_wp/2020/07/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20200710090821.webp">
+  
+  
+  
+  <title>LSTM应用于验证码识别 - Limour&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/hint.css@2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/theme-inject/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b.limour.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Limour&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.limour.top/2023/08/29/64ee08e108638.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LSTM应用于验证码识别"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-07-11 20:12" pubdate>
+          July 11, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">LSTM应用于验证码识别</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><a href="https://b.limour.top/go/#aHR0cHM6Ly9saW1vdXIubGFuem91cy5jb20vaVROS1plZzd0amE=" rel="noopener external nofollow noreferrer"><img src="data:image/png;base64,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" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></a></p>
+<p> <a href="https://b.limour.top/go/#aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvdmlldG9jci9maWxlcy9qVGVzc0JveEVkaXRvci8=" rel="noopener external nofollow noreferrer">jTessBoxEditorFX-2.3.0</a></p>
+<p><a href="https://b.limour.top/go/#aHR0cHM6Ly9saW1vdXIubGFuem91cy5jb20vaUxRMjVlaDJvMWk=" rel="noopener external nofollow noreferrer"><img src="data:image/png;base64,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" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></a></p>
+<p><a href="https://b.limour.top/go/#aHR0cHM6Ly90ZXNzZXJhY3Qtb2NyLmdpdGh1Yi5pby90ZXNzZG9jL0RhdGEtRmlsZXM=" rel="noopener external nofollow noreferrer">预训练数据</a></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment">#For CentOS 7 run the following as root to install Tesseract with English language traineddata:</span><br>yum -y install yum-utils<br>yum-config-manager --add-repo https:<span class="hljs-regexp">//</span>download.opensuse.org<span class="hljs-regexp">/repositories/</span>home:<span class="hljs-regexp">/Alexander_Pozdnyakov/</span>CentOS_7/<br>sudo rpm --import https:<span class="hljs-regexp">//</span>build.opensuse.org<span class="hljs-regexp">/projects/</span>home:Alexander_Pozdnyakov/public_key<br>yum update<br>yum install tesseract <br>yum install tesseract-langpack-eng<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-comment">#For Win10 to install Tesseract:</span><br><span class="hljs-number">1.</span>下载解压 jTessBoxEditor<br><span class="hljs-number">2.</span>将 &#123;解压目录&#125;<span class="hljs-string">\jTessBoxEditorFX\tesseract-ocr</span> 添加到 Path<br><span class="hljs-number">3.</span>下载解压预训练数据到当前目录<br><span class="hljs-number">4.</span>新建环境变量 TESSDATA_PREFIX ,值为 &#123;解压目录&#125;<span class="hljs-string">\tessdata</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img.limour.top/archives_2023/blog_wp/2020/07/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20200710090821.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></p>
+<p>终端中运行命令 tesseract –help-extra 显示如上信息表示安装成功</p>
+<p><a href="https://b.limour.top/go/#aHR0cHM6Ly9saW1vdXIubGFuem91cy5jb20vaWNJaGVlaDMyMWM=" rel="noopener external nofollow noreferrer"><img src="data:image/png;base64,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" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></a></p>
+<p>自行获取训练所需的验证码</p>
+<p>按照<a href="https://b.limour.top/go/#aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwMTQ3ODYzL2FydGljbGUvZGV0YWlscy84MjI5MDAxNQ==" rel="noopener external nofollow noreferrer">肖鹏伟的《Tesseract-OCR-04-使用 jTessBoxEditor提高文字识别准确率》</a>中的方法生成<code>fdu.ufont.exp0.tif</code>文件</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">#通过此命令生成fdu<span class="hljs-selector-class">.ufont</span><span class="hljs-selector-class">.exp0</span>.box文件<br>tesseract fdu<span class="hljs-selector-class">.ufont</span><span class="hljs-selector-class">.exp0</span><span class="hljs-selector-class">.tif</span> fdu<span class="hljs-selector-class">.ufont</span><span class="hljs-selector-class">.exp0</span> -l eng <span class="hljs-attr">--psm</span> <span class="hljs-number">8</span> <span class="hljs-attr">--oem</span> <span class="hljs-number">0</span> nobatch box<span class="hljs-selector-class">.train</span> -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyzAT-<br></code></pre></td></tr></table></figure>
+
+<p>继续按照肖鹏伟的方法修正<code>.box</code>文件</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs stylus">#将fdu<span class="hljs-selector-class">.ufont</span><span class="hljs-selector-class">.exp0</span>.tif文件、修正后的fdu<span class="hljs-selector-class">.ufont</span><span class="hljs-selector-class">.exp0</span>.box文件一起保存到独立的同一新文件夹下，同目录下运行此.ps1文件即可得到fdu<span class="hljs-selector-class">.traineddata</span><br>tesseract fdu<span class="hljs-selector-class">.ufont</span><span class="hljs-selector-class">.exp0</span><span class="hljs-selector-class">.tif</span> fdu<span class="hljs-selector-class">.ufont</span><span class="hljs-selector-class">.exp0</span> -l enb <span class="hljs-attr">--psm</span> <span class="hljs-number">8</span> lstm<span class="hljs-selector-class">.train</span><br>combine_tessdata -e <span class="hljs-string">&quot;$env:TESSDATA_PREFIX\enb.traineddata&quot;</span> enb<span class="hljs-selector-class">.lstm</span><br><span class="hljs-variable">$PSroot</span> = Get-ChildItem<br><span class="hljs-variable">$PSroot</span> = Split-Path <span class="hljs-variable">$PSroot</span><span class="hljs-selector-class">.Get</span>(<span class="hljs-number">0</span>)<span class="hljs-selector-class">.FullName</span><br><span class="hljs-variable">$fso</span>=New-Object -ComObject Scripting<span class="hljs-selector-class">.FileSystemObject</span><br><span class="hljs-variable">$fso</span><span class="hljs-selector-class">.CreateTextFile</span>(<span class="hljs-string">&#x27;fdu.training_files.txt&#x27;</span>,<span class="hljs-number">2</span>)<span class="hljs-selector-class">.Write</span>(<span class="hljs-string">&quot;$PSroot\fdu.ufont.exp0.lstmf&quot;</span> )<br><span class="hljs-keyword">if</span> (-not (Test-Path -Path output))&#123;mkdir output&#125;<br>lstmtraining <span class="hljs-attr">--model_output</span>=<span class="hljs-string">&quot;$PSroot\output\output&quot;</span> <span class="hljs-attr">--continue_from</span>=<span class="hljs-string">&quot;$PSroot\enb.lstm&quot;</span> <span class="hljs-attr">--train_listfile</span>=<span class="hljs-string">&quot;$PSroot\fdu.training_files.txt&quot;</span> <span class="hljs-attr">--traineddata</span>=<span class="hljs-string">&quot;$env:TESSDATA_PREFIX\enb.traineddata&quot;</span> <span class="hljs-attr">--debug_interval</span> -<span class="hljs-number">1</span> <span class="hljs-attr">--target_error_rate</span> <span class="hljs-number">0.001</span><br>lstmtraining <span class="hljs-attr">--stop_training</span> <span class="hljs-attr">--continue_from</span>=<span class="hljs-string">&quot;$PSroot\output\output_checkpoint&quot;</span> <span class="hljs-attr">--traineddata</span>=<span class="hljs-string">&quot;$env:TESSDATA_PREFIX\enb.traineddata&quot;</span> <span class="hljs-attr">--model_output</span>=<span class="hljs-string">&quot;$PSroot\fdu.traineddata&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><a href="https://b.limour.top/go/#aHR0cHM6Ly9saW1vdXIubGFuem91cy5jb20vaWZXM2plaXJlaWI=" rel="noopener external nofollow noreferrer"><img src="data:image/png;base64,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" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></a></p>
+<p>最终得到如上结果</p>
+<p>将得到的<code>fdu.traineddata</code>文件移动到<code>tessdata</code>文件夹下即可通过参数<code>-l fdu</code>进行使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#此程序用于简单判断训练效果</span><br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><span class="hljs-comment">#from itertools import cycle</span><br><span class="hljs-keyword">import</span> os, random, re<br><span class="hljs-keyword">import</span> pytesseract<br>fl = re.<span class="hljs-built_in">compile</span>(<span class="hljs-string">r&#x27;[a-zA-Z-]+&#x27;</span>)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">clearStr</span>(<span class="hljs-params"><span class="hljs-built_in">str</span></span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>.join(fl.findall(<span class="hljs-built_in">str</span>))<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Fileset</span>(<span class="hljs-title class_ inherited__">list</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name,  ext=<span class="hljs-string">&#x27;&#x27;</span>, _read=<span class="hljs-literal">None</span>, root=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(name, <span class="hljs-built_in">str</span>)  :<br>            self.root = os.path.join(root <span class="hljs-keyword">or</span> os.getcwd(), name)<br>            self.extend(f <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> os.listdir(self.root) <span class="hljs-keyword">if</span> f.endswith(ext))<br>            self._read = _read<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__getitem__</span>(<span class="hljs-params">self, index</span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(index, <span class="hljs-built_in">int</span>):<span class="hljs-comment"># index是索引</span><br>            <span class="hljs-keyword">return</span> os.path.join(self.root, <span class="hljs-built_in">super</span>().__getitem__(index))<br>        <span class="hljs-keyword">else</span>:<span class="hljs-comment"># index是切片</span><br>            fileset = Fileset(<span class="hljs-literal">None</span>)<br>            fileset.root = self.root<br>            fileset._read = self._read<br>            fileset.extend(<span class="hljs-built_in">super</span>().__getitem__(index))<br>            <span class="hljs-keyword">return</span> fileset<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getFileName</span>(<span class="hljs-params">self, index</span>):<br>        fname, ext = os.path.splitext(<span class="hljs-built_in">super</span>().__getitem__(index))<br>        <span class="hljs-keyword">return</span> fname<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__iter__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">if</span> self._read: <span class="hljs-keyword">return</span> (self._read(os.path.join(self.root, f)) <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> <span class="hljs-built_in">super</span>().__iter__())<br>        <span class="hljs-keyword">else</span>: <span class="hljs-keyword">return</span> (os.path.join(self.root, f) <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> <span class="hljs-built_in">super</span>().__iter__())<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__call__</span>(<span class="hljs-params">self</span>):<br>        retn = random.choice(self)<br>        <span class="hljs-keyword">if</span> self._read: <span class="hljs-keyword">return</span> self._read(retn)<br>        <span class="hljs-keyword">else</span>: <span class="hljs-keyword">return</span> retn<br><br><span class="hljs-comment"># def fopen(path):</span><br>    <span class="hljs-comment"># with open(path, &#x27;rb&#x27;) as f:</span><br>        <span class="hljs-comment"># return f.read()</span><br><span class="hljs-comment"># #from tesOCR import tesOCR as OCR1</span><br><span class="hljs-comment"># sample = Fileset(&#x27;Captcha&#x27;, &#x27;.jpg&#x27;, fopen)</span><br>sample = Fileset(<span class="hljs-string">&#x27;Captcha&#x27;</span>, <span class="hljs-string">&#x27;.jpg&#x27;</span>, Image.<span class="hljs-built_in">open</span>)<br><br>config1 = <span class="hljs-string">&#x27;--psm 8&#x27;</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">OCR1</span>(<span class="hljs-params">img</span>):<br>     <span class="hljs-keyword">return</span> pytesseract.image_to_string(img, lang=<span class="hljs-string">&#x27;fdu&#x27;</span>, config=config1)<br><br>config2 = <span class="hljs-string">&quot;--psm 8 --oem 0 -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyzAT-&quot;</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">OCR2</span>(<span class="hljs-params">img</span>):<br>     <span class="hljs-keyword">return</span> pytesseract.image_to_string(img, lang=<span class="hljs-string">&#x27;eng&#x27;</span>, config=config2)<br><br><span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> sample:<br>    b = a.convert(<span class="hljs-string">&quot;L&quot;</span>)<br>    x = clearStr(OCR1(b))<br>    y = clearStr(OCR2(b))<br>    <span class="hljs-keyword">if</span> x != y:<br>        display(a)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;LSTM is <span class="hljs-subst">&#123;x&#125;</span> ; Legacy is <span class="hljs-subst">&#123;y&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><a href="https://b.limour.top/go/#aHR0cHM6Ly9saW1vdXIubGFuem91cy5jb20vaW1LNm1lOWx1cmc=" rel="noopener external nofollow noreferrer"><img src="data:image/png;base64,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" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload></a></p>
+<p>我的结果和python调用封装</p>
+<p>注释:  </p>
+<ol>
+<li><a href="https://b.limour.top/go/#aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvdmlldG9jci9maWxlcy9qVGVzc0JveEVkaXRvci8=" rel="noopener external nofollow noreferrer">jTessBoxEditor</a>中带有FX表示支持中文<br>2.预训练数据中22.3Mb的是Legacy数据,14.6Mb的是LSTM数据,语言均为eng<br>3.”tessedit_char_whitelist&#x3D;”后面所接内容为验证码中可能出现的字符</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python%E7%BB%83%E4%B9%A0/" class="category-chain-item">Python练习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/" class="print-no-link">#Python</a>
+      
+        <a href="/tags/LSTM/" class="print-no-link">#LSTM</a>
+      
+        <a href="/tags/tesseract/" class="print-no-link">#tesseract</a>
+      
+        <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/" class="print-no-link">#验证码</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LSTM应用于验证码识别</div>
+      <div>https://b.limour.top/309.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Limour</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 11, 2020</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/341.html" title="色温与RGB颜色换算表">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">色温与RGB颜色换算表</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/297.html" title="pytesseract测试">
+                        <span class="hidden-mobile">pytesseract测试</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comments.limour.top","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://jscdn.limour.top/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a target="_blank" rel="nofollow noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43130202000203"><img src="https://img.limour.top/2023/08/27/64eadeb81d6a0.webp" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload>湘公网安备 43130202000203号  </a> <a target="_blank" rel="nofollow noopener" href="https://beian.miit.gov.cn/">湘ICP备20008299号 </a> <a target="_blank" rel="nofollow noopener" href="https://icp.gov.moe/?keyword=20210128">萌ICP备20210128号</a> <br> <a href="https://www.foreverblog.cn/" target="_blank"> <img src="https://img.foreverblog.cn/logo_en_default.png" srcset="https://jscdn.limour.top/gh/Limour-dev/Sakurairo_Vision/load_svg/inload.svg" lazyload alt="" style="width:auto;height:24px"> </a> <br> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/limour-blog/archives-b" target="_blank" rel="nofollow noopener"><span>SRC</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://jscdn.limour.top/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://jscdn.limour.top/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
+<script  src="https://jscdn.limour.top/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/tocbot@4.20.1/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://jscdn.limour.top/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start -->
+  <script defer src="/theme-inject/timeliness.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>
